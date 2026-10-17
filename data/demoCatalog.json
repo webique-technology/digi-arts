@@ -1,0 +1,916 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Gift Bags & Wraps",
+      "slug": "gift-bags-wraps"
+    },
+    {
+      "id": 2,
+      "name": "Small Gift Bags",
+      "slug": "small-bags"
+    },
+    {
+      "id": 3,
+      "name": "Boxes & Baskets",
+      "slug": "boxes-baskets"
+    },
+    {
+      "id": 4,
+      "name": "Shaped Boxes",
+      "slug": "shaped-boxes"
+    },
+    {
+      "id": 5,
+      "name": "Diwali",
+      "slug": "diwali"
+    },
+    {
+      "id": 6,
+      "name": "Diwali Box",
+      "slug": "diwali-box"
+    },
+    {
+      "id": 7,
+      "name": "Diwali Wall Decor",
+      "slug": "diwali-wall-decor"
+    },
+    {
+      "id": 8,
+      "name": "Diwali Floor Decor",
+      "slug": "diwali-floor-decor"
+    },
+    {
+      "id": 9,
+      "name": "Gift Sets",
+      "slug": "gift-sets"
+    },
+    {
+      "id": 10,
+      "name": "Decor",
+      "slug": "decor"
+    },
+    {
+      "id": 11,
+      "name": "Wall Decor",
+      "slug": "wall-decor"
+    },
+    {
+      "id": 12,
+      "name": "Floor Decor",
+      "slug": "floor-decor"
+    },
+    {
+      "id": 13,
+      "name": "Lamps",
+      "slug": "lamps"
+    },
+    {
+      "id": 14,
+      "name": "Karwachauth",
+      "slug": "karwachauth"
+    },
+    {
+      "id": 15,
+      "name": "Essentials",
+      "slug": "essentials"
+    },
+    {
+      "id": 16,
+      "name": "DIY & Notebooks",
+      "slug": "diy-notebooks"
+    },
+    {
+      "id": 17,
+      "name": "Combos",
+      "slug": "combos"
+    },
+    {
+      "id": 18,
+      "name": "Birth Announcements",
+      "slug": "birth-announcements"
+    },
+    {
+      "id": 19,
+      "name": "Ganpati",
+      "slug": "ganpati"
+    },
+    {
+      "id": 20,
+      "name": "Shagun",
+      "slug": "shagun"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "title": "Large Floral Gift Bag",
+      "slug": "large-floral-gift-bag",
+      "description": "Material : Handmade paper\nSize : As shown\nColour : As shown",
+      "price": 449.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 1,
+      "category_name": "Gift Bags & Wraps",
+      "category_slug": "gift-bags-wraps",
+      "primary_image": "products/4657f759dca910da335458a3.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 1,
+          "image_path": "products/4657f759dca910da335458a3.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 1,
+        "name": "Gift Bags & Wraps",
+        "slug": "gift-bags-wraps"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Everyday Sketchbook (Pack of 2)",
+      "slug": "everyday-sketchbook-pack-of-2",
+      "description": "Material : Handmade paper\nSize : As shown\nColour : As shown",
+      "price": 299.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 15,
+      "category_name": "Essentials",
+      "category_slug": "essentials",
+      "primary_image": "products/96604585a0bd5b9ef19f0205.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 2,
+          "image_path": "products/96604585a0bd5b9ef19f0205.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 15,
+        "name": "Essentials",
+        "slug": "essentials"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Karwachauth Pooja Set",
+      "slug": "karwachauth-pooja-set",
+      "description": "Material : Handmade paper\nSize : As shown\nColour : As shown",
+      "price": 799.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 14,
+      "category_name": "Karwachauth",
+      "category_slug": "karwachauth",
+      "primary_image": "products/d224437da32d5ecec4f1606a.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 3,
+          "image_path": "products/d224437da32d5ecec4f1606a.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 14,
+        "name": "Karwachauth",
+        "slug": "karwachauth"
+      }
+    },
+    {
+      "id": 4,
+      "title": "Ganpati Decor Backdrop",
+      "slug": "ganpati-decor-backdrop",
+      "description": "Material : Handmade paper\nSize : As shown\nColour : As shown",
+      "price": 899.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 19,
+      "category_name": "Ganpati",
+      "category_slug": "ganpati",
+      "primary_image": "products/661ba32190dd14cae6795b25.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 4,
+          "image_path": "products/661ba32190dd14cae6795b25.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 19,
+        "name": "Ganpati",
+        "slug": "ganpati"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Festive Combo Hamper",
+      "slug": "festive-combo-hamper",
+      "description": "Material : Handmade paper\nSize : As shown\nColour : As shown",
+      "price": 1799.0,
+      "sale_price": 1599.0,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 17,
+      "category_name": "Combos",
+      "category_slug": "combos",
+      "primary_image": "products/0cb30c0c2c7dade1719dff94.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 5,
+          "image_path": "products/0cb30c0c2c7dade1719dff94.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 17,
+        "name": "Combos",
+        "slug": "combos"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Birth Announcement Card Set",
+      "slug": "birth-announcement-card-set",
+      "description": "Material : Handmade paper\nSize : As shown\nColour : As shown",
+      "price": 699.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 18,
+      "category_name": "Birth Announcements",
+      "category_slug": "birth-announcements",
+      "primary_image": "products/2de03d1f04b027e3ccb526a9.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 6,
+          "image_path": "products/2de03d1f04b027e3ccb526a9.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 18,
+        "name": "Birth Announcements",
+        "slug": "birth-announcements"
+      }
+    },
+    {
+      "id": 7,
+      "title": "Marigold Toran",
+      "slug": "marigold-toran",
+      "description": "Material : Paper marigolds\nLength : 4 feet\nColour : Orange & yellow",
+      "price": 599.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 11,
+      "category_name": "Wall Decor",
+      "category_slug": "wall-decor",
+      "primary_image": "products/b70fef3f7f32b15de7a8c567.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 7,
+          "image_path": "products/b70fef3f7f32b15de7a8c567.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 11,
+        "name": "Wall Decor",
+        "slug": "wall-decor"
+      }
+    },
+    {
+      "id": 8,
+      "title": "Shubh Labh Wall Hanging",
+      "slug": "shubh-labh-wall-hanging",
+      "description": "Material : Beads, fabric & paper\nSize : 24 inch hanging\nColour : Red & gold",
+      "price": 449.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 7,
+      "category_name": "Diwali Wall Decor",
+      "category_slug": "diwali-wall-decor",
+      "primary_image": "products/6ad71eb5f9d311fbb372d2d0.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 8,
+          "image_path": "products/6ad71eb5f9d311fbb372d2d0.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 7,
+        "name": "Diwali Wall Decor",
+        "slug": "diwali-wall-decor"
+      }
+    },
+    {
+      "id": 9,
+      "title": "Heart Shaped Gift Box",
+      "slug": "heart-shaped-gift-box",
+      "description": "Material : Handmade paper\nShape : Heart\nColour : As shown",
+      "price": 549.0,
+      "sale_price": null,
+      "stock": 4,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 4,
+      "category_name": "Shaped Boxes",
+      "category_slug": "shaped-boxes",
+      "primary_image": "products/5489049495bb107677c2b23a.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 9,
+          "image_path": "products/5489049495bb107677c2b23a.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 4,
+        "name": "Shaped Boxes",
+        "slug": "shaped-boxes"
+      }
+    },
+    {
+      "id": 10,
+      "title": "Origami Paper Lamp",
+      "slug": "origami-paper-lamp",
+      "description": "Material : Folded paper shade\nSize : 28 cm\nUse : LED bulb recommended",
+      "price": 1299.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 13,
+      "category_name": "Lamps",
+      "category_slug": "lamps",
+      "primary_image": "products/a49000d78feae064d9344205.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 10,
+          "image_path": "products/a49000d78feae064d9344205.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 13,
+        "name": "Lamps",
+        "slug": "lamps"
+      }
+    },
+    {
+      "id": 11,
+      "title": "Peacock Hardbound Notebook",
+      "slug": "peacock-hardbound-notebook",
+      "description": "Material : Handmade paper & cloth cover\nSize : A5, 120 pages\nColour : As shown",
+      "price": 399.0,
+      "sale_price": 349.0,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 16,
+      "category_name": "DIY & Notebooks",
+      "category_slug": "diy-notebooks",
+      "primary_image": "products/8f8460ce4de8b4cbe4cb2520.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 11,
+          "image_path": "products/8f8460ce4de8b4cbe4cb2520.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 16,
+        "name": "DIY & Notebooks",
+        "slug": "diy-notebooks"
+      }
+    },
+    {
+      "id": 12,
+      "title": "Shagun Envelope Set (Pack of 5)",
+      "slug": "shagun-envelope-set-pack-of-5",
+      "description": "Material : Textured paper\nPack : 5 envelopes\nColour : Assorted festive prints",
+      "price": 249.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 20,
+      "category_name": "Shagun",
+      "category_slug": "shagun",
+      "primary_image": "products/d85433932705405073e7db8c.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 12,
+          "image_path": "products/d85433932705405073e7db8c.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 20,
+        "name": "Shagun",
+        "slug": "shagun"
+      }
+    },
+    {
+      "id": 13,
+      "title": "Lotus Accordion Trio Gift Set",
+      "slug": "lotus-accordion-trio-gift-set",
+      "description": "Material : Handmade paper & wax\nIncludes : Box, accordion decor and candles\nColour : Festive mix",
+      "price": 1499.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 1,
+      "category_id": 9,
+      "category_name": "Gift Sets",
+      "category_slug": "gift-sets",
+      "primary_image": "products/ddd77d1cb5f9f41cef835142.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 13,
+          "image_path": "products/ddd77d1cb5f9f41cef835142.webp",
+          "is_primary": true,
+          "sort_order": 0
+        },
+        {
+          "id": 14,
+          "image_path": "products/0cabd57ae3d49aaf9b21b012.webp",
+          "is_primary": false,
+          "sort_order": 1
+        }
+      ],
+      "category": {
+        "id": 9,
+        "name": "Gift Sets",
+        "slug": "gift-sets"
+      }
+    },
+    {
+      "id": 14,
+      "title": "Collapsible Anar Box (Set of 2)",
+      "slug": "collapsible-anar-box-set-of-2",
+      "description": "Material : Handmade paper\nSize : Set of 2 collapsible boxes\nColour : Red & gold",
+      "price": 2199.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 1,
+      "category_id": 6,
+      "category_name": "Diwali Box",
+      "category_slug": "diwali-box",
+      "primary_image": "products/d8bf393fd2a53a86cfdbfd25.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 15,
+          "image_path": "products/d8bf393fd2a53a86cfdbfd25.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 6,
+        "name": "Diwali Box",
+        "slug": "diwali-box"
+      }
+    },
+    {
+      "id": 15,
+      "title": "Origami Dome Box",
+      "slug": "origami-dome-box",
+      "description": "Material : Handmade paper\nSize : 22 x 22 x 12 cm\nColour : Natural & gold",
+      "price": 999.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 1,
+      "category_id": 3,
+      "category_name": "Boxes & Baskets",
+      "category_slug": "boxes-baskets",
+      "primary_image": "products/3a355aaa70adb1d0e46c6d8f.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 16,
+          "image_path": "products/3a355aaa70adb1d0e46c6d8f.webp",
+          "is_primary": true,
+          "sort_order": 0
+        },
+        {
+          "id": 17,
+          "image_path": "products/3ad41c88a06417245ec872f7.webp",
+          "is_primary": false,
+          "sort_order": 1
+        }
+      ],
+      "category": {
+        "id": 3,
+        "name": "Boxes & Baskets",
+        "slug": "boxes-baskets"
+      }
+    },
+    {
+      "id": 16,
+      "title": "Kutchi Mirror Rangoli",
+      "slug": "kutchi-mirror-rangoli",
+      "description": "Material : Handmade paper & mirror work\nSize : 12 inch\nUse : Reusable floor decor",
+      "price": 299.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 1,
+      "category_id": 8,
+      "category_name": "Diwali Floor Decor",
+      "category_slug": "diwali-floor-decor",
+      "primary_image": "products/9cacb13ac6f2041c1f554f96.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 18,
+          "image_path": "products/9cacb13ac6f2041c1f554f96.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 8,
+        "name": "Diwali Floor Decor",
+        "slug": "diwali-floor-decor"
+      }
+    },
+    {
+      "id": 17,
+      "title": "Botanical Small Gift Bag (Set of 3)",
+      "slug": "botanical-small-gift-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/0d0342b27883b13c02fed6df.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 19,
+          "image_path": "products/0d0342b27883b13c02fed6df.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 18,
+      "title": "Paithani Small Bag (Set Of 3)",
+      "slug": "paithani-small-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 0,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/213aea08004f1270a2047161.webp",
+      "rating": 5.0,
+      "review_count": 1,
+      "images": [
+        {
+          "id": 20,
+          "image_path": "products/213aea08004f1270a2047161.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 19,
+      "title": "Harshringar Small Bag (Set Of 3)",
+      "slug": "harshringar-small-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/4b6d049386255638ae6b8182.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 21,
+          "image_path": "products/4b6d049386255638ae6b8182.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 20,
+      "title": "Gul Small Gift Bag (Set of 3)",
+      "slug": "gul-small-gift-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/8a36e7af37f69c4513f2b188.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 22,
+          "image_path": "products/8a36e7af37f69c4513f2b188.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 21,
+      "title": "Phool Small Bag (Set of 3)",
+      "slug": "phool-small-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/6fdd33fc1d7b1be09c2dba1c.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 23,
+          "image_path": "products/6fdd33fc1d7b1be09c2dba1c.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 22,
+      "title": "Noor Small Bag (Set of 3)",
+      "slug": "noor-small-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/76e5c98629f31e5e28e9f956.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 24,
+          "image_path": "products/76e5c98629f31e5e28e9f956.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 23,
+      "title": "Bloom Small Bag (Set of 3)",
+      "slug": "bloom-small-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/a072ae4e5ce197c9b7cb5c4a.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 25,
+          "image_path": "products/a072ae4e5ce197c9b7cb5c4a.webp",
+          "is_primary": true,
+          "sort_order": 0
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 24,
+      "title": "Leheriya Small Bag (Set of 3)",
+      "slug": "leheriya-small-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/a037e9cdbe2186a5d5f46519.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 26,
+          "image_path": "products/a037e9cdbe2186a5d5f46519.webp",
+          "is_primary": true,
+          "sort_order": 0
+        },
+        {
+          "id": 27,
+          "image_path": "products/3fa930c685831bc1e84c78de.webp",
+          "is_primary": false,
+          "sort_order": 1
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 25,
+      "title": "Vrindavan Small Bag (Set of 3)",
+      "slug": "vrindavan-small-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/af8803b706fffadfe13c3c9d.webp",
+      "rating": null,
+      "review_count": 0,
+      "images": [
+        {
+          "id": 28,
+          "image_path": "products/af8803b706fffadfe13c3c9d.webp",
+          "is_primary": true,
+          "sort_order": 0
+        },
+        {
+          "id": 29,
+          "image_path": "products/c8de723ded69dd2584fadcf1.webp",
+          "is_primary": false,
+          "sort_order": 1
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    },
+    {
+      "id": 26,
+      "title": "Jamavar Jal Small Gift Bag (Set of 3)",
+      "slug": "jamavar-jal-small-gift-bag-set-of-3",
+      "description": "Material : Recycled kraft paper\nSize : 18 x 23 x 10 cm (Set of 3)\nFinish : Matte print with rope handles",
+      "price": 349.0,
+      "sale_price": null,
+      "stock": 60,
+      "status": 1,
+      "is_bestseller": 0,
+      "category_id": 2,
+      "category_name": "Small Gift Bags",
+      "category_slug": "small-bags",
+      "primary_image": "products/ae20f799478e2ed691db2267.webp",
+      "rating": 5.0,
+      "review_count": 1,
+      "images": [
+        {
+          "id": 30,
+          "image_path": "products/ae20f799478e2ed691db2267.webp",
+          "is_primary": true,
+          "sort_order": 0
+        },
+        {
+          "id": 31,
+          "image_path": "products/87a5d014a004b5e3884e36e8.webp",
+          "is_primary": false,
+          "sort_order": 1
+        }
+      ],
+      "category": {
+        "id": 2,
+        "name": "Small Gift Bags",
+        "slug": "small-bags"
+      }
+    }
+  ]
+}

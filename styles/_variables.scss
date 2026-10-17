@@ -1,0 +1,54 @@
+// =====================================================
+// DESIGN TOKENS: sampled from the paperme.in screenshots.
+// Change look & feel here ONLY.
+// =====================================================
+$color-primary: #E83E8C;        // buttons, announcement bar, accents
+$color-primary-dark: #542478;   // headings
+$color-tier-accent: #1f6fe5;    // bulk price selection (selected border / radio)
+$color-tier-edge: #8fbdf5;      // bulk price tile border
+$color-tier-bg: #eef5ff;
+$color-tier-badge: #0a6cf0;     // "Most popular"
+$color-secondary: #bcbab7;      // filter bar grey
+$color-bg: #ffffff;
+$color-bg-alt: #f6f6f6;
+$color-gray: #dcdcdc;
+$color-text: #121212;
+$color-text-muted: #6b6b6b;
+$color-border: #e6e6e6;
+$color-success: #2e7d32;
+$color-error: #c62828;
+$color-whatsapp: #25d366;
+
+
+
+$font-heading: Playfair Display, serif;
+$font-body: "Poppins", sans-serif;
+
+$fs-xs: 0.75rem; $fs-sm: 0.875rem; $fs-md: 1rem; $fs-lg: 1.25rem;
+$fs-xl: 1.75rem; $fs-2xl: 2.5rem; $fs-3xl: 3.25rem;
+
+$space-1: 0.25rem; $space-2: 0.5rem; $space-3: 1rem; $space-4: 1.5rem;
+$space-5: 2.5rem; $space-6: 4rem;
+
+$radius: 8px;
+$shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+$container: 1500px;
+
+$bp-sm: 576px; $bp-md: 768px; $bp-lg: 992px; $bp-xl: 1200px;
+
+:root {
+  --color-primary: #{$color-primary};
+  --color-primary-dark: #{$color-primary-dark};
+  --color-tier-accent: #{$color-tier-accent};
+  --color-tier-bg: #{$color-tier-bg};
+  --color-secondary: #{$color-secondary};
+  --color-bg: #{$color-bg};
+  --color-bg-alt: #{$color-bg-alt};
+  --color-text: #{$color-text};
+  --color-muted: #{$color-text-muted};
+  --color-border: #{$color-border};
+  --color-success: #{$color-success};
+  --color-error: #{$color-error};
+  --radius: #{$radius};
+  --shadow: #{$shadow};
+}

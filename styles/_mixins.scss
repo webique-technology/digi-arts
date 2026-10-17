@@ -1,0 +1,22 @@
+@use 'variables' as v;
+
+@mixin up($bp) { @media (min-width: $bp) { @content; } }
+@mixin down($bp) { @media (max-width: calc(#{$bp} - 1px)) { @content; } }
+@mixin flex-center { display: flex; align-items: center; justify-content: center; }
+@mixin truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@mixin button($bg: v.$color-primary, $fg: #fff) {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 1.5rem; border: 1px solid $bg; border-radius: v.$radius;
+  background: $bg; color: $fg; font: 600 0.9rem v.$font-body; cursor: pointer; text-align: center;
+  transition: opacity 0.2s, transform 0.2s;
+  &:hover { opacity: 0.9; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+@mixin heading {
+  display: inline-block;
+  background-image: linear-gradient(123deg, v.$color-primary 20%, v.$color-primary-dark 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-transform: capitalize;
+}

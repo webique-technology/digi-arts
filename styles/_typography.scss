@@ -1,0 +1,43 @@
+@use 'variables' as v;
+@use 'mixins' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: v.$font-body;
+    font-size: v.$fs-md;
+    line-height: 1.6;
+    color: v.$color-text;
+    background: v.$color-bg;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: v.$font-heading;
+    font-weight: 600;
+    line-height: 1.2;
+    @include heading;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: v.$fs-xl;
+}
+
+h3 {
+    font-size: v.$fs-lg;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
