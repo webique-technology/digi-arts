@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 const DUMMY_PRODUCTS = [
   {
@@ -11,8 +12,17 @@ const DUMMY_PRODUCTS = [
     price: 149,
     originalPrice: 199,
     image: '/images/insta-1.jpg',
+    images: ['/images/insta-1.jpg', '/images/insta-2.jpg'],
     badge: 'Bestseller',
     stock: 12,
+    unit: 'Piece',
+    description:
+      'An elegant paper gift bag for festive gifting, celebrations and special occasions.',
+    specifications: [
+      { label: 'Category', value: 'Gift Packaging' },
+      { label: 'Unit', value: 'Piece' },
+      { label: 'Material', value: 'Paper' },
+    ],
   },
   {
     id: 2,
@@ -21,8 +31,17 @@ const DUMMY_PRODUCTS = [
     price: 299,
     originalPrice: 399,
     image: '/images/insta-2.jpg',
+    images: ['/images/insta-2.jpg', '/images/insta-3.jpg'],
     badge: 'Popular',
     stock: 8,
+    unit: 'Piece',
+    description:
+      'A premium gift box suitable for celebrations, gifting and special occasions.',
+    specifications: [
+      { label: 'Category', value: 'Gift Boxes' },
+      { label: 'Unit', value: 'Piece' },
+      { label: 'Material', value: 'Paperboard' },
+    ],
   },
   {
     id: 3,
@@ -31,8 +50,17 @@ const DUMMY_PRODUCTS = [
     price: 249,
     originalPrice: 0,
     image: '/images/insta-3.jpg',
+    images: ['/images/insta-3.jpg', '/images/insta-4.jpg'],
     badge: 'New',
     stock: 15,
+    unit: 'Set',
+    description:
+      'Decorative paper products to add a festive touch to your home and celebrations.',
+    specifications: [
+      { label: 'Category', value: 'Festival Decor' },
+      { label: 'Unit', value: 'Set' },
+      { label: 'Usage', value: 'Festival Decoration' },
+    ],
   },
   {
     id: 4,
@@ -41,49 +69,37 @@ const DUMMY_PRODUCTS = [
     price: 199,
     originalPrice: 279,
     image: '/images/insta-4.jpg',
+    images: ['/images/insta-4.jpg', '/images/insta-5.jpg'],
     badge: '',
     stock: 0,
+    unit: 'Piece',
+    description:
+      'A decorative wall hanging designed to enhance your home decor.',
+    specifications: [
+      { label: 'Category', value: 'Home Decor' },
+      { label: 'Unit', value: 'Piece' },
+      { label: 'Usage', value: 'Home Decoration' },
+    ],
   },
-  // {
-  //   id: 5,
-  //   name: 'Decorative Paper Lanterns',
-  //   category: 'Festival Decor',
-  //   price: 199,
-  //   originalPrice: 249,
-  //   image: '/images/insta-5.jpg',
-  //   badge: 'New',
-  //   stock: 10,
-  // },
-  // {
-  //   id: 6,
-  //   name: 'Handcrafted Wall Hanging',
-  //   category: 'Home Decor',
-  //   price: 199,
-  //   originalPrice: 279,
-  //   image: '/images/insta-4.jpg',
-  //   badge: '',
-  //   stock: 0,
-  // },
-  // {
-  //   id: 7,
-  //   name: 'Festive Paper Decoration Set',
-  //   category: 'Festival Decor',
-  //   price: 249,
-  //   originalPrice: 0,
-  //   image: '/images/insta-3.jpg',
-  //   badge: 'New',
-  //   stock: 15,
-  // },
-  // {
-  //   id: 8,
-  //   name: 'Handcrafted Wall Hanging',
-  //   category: 'Home Decor',
-  //   price: 199,
-  //   originalPrice: 279,
-  //   image: '/images/insta-4.jpg',
-  //   badge: '',
-  //   stock: 0,
-  // }
+  {
+    id: 5,
+    name: 'Decorative Paper Lanterns',
+    category: 'Festival Decor',
+    price: 199,
+    originalPrice: 249,
+    image: '/images/insta-5.jpg',
+    images: ['/images/insta-5.jpg', '/images/insta-1.jpg'],
+    badge: 'New',
+    stock: 10,
+    unit: 'Piece',
+    description:
+      'Decorative paper lanterns for festive arrangements and special occasions.',
+    specifications: [
+      { label: 'Category', value: 'Festival Decor' },
+      { label: 'Unit', value: 'Piece' },
+      { label: 'Material', value: 'Paper' },
+    ],
+  },
 ];
 
 function HeartIcon({ filled = false }) {
@@ -172,6 +188,8 @@ export function ProductCard({ product }) {
     product.stock !== undefined &&
     Number(product.stock) > 0;
 
+  const detailHref = `/products/${product.id}`;
+
   const discount =
     product.originalPrice > product.price
       ? Math.round(
@@ -184,7 +202,7 @@ export function ProductCard({ product }) {
   const handleAddToCart = () => {
     if (!inStock) return;
 
-    // Demo interaction only; no real cart/API integration.
+    // Demo only. Real cart integration can be added later.
     setAdded(true);
   };
 
@@ -192,7 +210,16 @@ export function ProductCard({ product }) {
     <>
       <article className="dummy-product">
         <div className="dummy-product__visual">
-          <ProductImage src={product.image} name={product.name} />
+          <Link
+            href={detailHref}
+            className="dummy-product__detail-link"
+            aria-label={`View ${product.name} details`}
+          >
+            <ProductImage
+              src={product.image}
+              name={product.name}
+            />
+          </Link>
 
           {product.badge && (
             <span
@@ -218,9 +245,11 @@ export function ProductCard({ product }) {
               className={`dummy-product__icon-btn ${
                 wishlisted ? 'is-active' : ''
               }`}
-              onClick={() => setWishlisted(!wishlisted)}
+              onClick={() => setWishlisted((value) => !value)}
               aria-label={
-                wishlisted ? 'Remove from wishlist' : 'Add to wishlist'
+                wishlisted
+                  ? 'Remove from wishlist'
+                  : 'Add to wishlist'
               }
               aria-pressed={wishlisted}
             >
@@ -250,7 +279,9 @@ export function ProductCard({ product }) {
           </span>
 
           <h3 className="dummy-product__name">
-            {product.name}
+            <Link href={detailHref}>
+              {product.name}
+            </Link>
           </h3>
 
           <div className="dummy-product__bottom">
@@ -316,7 +347,10 @@ export function ProductCard({ product }) {
               ×
             </button>
 
-            <ProductImage src={product.image} name={product.name} />
+            <ProductImage
+              src={product.image}
+              name={product.name}
+            />
 
             <div className="dummy-product__modal-info">
               <span className="dummy-product__category">
@@ -338,9 +372,17 @@ export function ProductCard({ product }) {
               </div>
 
               <p>
-                Thoughtfully designed for gifting, celebrations and
-                special moments.
+                {product.description ||
+                  'Thoughtfully designed for gifting, celebrations and special moments.'}
               </p>
+
+              <Link
+                href={detailHref}
+                className="dummy-product__view-detail"
+                onClick={() => setQuickView(false)}
+              >
+                View Product Details →
+              </Link>
 
               <button
                 type="button"
@@ -364,12 +406,10 @@ export function ProductCard({ product }) {
 
 export default function DummyProductCard() {
   return (
-    
-        <div className="dummy-products-grid">
-          {DUMMY_PRODUCTS.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-     
+    <div className="dummy-products-grid">
+      {DUMMY_PRODUCTS.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </div>
   );
 }

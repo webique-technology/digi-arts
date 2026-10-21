@@ -35,22 +35,20 @@ export default function ShopByCategory() {
 
   return (
     <section className="shop-category">
-      <div className="shop-category__container">
-        <div className="shop-category__header">
-          <div>
+      <div className="container">
+        <div className="shop-category__header row">
             <h2 className="shop-category__title">
               Shop by <span>Category</span>
             </h2>
-          </div>
 
-          <div className="shop-category__navigation">
+          {/* <div className="shop-category__navigation">
             <button type="button" onClick={() => scrollSlider(-1)} aria-label="Previous categories">
               &#8592;
             </button>
             <button type="button" onClick={() => scrollSlider(1)} aria-label="Next categories">
               &#8594;
             </button>
-          </div>
+          </div> */}
         </div>
 
         <div className="shop-category__slider" ref={sliderRef}>

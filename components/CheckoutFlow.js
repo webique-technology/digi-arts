@@ -11,7 +11,7 @@ import { ArrowLeft, BagIcon, ChevronDown, ChevronUp, TagIcon, TrashIcon, TruckIc
 
 const STATES = ['Andhra Pradesh', 'Assam', 'Bihar', 'Chandigarh', 'Chhattisgarh', 'Delhi', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Odisha', 'Punjab', 'Rajasthan', 'Tamil Nadu', 'Telangana', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Other'];
 const STEPS = ['Contact', 'Address', 'Payment'];
-const SAVED = 'damani_customer';
+const SAVED = 'Digi Art’s Store_customer';
 const EMPTY = { customer_name: '', phone: '', email: '', address: '', city: '', state: 'Rajasthan', pincode: '', notes: '' };
 const ADDRESS_KEYS = ['customer_name', 'email', 'address', 'city', 'state', 'pincode'];
 
@@ -22,7 +22,7 @@ function Shell({ total, back, children }) {
       <div className="co__card">
         <header className="co__head">
           {back}
-          <Link href="/" className="co__logo" aria-label="Damani home"><Logo /></Link>
+          <Link href="/" className="co__logo" aria-label="Digi Art’s Store home"><Logo /></Link>
           <strong className="co__total">{total != null ? rupee(total) : ''}</strong>
         </header>
         {children}
@@ -120,7 +120,7 @@ export default function CheckoutFlow() {
       }
       try {
         localStorage.setItem(SAVED, JSON.stringify({ customer_name: f.customer_name, phone: onlyDigits(f.phone).slice(-10), email: f.email, address: f.address, city: f.city, state: f.state, pincode: f.pincode }));
-        sessionStorage.setItem('damani_last_order', JSON.stringify({ ...json.data, name: f.customer_name, phone: onlyDigits(f.phone).slice(-10) }));
+        sessionStorage.setItem('Digi Art’s Store_last_order', JSON.stringify({ ...json.data, name: f.customer_name, phone: onlyDigits(f.phone).slice(-10) }));
       } catch {}
       clear();
       router.push('/order-success');

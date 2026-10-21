@@ -10,7 +10,7 @@ import { SITE_INFO } from '@/data/site';
 export default function SiteLayout({ children }) {
   return (
     <CartProvider>
-      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'Damani', url: SITE }} />
+      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'Organization', name: 'Digi Art’s Store', url: SITE }} />
       <div className="announcement">{SITE_INFO.announcement}</div>
       <Header />
       <main>{children}</main>

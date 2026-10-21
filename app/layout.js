@@ -7,9 +7,9 @@ const heading = Nunito({ subsets: ['latin'], variable: '--font-heading', display
 
 export const metadata = {
   metadataBase: new URL(SITE),
-  title: { default: 'Damani | Handcrafted gifting, décor & stationery', template: '%s | Damani' },
+  title: { default: 'Digi Art’s Store | Handcrafted gifting, décor & stationery', template: '%s | Digi Art’s Store' },
   description: 'Handcrafted gift bags, boxes, décor and stationery, made with love in Jaipur.',
-  openGraph: { siteName: 'Damani', type: 'website' },
+  openGraph: { siteName: 'Digi Art’s Store', type: 'website' },
   twitter: { card: 'summary_large_image' },
 };
 

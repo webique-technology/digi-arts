@@ -1,4 +1,4 @@
-# Damani API reference
+# Digi Art’s Store API reference
 
 All responses: `{ "success": bool, "data": ..., "message": "", "meta": {} }`.
 Errors use HTTP 4xx/5xx with `success:false`; validation errors are **422** with `data:{field:"message"}`.

@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
   if (result.status === 404) return { title: 'Product not found', robots: { index: false } };
   if (!p) return { title: 'Product temporarily unavailable', robots: { index: false } };
   const title = p.meta_title || p.title;
-  const description = p.meta_description || truncate(stripHtml(p.description)) || `Buy ${p.title} at Damani`;
+  const description = p.meta_description || truncate(stripHtml(p.description)) || `Buy ${p.title} at Digi Art’s Store`;
   const img = p.images?.[0];
   return {
     title, description,

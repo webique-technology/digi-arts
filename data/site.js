@@ -1,6 +1,6 @@
 // Static site content. Replace image: null with a path in /public/images/... (e.g. '/images/tile-decor.jpg')
 export const SITE_INFO = {
-  name: 'Damani',
+  name: 'Digi Art’s Store',
   announcement: 'Free shipping on orders above Rs 999',
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_URL || '',
   instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || '',
@@ -65,7 +65,7 @@ export const HOME = {
     { label: 'Shaped boxes', href: cat('shaped-boxes'), image: '/images/col-boxes.jpg', tone: 'linear-gradient(160deg,#b24a2a,#e7a45a)' },
   ],
   story: { eyebrow: 'Our story', title: 'Made with love, by hand',
-    text: ['Damani creates thoughtfully crafted gift bags, boxes, décor and stationery for every celebration. Each piece is designed with care and made to be kept, reused and loved.',
+    text: ['Digi Art’s Store creates thoughtfully crafted gift bags, boxes, décor and stationery for every celebration. Each piece is designed with care and made to be kept, reused and loved.',
       'Based in Jaipur, we bring together thoughtful details, color and craftsmanship to make gifting feel personal. From a small gesture to a larger celebration, our collections are made to help you share the moment.'],
     href: '/about', image: '/images/story.jpg', tone: 'linear-gradient(160deg,#c9a77a,#6b4a2b)' },
   clients: [],

@@ -5,7 +5,7 @@ import { formatPrice } from '@/lib/utils';
 
 export default function OrderSuccess() {
   const [o, setO] = useState(undefined);
-  useEffect(() => { window.scrollTo(0, 0); try { setO(JSON.parse(sessionStorage.getItem('damani_last_order') || 'null')); } catch { setO(null); } }, []);
+  useEffect(() => { window.scrollTo(0, 0); try { setO(JSON.parse(sessionStorage.getItem('Digi Art’s Store_last_order') || 'null')); } catch { setO(null); } }, []);
   if (o === undefined) return null;
   return (
     <div className="success">

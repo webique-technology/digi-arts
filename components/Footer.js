@@ -29,7 +29,7 @@ export default function Footer() {
 <div className="footer__grid">
   {/* Grid 1: Brand */}
   <div className="footer__brand">
-    <Link href="/" className="footer__logo" aria-label="Damani home">
+    <Link href="/" className="footer__logo" aria-label="Digi Art’s Store home">
       <Logo />
     </Link>
 
@@ -75,7 +75,8 @@ export default function Footer() {
       </span>
       <div>
         <span className="footer__contact-label">Our Address</span>
-        <p>YOUR BUSINESS ADDRESS</p>
+        <p>Nashik (Panchavati) <br />Pin-42203 Maharashtra India
+</p>
       </div>
     </div>
 
@@ -85,7 +86,7 @@ export default function Footer() {
       </span>
       <div>
         <span className="footer__contact-label">Call Us</span>
-        <a href="tel:+91XXXXXXXXXX">+91 XXXXXXXXXX</a>
+        <a href="tel:+91982831883">+91 982831883</a>
       </div>
     </div>
 
@@ -95,8 +96,8 @@ export default function Footer() {
       </span>
       <div>
         <span className="footer__contact-label">Email Us</span>
-        <a href="mailto:YOUR_EMAIL@example.com">
-          YOUR_EMAIL@example.com
+        <a href="mailto:digiartsstore@gmail.com">
+          digiartsstore@gmail.com
         </a>
       </div>
     </div>
@@ -107,7 +108,7 @@ export default function Footer() {
        target="_blank" rel="noopener noreferrer">
       <FacebookIcon />
     </a>
-    <a href="YOUR_INSTAGRAM_URL" aria-label="Instagram"
+    <a href="https://www.instagram.com/digi_arts11?xtok=MWY0aHRvbWt5cndzOQ==" aria-label="Instagram"
        target="_blank" rel="noopener noreferrer">
       <InstagramIcon />
     </a>

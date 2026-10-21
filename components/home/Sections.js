@@ -132,7 +132,7 @@ export function CustomOrders() {
         <div className="custom-studio__heading">
           <span className="custom-studio__eyebrow">
             <span className="custom-studio__eyebrow-dot" />
-            THE DAMANI CUSTOM STUDIO
+            THE Digi Art’s Store CUSTOM STUDIO
           </span>
 
           <h2>
@@ -441,23 +441,23 @@ export function Story() {
 }
 
 
-export function Clients() {
-  if (!HOME.clients.length) return null;
+// export function Clients() {
+//   if (!HOME.clients.length) return null;
 
-  return (
-    <section className="clients">
-      <div className="container">
-        <small>Our clients</small>
+//   return (
+//     <section className="clients">
+//       <div className="container">
+//         <small>Our clients</small>
 
-        <div className="clients__row">
-          {HOME.clients.map((c) => (
-            <span key={c}>{c}</span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+//         <div className="clients__row">
+//           {HOME.clients.map((c) => (
+//             <span key={c}>{c}</span>
+//           ))}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
 export function Features() {
   const features = [
@@ -507,7 +507,7 @@ export function Features() {
           </p>
 
           <span className="features__signature">
-            THE DAMANI EXPERIENCE
+            THE Digi Art’s Store EXPERIENCE
           </span>
 
           <span className="features__watermark" aria-hidden="true">

@@ -1,7 +1,7 @@
 import ContactForm from '@/components/ContactForm';
 import Link from 'next/link';
 import { TEST_IDS } from '@/components/testIds';
-export const metadata = { title: 'Contact Us', description: 'Get in touch with the Damani team for orders, custom gifting and bulk enquiries.', alternates: { canonical: '/contact' } };
+export const metadata = { title: 'Contact Us', description: 'Get in touch with the Digi Art’s Store team for orders, custom gifting and bulk enquiries.', alternates: { canonical: '/contact' } };
 
 export default function Contact() {
   return (

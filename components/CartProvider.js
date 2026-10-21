@@ -4,7 +4,7 @@ import { finalPrice, quantityLineTotal } from '@/lib/utils';
 
 const Ctx = createContext(null);
 export const useCart = () => useContext(Ctx);
-const KEY = 'damani_cart';
+const KEY = 'Digi Art’s Store_cart';
 const save = (items) => { try { localStorage.setItem(KEY, JSON.stringify(items)); } catch {} };
 const keyOf = (item) => item.key || `live:${item.id}`;
 const matches = (item, target) => typeof target === 'object'

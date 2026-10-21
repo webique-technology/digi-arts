@@ -70,7 +70,7 @@
 
 ## Design Tokens and Pricing
 
-Existing Damani colors and typography tokens are retained. Blue selection and selected-state colors for the bulk-price rows were added to `styles/_variables.scss`.
+Existing Digi Art’s Store colors and typography tokens are retained. Blue selection and selected-state colors for the bulk-price rows were added to `styles/_variables.scss`.
 
 | Quantity per product | Discount |
 |---:|---:|

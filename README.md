@@ -1,4 +1,4 @@
-# Damani Frontend (Next.js 14, JavaScript, SCSS)
+# Digi Art’s Store Frontend (Next.js 14, JavaScript, SCSS)
 
 ## Run (backend must be running, see ../backend/README.md)
     cp .env.example .env.local      # BACKEND_URL=http://127.0.0.1:8000

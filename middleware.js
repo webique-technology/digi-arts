@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 export function middleware(req) {
   const { pathname } = req.nextUrl;
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    if (!req.cookies.get('damani_admin')) {
+    if (!req.cookies.get('Digi Art’s Store_admin')) {
       const url = req.nextUrl.clone();
       url.pathname = '/admin/login';
       return NextResponse.redirect(url);

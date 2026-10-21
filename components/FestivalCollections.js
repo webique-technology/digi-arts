@@ -33,7 +33,7 @@ export default function FestivalCollections() {
 
   return (
     <section className="festival-collections">
-      <div className="festival-collections__container">
+      <div className="container">
         <div className="festival-collections__grid">
           <Link
             href={featured.href}

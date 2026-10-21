@@ -16,7 +16,7 @@ export function generateMetadata({ searchParams }) {
   const filtered = ['category', 'min', 'max', 'sort', 'q', 'in_stock'].some((k) => searchParams[k]);
   return {
     title: searchParams.category ? titleCase(searchParams.category) : 'Shop All',
-    description: 'Browse the full Damani collection. Filter by category, price and more.',
+    description: 'Browse the full Digi Art’s Store collection. Filter by category, price and more.',
     alternates: { canonical: '/products' },
     robots: filtered ? { index: false, follow: true } : undefined,
   };

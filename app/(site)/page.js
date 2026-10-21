@@ -11,11 +11,11 @@ import {
   SplitBanner,
   CollectionCards,
   Story,
-  Clients,
   Features,
 } from '@/components/home/Sections';
 import { getPublic } from '@/lib/api';
 import { HERO_FALLBACK } from '@/data/site';
+import Testimonials from '@/components/Testimonials';
 
 export const revalidate = 15;
 export const metadata = { alternates: { canonical: '/' } };
@@ -61,7 +61,7 @@ export default async function Home() {
       {/* <SplitBanner /> */}
       {/* <CollectionCards /> */}
       {/* <Story /> */}
-      <Clients />
+      <Testimonials />
       <Features />
     </>
   );

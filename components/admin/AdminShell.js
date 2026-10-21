@@ -50,7 +50,7 @@ export default function AdminShell({ children }) {
     <div className="shell">
       {open && <button className="shell__overlay" type="button" onClick={() => setOpen(false)} aria-label="Close admin navigation" data-testid={TEST_IDS.adminMenuBackdrop} />}
       <aside className={`shell__side ${open ? 'is-open' : ''}`}>
-        <div className="shell__brand"><span>Damani</span><button className="shell__close" type="button" onClick={() => setOpen(false)} aria-label="Close menu" data-testid={TEST_IDS.adminMenuClose}><CloseIcon /></button></div>
+        <div className="shell__brand"><span>Digi Art’s Store</span><button className="shell__close" type="button" onClick={() => setOpen(false)} aria-label="Close menu" data-testid={TEST_IDS.adminMenuClose}><CloseIcon /></button></div>
         <p className="shell__caption">Store administration</p>
         <nav id="admin-navigation" className="shell__nav" aria-label="Admin" data-testid={TEST_IDS.adminNavigation}>
           {NAV.map((n) => (
