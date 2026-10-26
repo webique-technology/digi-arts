@@ -70,10 +70,10 @@ export default function ContactPage() {
                   <div className="d-flex align-items-center gap-3">
                     <HiOutlinePhone className="contact-store-info__icon text-danger flex-shrink-0 fs-5" />
                     <a
-                      href="tel:+919876543210"
+                      href="tel:+91982831883"
                       className="text-decoration-none text-secondary small"
                     >
-                      +91 98765 43210
+                      +91 9828 31883
                     </a>
                   </div>
 
@@ -114,7 +114,7 @@ export default function ContactPage() {
                       <FaFacebookF />
                     </a>
                     <a
-                      href="https://instagram.com/digi_arts11"
+                      href="instagram.com/digi_arts11?xtok=MWY0aHRvbWt5cndzOQ=="
                       target="_blank"
                       rel="noopener noreferrer"
                       className="contact-social-btn contact-social-btn--ig"

@@ -78,7 +78,7 @@ export default function Footer() {
                   <FaFacebookF />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="instagram.com/digi_arts11?xtok=MWY0aHRvbWt5cndzOQ=="
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -167,18 +167,18 @@ export default function Footer() {
 
               <div className="da-footer__direct-contact d-flex flex-column gap-2 pt-1">
                 <a
-                  href="mailto:hello@digiarts.in"
+                  href="mailto:digiartsstore@gmail.com"
                   className="da-footer__contact-item d-flex align-items-center gap-2"
                 >
                   <HiOutlineMail className="da-footer__contact-icon" />
-                  <span>hello@digiarts.in</span>
+                  <span>digiartsstore@gmail.com</span>
                 </a>
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+91982831883"
                   className="da-footer__contact-item d-flex align-items-center gap-2"
                 >
                   <HiOutlinePhone className="da-footer__contact-icon" />
-                  <span>+91 98765 43210</span>
+                  <span>+91 9828 31883</span>
                 </a>
               </div>
             </Col>
