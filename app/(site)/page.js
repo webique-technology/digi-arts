@@ -14,7 +14,9 @@ import {
 } from "@/components/home/Sections";
 import { getPublic } from "@/lib/api";
 import { HERO_FALLBACK } from "@/data/site";
+import { PRODUCTS_DATA } from "@/data/productData";
 import Testimonials from "@/components/Testimonials";
+import TrustStrip from "@/components/TrustStrip";
 
 export const revalidate = 15;
 export const metadata = { alternates: { canonical: "/" } };
@@ -53,7 +55,7 @@ export default async function Home() {
       <FeaturedProducts products={products} />
       <CollectionTiles />
 
-      <BestSellers products={smallBagsProducts} />
+      <BestSellers products={PRODUCTS_DATA} />
 
       {/* <CustomOrders /> */}
       <InstagramRow />
@@ -61,7 +63,8 @@ export default async function Home() {
       {/* <CollectionCards /> */}
       {/* <Story /> */}
       <Testimonials />
-      <Features />
+      <TrustStrip />
+      {/* <Features /> */}
     </>
   );
 }

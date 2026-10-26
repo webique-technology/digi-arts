@@ -3,9 +3,10 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Visual from "@/components/Visual";
-import ProductCard from "@/components/DummyProductCard";
+import { ProductCard } from "@/components/DummyProductCard";
 import Carousel from "@/components/Carousel";
 import { HOME, SITE_INFO, instagram } from "@/data/site";
+import { PRODUCTS_DATA } from "@/data/productData";
 import { TEST_IDS } from "@/components/testIds";
 import { SparklesIcon, GiftIcon, QualityIcon } from "@/components/Icons";
 
@@ -18,7 +19,7 @@ const Title = ({ children, sub, bold }) => (
 
 export function CollectionTiles() {
   return (
-    <section className="container collections-section">
+    <section className="container collections-section py-5">
       <div className="best-sellers__header">
         <h2 className="shop-category__title fp-heading">
           Discover Our <span>Collections</span>
@@ -44,9 +45,7 @@ export function CollectionTiles() {
                 alt={t.label}
                 tone={t.tone}
               />
-
               <div className="tile__overlay" />
-
               <div className="tile__text">
                 <h3>{t.label}</h3>
               </div>
@@ -58,7 +57,7 @@ export function CollectionTiles() {
   );
 }
 
-export function BestSellers({ products = [] }) {
+export function BestSellers({ products = PRODUCTS_DATA }) {
   const sliderRef = useRef(null);
 
   const scrollProducts = (direction) => {
@@ -67,6 +66,8 @@ export function BestSellers({ products = [] }) {
       behavior: "smooth",
     });
   };
+
+  const productList = products?.length ? products : PRODUCTS_DATA;
 
   return (
     <section className="best-sellers">
@@ -84,20 +85,13 @@ export function BestSellers({ products = [] }) {
             </Link>
           </div>
         </div>
-        <ProductCard />
-        {/* {products.length > 0 ? (
-          <div className="best-sellers__slider" ref={sliderRef}>
-            {products.map((product) => (
-              <div className="best-sellers__slide" key={product.id}>
-                <ProductCard product={product} />
-              </div>
-            ))}
-          </div>
-        ) : ( 
-          <p className="best-sellers__empty">
-            Best sellers will appear here once products are available.
-          </p>
-        )}*/}
+
+        {/* Mapped grid rendering each individual ProductCard */}
+        <div className="dummy-products-grid" ref={sliderRef}>
+          {productList.map((item) => (
+            <ProductCard key={item.id} product={item} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -391,24 +385,6 @@ export function Story() {
     </section>
   );
 }
-
-// export function Clients() {
-//   if (!HOME.clients.length) return null;
-
-//   return (
-//     <section className="clients">
-//       <div className="container">
-//         <small>Our clients</small>
-
-//         <div className="clients__row">
-//           {HOME.clients.map((c) => (
-//             <span key={c}>{c}</span>
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
 
 export function Features() {
   const features = [

@@ -84,30 +84,6 @@ export const POLICIES = [
   { label: "Contact information", href: "/contact" },
 ];
 
-export const HERO_FALLBACK = [
-  {
-    id: "f1",
-    title: "Thoughtful gifts, made by hand",
-    subtitle: "Make every celebration feel a little more special.",
-    link_url: "/products",
-    image_desktop: "/images/digi-art-slider-1.webp",
-  },
-  {
-    id: "f2",
-    title: "Gifts that make an impression",
-    subtitle: "Discover keepsake boxes and beautifully wrapped moments.",
-    link_url: "/products?category=gift-sets",
-    image_desktop: "/images/split.jpg",
-  },
-  {
-    id: "f3",
-    title: "A little something, made with love",
-    subtitle: "Shop handcrafted bags, décor and stationery.",
-    link_url: "/products",
-    image_desktop: "/images/tile-decor.jpg",
-  },
-];
-
 export const HOME = {
   tiles: [
     {
@@ -289,3 +265,5 @@ export const instagram = [
     alt: "Decorative wall hanging",
   },
 ];
+
+

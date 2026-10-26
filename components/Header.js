@@ -14,6 +14,7 @@ import {
   MenuIcon,
 } from "./Icons";
 import { TEST_IDS } from "./testIds";
+import { Col, Row } from "react-bootstrap";
 
 export default function Header() {
   const router = useRouter();
@@ -93,14 +94,6 @@ export default function Header() {
           ],
         },
         {
-          label: "Independence Day",
-          href: "/products?category=independence-day",
-        },
-        {
-          label: "Christmas Day",
-          href: "/products?category=christmas-day",
-        },
-        {
           label: "Packaging Box",
           href: "/products?category=packaging-box",
           children: [
@@ -110,6 +103,14 @@ export default function Header() {
             { label: "Candle Box", href: "/products?category=candle-box" },
             { label: "Premium Box", href: "/products?category=premium-box" },
           ],
+        },
+        {
+          label: "Independence Day",
+          href: "/products?category=independence-day",
+        },
+        {
+          label: "Christmas Day",
+          href: "/products?category=christmas-day",
         },
         {
           label: "Wax Candle",
@@ -189,22 +190,24 @@ export default function Header() {
               </Link>
 
               {n.children && (
-                <ul className="nav__sub">
-                  {n.children.map((c) => (
-                    <li key={c.label}>
+                <div className="nav__sub">
+                  <Row className="justify-content-around">
+                  {n.children.slice(0, 4).map((c) => (
+                    <Col lg={2} key={c.label}>
                       <Link
                         href={c.href}
                         data-testid={TEST_IDS.headerNavigation(
                           "desktop",
                           c.href,
                         )}
+                        className="nav-link-main"
                       >
                         {c.label}
                         {c.children && <ChevronDown />}
                       </Link>
 
                       {c.children && (
-                        <ul className="nav__sub nav__sub--nested">
+                        <ul className="nav__sub--nested p-0">
                           {c.children.map((sub) => (
                             <li key={sub.label}>
                               <Link
@@ -213,6 +216,7 @@ export default function Header() {
                                   "desktop",
                                   sub.href,
                                 )}
+                                className="fw-normal"
                               >
                                 {sub.label}
                               </Link>
@@ -220,9 +224,27 @@ export default function Header() {
                           ))}
                         </ul>
                       )}
-                    </li>
+                    </Col>
                   ))}
-                </ul>
+                  <Col lg={2}>
+                    {n.children.slice(4).map((c) => (
+                      <div key={c.label}>
+                        <Link
+                          href={c.href}
+                          data-testid={TEST_IDS.headerNavigation(
+                            "desktop",
+                            c.href,
+                          )}
+                          className="nav-link-main"
+                        >
+                          {c.label}
+                          {c.children && <ChevronDown />}
+                        </Link>
+                      </div>
+                    ))}
+                  </Col>
+                </Row>
+                </div>
               )}
             </li>
           ))}

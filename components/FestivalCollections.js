@@ -32,7 +32,7 @@ export default function FestivalCollections() {
   const secondary = festivals.slice(1);
 
   return (
-    <section className="festival-collections">
+    <section className="festival-collections py-5">
       <div className="container">
         <div className="festival-collections__grid">
           <Link

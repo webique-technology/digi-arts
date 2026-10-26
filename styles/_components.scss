@@ -87,7 +87,7 @@
 // Announcement + header
 .announcement {
   background: v.$color-primary;
-  color: v.$color-text;
+  color: v.$color-primary-light;
   text-align: center;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
@@ -214,13 +214,13 @@
   justify-content: center;
   width: 100%;
   gap: 1.6rem;
+  position: relative;
 
   @include m.down(v.$bp-lg) {
     display: none;
   }
 
   >li {
-    position: relative;
     padding: 1.8rem 0;
   }
 
@@ -244,23 +244,29 @@
   &__sub {
     position: absolute;
     top: 100%;
-    left: -1rem;
-    min-width: 230px;
-    background: v.$color-primary;
+    left: 48%;
+    transform: translateX(-50%);
+    min-width: 1080px;
+    background: v.$color-primary-light;
     border: 1px solid v.$color-border;
     box-shadow: v.$shadow;
+    border-radius: 8px;
     padding: 0.6rem 0;
-    display: none;
+    // display: none;
     z-index: 10;
 
+    .nav-link-main {
+      color: v.$color-primary !important;
+    }
+
     a {
-      text-transform: none;
+      // text-transform: none;
       padding: 0.5rem 1.2rem;
       font-size: 0.95rem;
 
       &:hover {
-        background: v.$color-primary-dark;
-        color: #fff;
+        // background: v.$color-primary-dark;
+        color: v.$color-primary;
       }
     }
   }
@@ -270,7 +276,6 @@
 .nav>li:focus-within>.nav__sub {
   display: block;
 }
-
 
 
 /* Nested dropdown: Desktop */
@@ -289,14 +294,14 @@
 }
 
 .nav__sub>li>.nav__sub--nested {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  min-width: 230px;
-  display: none;
-  background: v.$color-primary;
-  border: 1px solid v.$color-border;
-  box-shadow: v.$shadow;
+  // position: absolute;
+  // top: 0;
+  // left: 100%;
+  // min-width: 230px;
+  // display: none;
+  background: v.$color-primary-beige;
+  // border: 1px solid v.$color-border;
+  // box-shadow: v.$shadow;
   z-index: 20;
 }
 
@@ -992,6 +997,8 @@
   }
 }
 
+// Footer //
+
 .news {
   width: min(100%, 460px);
 
@@ -1079,6 +1086,7 @@
 
 
 
+// featured products
 .featured-products {
 
   position: relative;
@@ -1087,7 +1095,6 @@
   padding: v.$space-6 0 v.$space-5;
   background: #f6f6f6;
   color: v.$color-text;
-  margin: 80px 0;
 
   .fp-container {
     position: relative;
@@ -1255,6 +1262,68 @@
     &:hover {
       background: transparent;
       color: v.$color-primary-dark;
+    }
+  }
+}
+
+.featured-products {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 50px 0;
+  background: #f6f6f6;
+
+  .fp-container {
+    position: relative;
+    z-index: 1;
+    max-width: v.$container;
+  }
+
+  // Background circle decorations
+  .fp-decoration {
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    border: 1px solid rgba(v.$color-primary-dark, 0.12);
+    border-radius: 50%;
+  }
+
+  .fp-decoration-one {
+    top: -170px;
+    right: -100px;
+    width: 370px;
+    height: 370px;
+  }
+
+  .fp-decoration-two {
+    bottom: -130px;
+    left: -100px;
+    width: 270px;
+    height: 270px;
+  }
+
+  .fp-heading {
+    color: #111;
+    font-weight: 700;
+
+    span {
+      color: v.$color-primary-dark;
+    }
+  }
+
+  // Swiper Slider Styles
+  .fp-swiper-wrapper {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .fp-swiper {
+    padding: 10px 4px 20px !important;
+    overflow: visible;
+
+    .swiper-slide {
+      display: flex;
+      height: auto;
     }
   }
 }
@@ -1742,10 +1811,11 @@
     padding: 55px 20px;
     text-align: center;
     border-radius: 12px;
-    background:
-      radial-gradient(circle at 10% 20%, #ffffffb3 0 2px, transparent 3px),
-      radial-gradient(circle at 90% 80%, #ffffff80 0 3px, transparent 4px),
-      linear-gradient(120deg, #fce7f3 0%, #f3e8ff 55%, #fdf2f8 100%);
+    // background:
+    //   radial-gradient(circle at 10% 20%, #ffffffb3 0 2px, transparent 3px),
+    //   radial-gradient(circle at 90% 80%, #ffffff80 0 3px, transparent 4px),
+    //   linear-gradient(120deg, #fce7f3 0%, #f3e8ff 55%, #fdf2f8 100%);
+    background: v.$color-light-red;
 
     &::before,
     &::after {
@@ -2610,7 +2680,7 @@
     transition: transform 0.25s ease, opacity 0.25s ease;
   }
 
-  .btn-link{
+  .btn-link {
     background-color: none !important;
     background: transparent !important;
   }

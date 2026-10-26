@@ -1,113 +1,14 @@
+"use client";
 
-'use client';
-
-import { useState } from 'react';
-import Link from 'next/link';
-
-const DUMMY_PRODUCTS = [
-  {
-    id: 1,
-    name: 'Elegant Paper Gift Bag',
-    category: 'Gift Packaging',
-    price: 149,
-    originalPrice: 199,
-    image: '/images/insta-1.jpg',
-    images: ['/images/insta-1.jpg', '/images/insta-2.jpg'],
-    badge: 'Bestseller',
-    stock: 12,
-    unit: 'Piece',
-    description:
-      'An elegant paper gift bag for festive gifting, celebrations and special occasions.',
-    specifications: [
-      { label: 'Category', value: 'Gift Packaging' },
-      { label: 'Unit', value: 'Piece' },
-      { label: 'Material', value: 'Paper' },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Premium Celebration Gift Box',
-    category: 'Gift Boxes',
-    price: 299,
-    originalPrice: 399,
-    image: '/images/insta-2.jpg',
-    images: ['/images/insta-2.jpg', '/images/insta-3.jpg'],
-    badge: 'Popular',
-    stock: 8,
-    unit: 'Piece',
-    description:
-      'A premium gift box suitable for celebrations, gifting and special occasions.',
-    specifications: [
-      { label: 'Category', value: 'Gift Boxes' },
-      { label: 'Unit', value: 'Piece' },
-      { label: 'Material', value: 'Paperboard' },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Festive Paper Decoration Set',
-    category: 'Festival Decor',
-    price: 249,
-    originalPrice: 0,
-    image: '/images/insta-3.jpg',
-    images: ['/images/insta-3.jpg', '/images/insta-4.jpg'],
-    badge: 'New',
-    stock: 15,
-    unit: 'Set',
-    description:
-      'Decorative paper products to add a festive touch to your home and celebrations.',
-    specifications: [
-      { label: 'Category', value: 'Festival Decor' },
-      { label: 'Unit', value: 'Set' },
-      { label: 'Usage', value: 'Festival Decoration' },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Handcrafted Wall Hanging',
-    category: 'Home Decor',
-    price: 199,
-    originalPrice: 279,
-    image: '/images/insta-4.jpg',
-    images: ['/images/insta-4.jpg', '/images/insta-5.jpg'],
-    badge: '',
-    stock: 0,
-    unit: 'Piece',
-    description:
-      'A decorative wall hanging designed to enhance your home decor.',
-    specifications: [
-      { label: 'Category', value: 'Home Decor' },
-      { label: 'Unit', value: 'Piece' },
-      { label: 'Usage', value: 'Home Decoration' },
-    ],
-  },
-  {
-    id: 5,
-    name: 'Decorative Paper Lanterns',
-    category: 'Festival Decor',
-    price: 199,
-    originalPrice: 249,
-    image: '/images/insta-5.jpg',
-    images: ['/images/insta-5.jpg', '/images/insta-1.jpg'],
-    badge: 'New',
-    stock: 10,
-    unit: 'Piece',
-    description:
-      'Decorative paper lanterns for festive arrangements and special occasions.',
-    specifications: [
-      { label: 'Category', value: 'Festival Decor' },
-      { label: 'Unit', value: 'Piece' },
-      { label: 'Material', value: 'Paper' },
-    ],
-  },
-];
+import { useState } from "react";
+import Link from "next/link";
 
 function HeartIcon({ filled = false }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path
         d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"
-        fill={filled ? 'currentColor' : 'none'}
+        fill={filled ? "currentColor" : "none"}
         stroke="currentColor"
         strokeWidth="1.6"
         strokeLinecap="round"
@@ -183,6 +84,14 @@ export function ProductCard({ product }) {
   const [added, setAdded] = useState(false);
   const [quickView, setQuickView] = useState(false);
 
+  // Guard against missing or malformed data
+  if (!product || typeof product !== "object" || Array.isArray(product)) {
+    return null;
+  }
+
+  const price = Number(product.price) || 0;
+  const originalPrice = Number(product.originalPrice) || 0;
+
   const inStock =
     product.stock !== null &&
     product.stock !== undefined &&
@@ -191,18 +100,12 @@ export function ProductCard({ product }) {
   const detailHref = `/products/${product.id}`;
 
   const discount =
-    product.originalPrice > product.price
-      ? Math.round(
-          ((product.originalPrice - product.price) /
-            product.originalPrice) *
-            100
-        )
+    originalPrice > price
+      ? Math.round(((originalPrice - price) / originalPrice) * 100)
       : 0;
 
   const handleAddToCart = () => {
     if (!inStock) return;
-
-    // Demo only. Real cart integration can be added later.
     setAdded(true);
   };
 
@@ -215,18 +118,15 @@ export function ProductCard({ product }) {
             className="dummy-product__detail-link"
             aria-label={`View ${product.name} details`}
           >
-            <ProductImage
-              src={product.image}
-              name={product.name}
-            />
+            <ProductImage src={product.image} name={product.name} />
           </Link>
 
           {product.badge && (
             <span
               className={`dummy-product__badge ${
-                product.badge.toLowerCase() === 'new'
-                  ? 'dummy-product__badge--new'
-                  : ''
+                product.badge.toLowerCase() === "new"
+                  ? "dummy-product__badge--new"
+                  : ""
               }`}
             >
               {product.badge}
@@ -234,22 +134,18 @@ export function ProductCard({ product }) {
           )}
 
           {discount > 0 && (
-            <span className="dummy-product__discount">
-              -{discount}%
-            </span>
+            <span className="dummy-product__discount">-{discount}%</span>
           )}
 
           <div className="dummy-product__quick-actions">
             <button
               type="button"
               className={`dummy-product__icon-btn ${
-                wishlisted ? 'is-active' : ''
+                wishlisted ? "is-active" : ""
               }`}
               onClick={() => setWishlisted((value) => !value)}
               aria-label={
-                wishlisted
-                  ? 'Remove from wishlist'
-                  : 'Add to wishlist'
+                wishlisted ? "Remove from wishlist" : "Add to wishlist"
               }
               aria-pressed={wishlisted}
             >
@@ -274,42 +170,36 @@ export function ProductCard({ product }) {
         </div>
 
         <div className="dummy-product__details">
-          <span className="dummy-product__category">
-            {product.category}
-          </span>
+          <span className="dummy-product__category">{product.category}</span>
 
           <h3 className="dummy-product__name">
-            <Link href={detailHref}>
-              {product.name}
-            </Link>
+            <Link href={detailHref}>{product.name}</Link>
           </h3>
 
           <div className="dummy-product__bottom">
             <div className="dummy-product__pricing">
               <span className="dummy-product__price">
-                ₹{product.price.toLocaleString('en-IN')}
+                ₹{price.toLocaleString("en-IN")}
               </span>
 
               {discount > 0 && (
                 <del className="dummy-product__original-price">
-                  ₹{product.originalPrice.toLocaleString('en-IN')}
+                  ₹{originalPrice.toLocaleString("en-IN")}
                 </del>
               )}
             </div>
 
             <button
               type="button"
-              className={`dummy-product__cart-btn ${
-                added ? 'is-added' : ''
-              }`}
+              className={`dummy-product__cart-btn ${added ? "is-added" : ""}`}
               onClick={handleAddToCart}
               disabled={!inStock}
               aria-label={
                 !inStock
-                  ? 'Out of stock'
+                  ? "Out of stock"
                   : added
-                    ? 'Added to demo cart'
-                    : 'Add to cart'
+                    ? "Added to demo cart"
+                    : "Add to cart"
               }
             >
               {inStock ? (
@@ -347,10 +237,7 @@ export function ProductCard({ product }) {
               ×
             </button>
 
-            <ProductImage
-              src={product.image}
-              name={product.name}
-            />
+            <ProductImage src={product.image} name={product.name} />
 
             <div className="dummy-product__modal-info">
               <span className="dummy-product__category">
@@ -361,19 +248,19 @@ export function ProductCard({ product }) {
 
               <div className="dummy-product__pricing">
                 <strong className="dummy-product__price">
-                  ₹{product.price.toLocaleString('en-IN')}
+                  ₹{price.toLocaleString("en-IN")}
                 </strong>
 
                 {discount > 0 && (
                   <del className="dummy-product__original-price">
-                    ₹{product.originalPrice.toLocaleString('en-IN')}
+                    ₹{originalPrice.toLocaleString("en-IN")}
                   </del>
                 )}
               </div>
 
               <p>
                 {product.description ||
-                  'Thoughtfully designed for gifting, celebrations and special moments.'}
+                  "Thoughtfully designed for gifting, celebrations and special moments."}
               </p>
 
               <Link
@@ -391,25 +278,15 @@ export function ProductCard({ product }) {
                 onClick={handleAddToCart}
               >
                 {!inStock
-                  ? 'Out of Stock'
+                  ? "Out of Stock"
                   : added
-                    ? 'Added to Demo Cart ✓'
-                    : 'Add to Cart'}
+                    ? "Added to Demo Cart ✓"
+                    : "Add to Cart"}
               </button>
             </div>
           </div>
         </div>
       )}
     </>
-  );
-}
-
-export default function DummyProductCard() {
-  return (
-    <div className="dummy-products-grid">
-      {DUMMY_PRODUCTS.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
   );
 }

@@ -3,105 +3,155 @@
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, A11y, Autoplay } from "swiper/modules";
+
+// Swiper core styles
+import "swiper/css";
+import "swiper/css/navigation";
 
 const categories = [
   {
-    name: "Home Décor",
-    image: "/images/home-decor.webp",
-    href: "/collections/home-decor",
+    name: "Ganesh Festival",
+    image: "/images/ganesh-festival-digiart.webp",
+    href: "/products?category=ganesh-festival",
   },
   {
-    name: "Paper Gift Boxes",
-    image: "/images/paper-gift-boxes.jpg",
-    href: "/collections/paper-gift-boxes",
+    name: "Diwali Festival",
+    image: "/images/diwali-digiart.webp",
+    href: "/products?category=diwali-festival",
   },
   {
-    name: "Festival Décor",
-    image: "/images/festivel-decor.jpg",
-    href: "/collections/festival-decor",
+    name: "Independence Day",
+    image: "/images/independence-day-digiart.webp",
+    href: "/products?category=independence-day",
   },
   {
-    name: "Wall Hangings",
-    image: "/images/wall-hangings.avif",
-    href: "/collections/wall-hanging",
-  },
-  {
-    name: "Table Standees",
-    image: "/images/tabel-standee.jpg",
-    href: "/collections/table-standee",
+    name: "Makar Sankranti",
+    image: "/images/makar-sankranti-digiart.webp",
+    href: "/products?category=makar-sankranti",
   },
   {
     name: "Gift Packaging",
-    image: "/images/gift-packing.jpg",
-    href: "/collections/gift-packaging",
+    image: "/images/pakaging-box-digiart.webp",
+    href: "/products?category=gift-packaging",
   },
   {
-    name: "Varkari & Mavale",
-    image: "/images/tabel-standes.jpg",
-    href: "/collections/varkari-mavale",
+    name: "Christmas Festival",
+    image: "/images/christmas-banner-digiart.webp",
+    href: "/products?category=christmas-festival",
+  },
+  {
+    name: "Holi Festival",
+    image: "/images/holi-digiart.webp",
+    href: "/products?category=holi-festival",
+  },
+  {
+    name: "Valentine Day",
+    image: "/images/valentine-day-digiart.webp",
+    href: "/products?category=valentine-day",
+  },
+  {
+    name: "Decorative Wax Candle",
+    image: "/images/decorative-wax-candle-digiart.jpg",
+    href: "/products?category=decorative-wax-candle",
   },
 ];
 
 export default function ShopByCategory() {
-  const sliderRef = useRef(null);
-
-  const scrollSlider = (direction) => {
-    const slider = sliderRef.current;
-    if (!slider) return;
-
-    const firstItem = slider.querySelector(".category-item");
-    const gap = parseFloat(getComputedStyle(slider).columnGap) || 0;
-    const amount = firstItem
-      ? (firstItem.getBoundingClientRect().width + gap) * 2
-      : 300;
-
-    slider.scrollBy({
-      left: direction * amount,
-      behavior: "smooth",
-    });
-  };
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
 
   return (
     <section className="shop-category">
-      <div className="container">
-        <div className="shop-category__header row">
-          <h2 className="shop-category__title">
+      <div className="container position-relative">
+        <div className="shop-category__header d-flex justify-content-between align-items-center mb-4">
+          <h2 className="shop-category__title mb-0">
             Shop by <span>Category</span>
           </h2>
 
-          {/* <div className="shop-category__navigation">
-            <button type="button" onClick={() => scrollSlider(-1)} aria-label="Previous categories">
+          {/* Navigation Controls */}
+          <div className="shop-category__navigation d-flex gap-2">
+            <button
+              ref={prevRef}
+              type="button"
+              className="shop-category__nav-btn"
+              aria-label="Previous categories"
+            >
               &#8592;
             </button>
-            <button type="button" onClick={() => scrollSlider(1)} aria-label="Next categories">
+            <button
+              ref={nextRef}
+              type="button"
+              className="shop-category__nav-btn"
+              aria-label="Next categories"
+            >
               &#8594;
             </button>
-          </div> */}
+          </div>
         </div>
 
-        <div className="shop-category__slider" ref={sliderRef}>
+        {/* Swiper Container */}
+        <Swiper
+          modules={[Navigation, A11y]}
+          spaceBetween={20}
+          slidesPerView={2.3}
+          loop={true} // Enables infinite loop
+          speed={800} // Transition slide speed in ms
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          autoplay={{
+            delay: 3000, // Time between slides (3 seconds)
+            disableOnInteraction: false, // Keeps autoplay running after touch/click
+            pauseOnMouseEnter: true, // Pauses autoplay when mouse hovers over slider
+          }}
+          onBeforeInit={(swiper) => {
+            swiper.params.navigation.prevEl = prevRef.current;
+            swiper.params.navigation.nextEl = nextRef.current;
+          }}
+          breakpoints={{
+            480: {
+              slidesPerView: 3.2,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 4.5,
+              spaceBetween: 24,
+            },
+            992: {
+              slidesPerView: 5.5,
+              spaceBetween: 24,
+            },
+            1200: {
+              slidesPerView: 6,
+              spaceBetween: 28,
+            },
+          }}
+          className="shop-category__swiper"
+        >
           {categories.map((category) => (
-            <Link
-              href={category.href}
-              className="category-item"
-              key={category.name}
-            >
-              <div className="category-item__image-wrap">
-                <div className="category-item__image">
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    fill
-                    sizes="(max-width: 575px) 27vw, (max-width: 991px) 20vw, 150px"
-                  />
+            <SwiperSlide key={category.name} className="shop-category__slide">
+              <Link href={category.href} className="category-item">
+                <div className="category-item__image-wrap">
+                  <div className="category-item__image">
+                    <Image
+                      src={category.image}
+                      alt={category.name}
+                      fill
+                      sizes="(max-width: 575px) 28vw, (max-width: 991px) 22vw, 150px"
+                    />
+                  </div>
+                  <span className="category-item__arrow" aria-hidden="true">
+                    &#8599;
+                  </span>
                 </div>
-                <span className="category-item__arrow">&#8599;</span>
-              </div>
-
-              <p>{category.name}</p>
-            </Link>
+                <p className="category-item__name">{category.name}</p>
+              </Link>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </section>
   );
