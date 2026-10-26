@@ -14,7 +14,7 @@ import {
   isCatalogUnavailable,
   isDemoCatalogPreviewEnabled,
 } from "@/lib/catalog";
-import MessagePopup from "@/components/messagePopup";
+import MessagePopup from '@/components/MessagePopup';
 
 export const revalidate = 15;
 
