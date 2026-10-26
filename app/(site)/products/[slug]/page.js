@@ -1,124 +1,127 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPublic, getPublicResult, imageUrl } from "@/lib/api";
 import { stripHtml, truncate, finalPrice, SITE } from "@/lib/utils";
 import ProductGallery from "@/components/ProductGallery";
 import ProductBuyBox from "@/components/ProductBuyBox";
 import ExploreCategories from "@/components/ExploreCategories";
 import { EXPLORE_PRODUCT } from "@/data/site";
 import JsonLd from "@/components/JsonLd";
-import { TEST_IDS } from "@/components/testIds";
-import CatalogPreviewNotice from "@/components/CatalogPreviewNotice";
-import {
-  DEMO_PRODUCTS,
-  isCatalogUnavailable,
-  isDemoCatalogPreviewEnabled,
-} from "@/lib/catalog";
-import MessagePopup from '@/components/MessagePopup';
+import demoCatalog from "@/data/demoCatalog.json";
+import MessagePopup from "@/components/MessagePopup";
 
 export const revalidate = 15;
 
-async function load(slug, fresh = false) {
-  const result = await getPublicResult(
-    `/products/${encodeURIComponent(slug)}`,
-    fresh ? 0 : 15,
+// Resolves file paths to public/demo-products/
+function resolveImagePath(img) {
+  if (!img) return "/demo-products/placeholder.webp";
+
+  let rawPath = typeof img === "object" ? img.image_path || img.src : img;
+  if (!rawPath || typeof rawPath !== "string")
+    return "/demo-products/placeholder.webp";
+
+  if (rawPath.startsWith("http://") || rawPath.startsWith("https://")) {
+    return rawPath;
+  }
+
+  const fileName = rawPath.split("/").filter(Boolean).pop();
+  return `/demo-products/${fileName}`;
+}
+
+// Loads product directly from demoCatalog.json
+function getProductBySlugOrId(slug) {
+  const products = Array.isArray(demoCatalog)
+    ? demoCatalog
+    : demoCatalog.products || [];
+
+  return products.find(
+    (item) =>
+      item.slug === slug ||
+      String(item.id) === String(slug) ||
+      (item.title &&
+        item.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, "") === slug),
   );
-  if (
-    result.data ||
-    !isDemoCatalogPreviewEnabled ||
-    !isCatalogUnavailable(result)
-  )
-    return result;
-  const demoProduct = DEMO_PRODUCTS.find((product) => product.slug === slug);
-  return demoProduct ? { ...result, data: demoProduct, preview: true } : result;
 }
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
-  const result = await load(resolvedParams.slug);
-  const p = result.data;
-  if (result.status === 404)
-    return { title: "Product not found", robots: { index: false } };
-  if (!p)
+  const p = getProductBySlugOrId(resolvedParams.slug);
+
+  if (!p) {
     return {
-      title: "Product temporarily unavailable",
+      title: "Product not found",
       robots: { index: false },
     };
-  const title = p.meta_title || p.title;
+  }
+
+  const title = p.meta_title || p.title || p.name || "Product Details";
   const description =
     p.meta_description ||
-    truncate(stripHtml(p.description)) ||
-    `Buy ${p.title} at Digi Art’s Store`;
-  const img = p.images?.[0];
+    truncate(stripHtml(p.description || "")) ||
+    `Buy ${title} at Digi Art’s Store`;
+
+  const rawImage =
+    p.primary_image ||
+    p.image ||
+    (Array.isArray(p.images) && p.images.length > 0
+      ? p.images[0].image_path || p.images[0]
+      : null);
+
+  const mainImageUrl = resolveImagePath(rawImage);
+
   return {
     title,
     description,
-    robots: result.preview ? { index: false, follow: false } : undefined,
-    alternates: { canonical: `/products/${p.slug}` },
+    alternates: { canonical: `/products/${p.slug || p.id}` },
     openGraph: {
       title,
       description,
-      images: img ? [{ url: `${SITE}${imageUrl(img.image_path)}` }] : undefined,
+      images: [{ url: `${SITE || ""}${mainImageUrl}` }],
     },
     twitter: { card: "summary_large_image", title, description },
   };
 }
 
-export default async function ProductPage({ params, searchParams }) {
+export default async function ProductPage({ params }) {
   const resolvedParams = await params;
-  const resolvedSearchParams = (await searchParams) || {};
-  const result = await load(
-    resolvedParams.slug,
-    Boolean(resolvedSearchParams.retry),
-  );
-  const p = result.data;
-
-  if (result.status === 404) notFound();
+  const p = getProductBySlugOrId(resolvedParams.slug);
 
   if (!p) {
-    return (
-      <section className="py-5">
-        <div
-          className="container empty-state text-center py-5"
-          data-testid={TEST_IDS.productLoadError}
-          role="alert"
-        >
-          <h1 className="h2 mb-3">We couldn’t load this product</h1>
-          <p className="text-muted mb-4">
-            The store is temporarily unavailable. Please try again, or browse
-            all products.
-          </p>
-          <div className="d-flex justify-content-center gap-3">
-            <Link
-              href={`/products/${encodeURIComponent(resolvedParams.slug)}?retry=${Date.now()}`}
-              className="btn btn-primary"
-            >
-              Try again
-            </Link>
-            <Link href="/products" className="btn btn-outline-secondary">
-              Browse products
-            </Link>
-          </div>
-        </div>
-      </section>
-    );
+    notFound();
   }
 
-  const price = finalPrice(p);
+  const title = p.title || p.name || "Product";
+  const slug = p.slug || String(p.id);
   const inStock = Number(p.stock) > 0;
-  const url = `${SITE}/products/${p.slug}`;
-  const productImages = p.images?.length
+  const url = `${SITE || ""}/products/${slug}`;
+
+  // Normalize images array to resolve to /demo-products/<filename>
+  const rawList = p.images?.length
     ? p.images
     : p.primary_image
       ? [{ image_path: p.primary_image }]
-      : [];
+      : [{ image_path: p.image }];
+
+  const productImages = rawList.map((item, index) => {
+    const rawPath = typeof item === "object" ? item.image_path : item;
+    return {
+      id: item.id || index + 1,
+      image_path: resolveImagePath(rawPath),
+      is_primary: index === 0,
+    };
+  });
+
+  const price =
+    typeof finalPrice === "function" ? finalPrice(p) : p.sale_price || p.price;
 
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: p.title,
-    image: productImages.map((i) => `${SITE}${imageUrl(i.image_path)}`),
-    description: stripHtml(p.description),
+    name: title,
+    image: productImages.map((i) => `${SITE || ""}${i.image_path}`),
+    description: stripHtml(p.description || ""),
     sku: String(p.id),
     offers: {
       "@type": "Offer",
@@ -132,9 +135,9 @@ export default async function ProductPage({ params, searchParams }) {
   };
 
   const crumbs = [
-    { name: "Home", url: SITE },
-    { name: "Products", url: `${SITE}/products` },
-    { name: p.title, url },
+    { name: "Home", url: SITE || "/" },
+    { name: "Products", url: `${SITE || ""}/products` },
+    { name: title, url },
   ];
 
   const breadcrumbLd = {
@@ -155,23 +158,21 @@ export default async function ProductPage({ params, searchParams }) {
 
       <main className="product-detail-page bg-light py-4">
         <div className="container">
-          {/* {result.preview && <CatalogPreviewNotice />} */}
-          {result.preview && (
-            <MessagePopup
-              title="Demo catalog preview"
-              text="The store API is offline. Sample products can be added to the preview cart; checkout is disabled."
-              duration={5000}
-            />
-          )}
+          <MessagePopup
+            title="Demo catalog preview"
+            text="The store API is offline. Sample products can be added to the preview cart; checkout is disabled."
+            duration={5000}
+          />
+
           <article
             className="row g-4 align-items-start"
             data-testid="product-detail"
           >
-            {/* Left Column: Gallery & Sticky Media Controls */}
+            {/* Left Column: Gallery */}
             <div className="col-12 col-md-5 col-lg-5 sticky-top">
               <div className="product-media-wrapper">
                 <div className="card product-card-container border-0 shadow-sm p-3">
-                  <ProductGallery images={productImages} title={p.title} />
+                  <ProductGallery images={productImages} title={title} />
                 </div>
               </div>
             </div>
@@ -181,19 +182,19 @@ export default async function ProductPage({ params, searchParams }) {
               <ProductBuyBox
                 product={{
                   id: p.id,
-                  slug: p.slug,
-                  title: p.title,
+                  slug,
+                  title,
                   price: p.price,
                   sale_price: p.sale_price,
                   stock: p.stock,
                   images: productImages,
-                  primary_image: p.primary_image,
+                  primary_image: productImages[0]?.image_path,
                   description: p.description,
                   weight: p.weight || "100",
                   dimensions: p.dimensions || "23 x 30 Cms",
                   color: p.color || "Multi",
                 }}
-                preview={Boolean(result.preview)}
+                preview={true}
               />
             </div>
           </article>

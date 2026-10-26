@@ -1,26 +1,20 @@
 import { Suspense } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
-import ProductCard from "@/components/ProductCard";
+
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
 import ExploreCategories from "@/components/ExploreCategories";
-import { getPublic, getPublicResult } from "@/lib/api";
-import { TEST_IDS } from "@/components/testIds";
 import CatalogPreviewNotice from "@/components/CatalogPreviewNotice";
-import {
-  DEMO_CATEGORIES,
-  getDemoProducts,
-  isCatalogUnavailable,
-  isDemoCatalogPreviewEnabled,
-} from "@/lib/catalog";
+import demoCatalog from "@/data/demoCatalog.json";
 import { Col, Row } from "react-bootstrap";
+import ProductCard from "@/components/ProductCard";
+import MessagePopup from "@/components/MessagePopup";
 
-const KEYS = ["category", "min", "max", "sort", "q", "in_stock", "page"];
 const titleCase = (s = "") =>
   s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-export function generateMetadata({ searchParams }) {
+export function generateMetadata({ searchParams = {} }) {
   const filtered = ["category", "min", "max", "sort", "q", "in_stock"].some(
     (k) => searchParams[k],
   );
@@ -35,45 +29,106 @@ export function generateMetadata({ searchParams }) {
   };
 }
 
-export default async function ProductsPage({ searchParams }) {
-  const qs = new URLSearchParams();
-  KEYS.forEach((k) => {
-    const v = searchParams[k];
-    if (v && typeof v === "string") qs.set(k, v);
-  });
+export default async function ProductsPage({ searchParams = {} }) {
+  // Extract all catalog categories and products from demoCatalog.json
+  const rawProducts = Array.isArray(demoCatalog)
+    ? demoCatalog
+    : demoCatalog.products || [];
+
+  const rawCategories =
+    demoCatalog.categories ||
+    [
+      ...new Set(
+        rawProducts.map((p) =>
+          typeof p.category === "object" ? p.category.name : p.category,
+        ),
+      ),
+    ]
+      .filter(Boolean)
+      .map((cat, idx) => ({
+        id: idx + 1,
+        name: cat,
+        slug: cat.toLowerCase().replace(/\s+/g, "-"),
+      }));
+
   const slug =
     typeof searchParams.category === "string" ? searchParams.category : "";
-  if (!qs.has("sort")) qs.set("sort", slug ? "featured" : "name_asc");
-  qs.set("limit", "16");
+  const query = (searchParams.q || "").toLowerCase().trim();
+  const minPrice = parseFloat(searchParams.min) || 0;
+  const maxPrice = parseFloat(searchParams.max) || Infinity;
+  const inStockOnly =
+    searchParams.in_stock === "1" || searchParams.in_stock === "true";
+  const sortBy = searchParams.sort || (slug ? "featured" : "name_asc");
+  const currentPage = Math.max(1, Number(searchParams.page) || 1);
+  const limit = 16;
 
-  const [res, cats] = await Promise.all([
-    getPublicResult(`/products?${qs}`, searchParams.retry ? 0 : 15),
-    getPublic("/categories", 300),
-  ]);
-  const preview =
-    isDemoCatalogPreviewEnabled &&
-    !Array.isArray(res.data) &&
-    isCatalogUnavailable(res);
-  const demoPage = preview
-    ? getDemoProducts(searchParams, 16, slug ? "featured" : "name_asc")
-    : null;
-  const categories = Array.isArray(cats?.data)
-    ? cats.data
-    : preview
-      ? DEMO_CATEGORIES
-      : [];
-  const products = Array.isArray(res.data)
-    ? res.data
-    : demoPage?.products || [];
-  const loadFailed = !Array.isArray(res.data) && !preview;
-  const meta = preview ? demoPage : res?.meta || {};
-  const page = Number(meta.page) || Number(searchParams.page) || 1;
+  // 1. Filter products
+  let filtered = rawProducts.filter((product) => {
+    const categoryName =
+      typeof product.category === "object"
+        ? product.category?.name
+        : product.category || "";
+    const categorySlug =
+      typeof product.category === "object" && product.category?.slug
+        ? product.category.slug
+        : categoryName.toLowerCase().replace(/\s+/g, "-");
+
+    if (slug && categorySlug !== slug) return false;
+
+    if (query) {
+      const matchName = product.name?.toLowerCase().includes(query);
+      const matchDesc = product.description?.toLowerCase().includes(query);
+      if (!matchName && !matchDesc) return false;
+    }
+
+    const price = Number(product.price) || 0;
+    if (price < minPrice || price > maxPrice) return false;
+
+    if (inStockOnly) {
+      const stock = Number(product.stock) || 0;
+      if (stock <= 0) return false;
+    }
+
+    return true;
+  });
+
+  // 2. Sort products
+  filtered.sort((a, b) => {
+    const priceA = Number(a.price) || 0;
+    const priceB = Number(b.price) || 0;
+    const nameA = (a.name || "").toLowerCase();
+    const nameB = (b.name || "").toLowerCase();
+
+    switch (sortBy) {
+      case "price_asc":
+        return priceA - priceB;
+      case "price_desc":
+        return priceB - priceA;
+      case "name_desc":
+        return nameB.localeCompare(nameA);
+      case "name_asc":
+      default:
+        return nameA.localeCompare(nameB);
+    }
+  });
+
+  // 3. Paginate products
+  const total = filtered.length;
+  const totalPages = Math.ceil(total / limit) || 1;
+  const startIndex = (currentPage - 1) * limit;
+  const paginatedProducts = filtered.slice(startIndex, startIndex + limit);
+
   const heading = slug
-    ? categories.find((c) => c.slug === slug)?.name || titleCase(slug)
+    ? rawCategories.find((c) => c.slug === slug)?.name || titleCase(slug)
     : "Products";
 
   return (
-    <section className="collection">
+    <section className="collection position-relative">
+      <MessagePopup
+        title="Demo catalog preview"
+        text="The store API is offline. Sample products can be added to the preview cart; checkout is disabled."
+        duration={5000}
+      />
       <div className="collection__banner">
         <h1 className="collection__title">{heading}</h1>
         <nav className="collection__breadcrumb" aria-label="Breadcrumb">
@@ -90,42 +145,29 @@ export default async function ProductsPage({ searchParams }) {
           )}
         </nav>
       </div>
-      <div className="container">
-        {preview && <CatalogPreviewNotice />}
+
+      <div className="container py-4 py-md-5">
         <div className="row g-4">
           <div className="col-12 col-md-4 col-lg-3 flex-shrink-0">
             <Suspense fallback={null}>
-              <FilterBar categories={categories} total={meta.total} />
+              <FilterBar categories={rawCategories} total={total} />
             </Suspense>
           </div>
+
           <div className="col-12 col-md-8 col-lg-9 flex-grow-1">
-            {loadFailed ? (
-              <div className="empty-state collection__error" role="alert">
-                <h2>We couldn’t load the product catalog</h2>
-                <p>
-                  The catalog API returned an error. Try again, or check that
-                  the product service is available.
-                </p>
-                <Link
-                  className="btn"
-                  href={`/products?retry=${Date.now()}`}
-                  data-testid={TEST_IDS.collectionLoadRetry}
-                >
-                  Try again
-                </Link>
-              </div>
-            ) : products.length ? (
+            {paginatedProducts.length > 0 ? (
               <>
                 <Row className="g-4">
-                  {products.map((p) => (
-                    <Col sm={6} lg={4}>
-                      <ProductCard key={p.id} p={p} preview={preview} />
+                  {paginatedProducts.map((p) => (
+                    <Col sm={6} lg={4} key={p.id}>
+                      <ProductCard p={p} />
                     </Col>
                   ))}
                 </Row>
+
                 <Pagination
-                  page={page}
-                  pages={Number(meta.pages) || 1}
+                  page={currentPage}
+                  pages={totalPages}
                   params={searchParams}
                 />
               </>
