@@ -1,43 +1,37 @@
+"use client";
 
-'use client';
-
-import { useState } from 'react';
+import { useState } from "react";
 
 const DEMO_PRODUCT = {
-  id: 'DA-1001',
-  name: 'Premium Decorative Gift Box',
-  category: 'Gift Packaging',
-  sku: 'DIGI-GB-1001',
+  id: "DA-1001",
+  name: "Premium Decorative Gift Box",
+  category: "Gift Packaging",
+  sku: "DIGI-GB-1001",
   price: 249,
   mrp: 349,
-  unit: 'Piece',
+  unit: "Piece",
   minOrder: 1,
   stock: 24,
   rating: 4.5,
   reviewCount: 18,
   shortDescription:
-    'Beautifully designed decorative gift box for festivals, gifting and special occasions.',
+    "Beautifully designed decorative gift box for festivals, gifting and special occasions.",
   description:
-    'Add a creative touch to your celebrations with this decorative gift box. Suitable for festive gifting, return gifts, sweets and special occasions.',
-  images: [
-    '/images/insta-2.jpg',
-    '/images/insta-3.jpg',
-    '/images/insta-4.jpg',
-    
-  ],
+    "Add a creative touch to your celebrations with this decorative gift box. Suitable for festive gifting, return gifts, sweets and special occasions.",
+  images: ["/images/insta-2.jpg", "/images/insta-3.jpg", "/images/insta-4.jpg"],
   specifications: [
-    ['Material', 'Decorative paper / board'],
-    ['Colour', 'As shown in images'],
-    ['Usage', 'Gifting and packaging'],
-    ['Unit', '1 piece'],
-    ['Package contents', '1 decorative gift box'],
+    ["Material", "Decorative paper / board"],
+    ["Colour", "As shown in images"],
+    ["Usage", "Gifting and packaging"],
+    ["Unit", "1 piece"],
+    ["Package contents", "1 decorative gift box"],
   ],
 };
 
 export default function ProductDetail({ product = DEMO_PRODUCT }) {
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(product.minOrder || 1);
-  const [activeTab, setActiveTab] = useState('description');
+  const [activeTab, setActiveTab] = useState("description");
   const [added, setAdded] = useState(false);
 
   const discount =
@@ -50,7 +44,7 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
   const minOrder = product.minOrder || 1;
   const images = product.images?.length
     ? product.images
-    : ['/images/products/gift-box-1.webp'];
+    : ["/images/products/gift-box-1.webp"];
 
   const handleAddToCart = () => {
     if (!inStock) return;
@@ -58,7 +52,7 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
     // Demo action: cart integration can be added later.
     const cartItem = { ...product, quantity };
 
-    console.log('Add to cart:', cartItem);
+    console.log("Add to cart:", cartItem);
     setAdded(true);
   };
 
@@ -68,11 +62,11 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
     // Demo action: connect the checkout flow when it is ready.
     const checkoutItem = { ...product, quantity };
 
-    console.log('Buy now:', checkoutItem);
+    console.log("Buy now:", checkoutItem);
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Hello DIGI ART'S, I am interested in ${product.name} (SKU: ${product.sku}).`
+    `Hello DIGI ART'S, I am interested in ${product.name} (SKU: ${product.sku}).`,
   );
 
   return (
@@ -93,32 +87,27 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
                 type="button"
                 key={image}
                 className={`da-product__thumb ${
-                  activeImage === index ? 'is-active' : ''
+                  activeImage === index ? "is-active" : ""
                 }`}
                 onClick={() => setActiveImage(index)}
                 aria-label={`View product image ${index + 1}`}
                 aria-pressed={activeImage === index}
               >
-                <img
-                  src={image}
-                  alt={`${product.name} view ${index + 1}`}
-                />
+                <img src={image} alt={`${product.name} view ${index + 1}`} />
               </button>
             ))}
           </div>
 
           <div className="da-product__main-image">
             {discount > 0 && (
-              <span className="da-product__sale-badge">
-                {discount}% OFF
-              </span>
+              <span className="da-product__sale-badge">{discount}% OFF</span>
             )}
 
             <img
               src={images[activeImage] || images[0]}
               alt={product.name}
               onError={(event) => {
-                event.currentTarget.style.opacity = '0';
+                event.currentTarget.style.opacity = "0";
               }}
             />
           </div>
@@ -131,9 +120,9 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
 
           <div className="da-product__meta">
             <span>SKU: {product.sku}</span>
-            <span className={inStock ? 'is-stock' : 'is-out'}>
+            <span className={inStock ? "is-stock" : "is-out"}>
               <i />
-              {inStock ? 'In Stock' : 'Out of Stock'}
+              {inStock ? "In Stock" : "Out of Stock"}
             </span>
           </div>
 
@@ -148,16 +137,14 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
             <span>({product.reviewCount} reviews)</span>
           </div>
 
-          <p className="da-product__short-desc">
-            {product.shortDescription}
-          </p>
+          <p className="da-product__short-desc">{product.shortDescription}</p>
 
           <div className="da-product__price">
-            <strong>₹{product.price.toLocaleString('en-IN')}</strong>
+            <strong>₹{product.price.toLocaleString("en-IN")}</strong>
 
             {product.mrp > product.price && (
               <>
-                <del>₹{product.mrp.toLocaleString('en-IN')}</del>
+                <del>₹{product.mrp.toLocaleString("en-IN")}</del>
                 <span>Save {discount}%</span>
               </>
             )}
@@ -179,9 +166,7 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
               <button
                 type="button"
                 onClick={() =>
-                  setQuantity((current) =>
-                    Math.max(minOrder, current - 1)
-                  )
+                  setQuantity((current) => Math.max(minOrder, current - 1))
                 }
                 disabled={quantity <= minOrder}
                 aria-label="Decrease quantity"
@@ -194,9 +179,7 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
               <button
                 type="button"
                 onClick={() =>
-                  setQuantity((current) =>
-                    Math.min(product.stock, current + 1)
-                  )
+                  setQuantity((current) => Math.min(product.stock, current + 1))
                 }
                 disabled={!inStock || quantity >= product.stock}
                 aria-label="Increase quantity"
@@ -206,15 +189,13 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
             </div>
 
             <small>
-              {inStock
-                ? `${product.stock} available`
-                : 'Currently unavailable'}
+              {inStock ? `${product.stock} available` : "Currently unavailable"}
             </small>
           </div>
 
           <div className="da-product__total">
             <span>Total price</span>
-            <strong>₹{total.toLocaleString('en-IN')}</strong>
+            <strong>₹{total.toLocaleString("en-IN")}</strong>
           </div>
 
           <div className="da-product__actions">
@@ -224,7 +205,7 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
               onClick={handleAddToCart}
               disabled={!inStock}
             >
-              {added ? 'Added to Cart ✓' : 'Add to Cart'}
+              {added ? "Added to Cart ✓" : "Add to Cart"}
             </button>
 
             <button
@@ -272,9 +253,9 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
           <button
             type="button"
             role="tab"
-            aria-selected={activeTab === 'description'}
-            className={activeTab === 'description' ? 'is-active' : ''}
-            onClick={() => setActiveTab('description')}
+            aria-selected={activeTab === "description"}
+            className={activeTab === "description" ? "is-active" : ""}
+            onClick={() => setActiveTab("description")}
           >
             Description
           </button>
@@ -282,15 +263,15 @@ export default function ProductDetail({ product = DEMO_PRODUCT }) {
           <button
             type="button"
             role="tab"
-            aria-selected={activeTab === 'specifications'}
-            className={activeTab === 'specifications' ? 'is-active' : ''}
-            onClick={() => setActiveTab('specifications')}
+            aria-selected={activeTab === "specifications"}
+            className={activeTab === "specifications" ? "is-active" : ""}
+            onClick={() => setActiveTab("specifications")}
           >
             Specifications
           </button>
         </div>
 
-        {activeTab === 'description' ? (
+        {activeTab === "description" ? (
           <div className="da-product__detail-content">
             <h2>About this product</h2>
             <p>{product.description}</p>

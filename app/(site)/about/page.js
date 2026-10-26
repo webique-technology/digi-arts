@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import {
   FiArrowUpRight,
@@ -46,9 +45,7 @@ export default function AboutPage() {
         <div className="container">
           <div className="da-about__hero-grid">
             <div className="da-about__hero-content">
-              <span className="da-about__eyebrow">
-                A LITTLE ABOUT US
-              </span>
+              <span className="da-about__eyebrow">A LITTLE ABOUT US</span>
 
               <h1>
                 Creativity that
@@ -59,8 +56,8 @@ export default function AboutPage() {
               </h1>
 
               <p>
-                From festive decorations to thoughtful gift packaging,
-                we bring creative ideas to life for your special moments.
+                From festive decorations to thoughtful gift packaging, we bring
+                creative ideas to life for your special moments.
               </p>
 
               <Link href="/products" className="da-about__button">
@@ -72,13 +69,21 @@ export default function AboutPage() {
               <div className="da-about__image-main">
                 <div className="da-about__image-placeholder">
                   <span>MADE FOR</span>
-                  <strong>Beautiful<br />Celebrations</strong>
+                  <strong>
+                    Beautiful
+                    <br />
+                    Celebrations
+                  </strong>
                   <small>DIGI ART’S STORE</small>
                 </div>
               </div>
               <div className="da-about__floating-note">
                 <FiHeart />
-                <span>Creativity in<br />every detail</span>
+                <span>
+                  Creativity in
+                  <br />
+                  every detail
+                </span>
               </div>
               <span className="da-about__decor da-about__decor--one">✳</span>
               <span className="da-about__decor da-about__decor--two">✦</span>
@@ -101,20 +106,19 @@ export default function AboutPage() {
 
             <div className="da-about__story-copy">
               <p>
-                DIGI ARTS STORE is a Nashik, Maharashtra-based brand
-                bringing together creative, traditional, and modern
-                decoration products for celebrations across India.
+                DIGI ARTS STORE is a Nashik, Maharashtra-based brand bringing
+                together creative, traditional, and modern decoration products
+                for celebrations across India.
               </p>
               <p>
-                We believe decorations are more than just details.
-                They help create an atmosphere, express traditions,
-                and make precious moments even more memorable.
+                We believe decorations are more than just details. They help
+                create an atmosphere, express traditions, and make precious
+                moments even more memorable.
               </p>
               <p>
-                Our collection includes festive hangings, Diwali
-                kandils, MDF decorations, rangoli sets, DIY craft kits,
-                pooja decorations, decorative gift boxes, and sweet
-                packaging.
+                Our collection includes festive hangings, Diwali kandils, MDF
+                decorations, rangoli sets, DIY craft kits, pooja decorations,
+                decorative gift boxes, and sweet packaging.
               </p>
             </div>
           </div>
@@ -125,10 +129,12 @@ export default function AboutPage() {
         <div className="container">
           <div className="da-about__section-heading">
             <span className="da-about__eyebrow">OUR COLLECTION</span>
-            <h2>Something special for <span>every occasion.</span></h2>
+            <h2>
+              Something special for <span>every occasion.</span>
+            </h2>
             <p>
-              Discover thoughtful details that add colour, creativity,
-              and tradition to your celebrations.
+              Discover thoughtful details that add colour, creativity, and
+              tradition to your celebrations.
             </p>
           </div>
 
@@ -148,18 +154,16 @@ export default function AboutPage() {
         <div className="container">
           <div className="da-about__section-heading">
             <span className="da-about__eyebrow">WHY DIGI ART’S</span>
-            <h2>Thoughtful products. <span>Joyful moments.</span></h2>
+            <h2>
+              Thoughtful products. <span>Joyful moments.</span>
+            </h2>
           </div>
 
           <div className="da-about__benefits">
             {benefits.map((benefit, index) => (
               <article className="da-about__benefit" key={benefit.title}>
-                <div className="da-about__benefit-icon">
-                  {benefit.icon}
-                </div>
-                <span className="da-about__benefit-number">
-                  0{index + 1}
-                </span>
+                <div className="da-about__benefit-icon">{benefit.icon}</div>
+                <span className="da-about__benefit-number">0{index + 1}</span>
                 <h3>{benefit.title}</h3>
                 <p>{benefit.text}</p>
               </article>
@@ -173,19 +177,21 @@ export default function AboutPage() {
           <div className="da-about__reach-inner">
             <div>
               <span className="da-about__eyebrow">FROM NASHIK TO INDIA</span>
-              <h2>
-                Celebrations have no boundaries.
-              </h2>
+              <h2>Celebrations have no boundaries.</h2>
               <p>
-                Based in Nashik, Maharashtra, DIGI ARTS STORE makes its
-                products accessible to customers across India through
-                our official website and online marketplaces, including
-                Amazon, Flipkart, and Meesho.
+                Based in Nashik, Maharashtra, DIGI ARTS STORE makes its products
+                accessible to customers across India through our official
+                website and online marketplaces, including Amazon, Flipkart, and
+                Meesho.
               </p>
             </div>
             <div className="da-about__reach-icon">
               <FiTruck />
-              <span>Online shopping<br />made convenient</span>
+              <span>
+                Online shopping
+                <br />
+                made convenient
+              </span>
             </div>
           </div>
         </div>
@@ -194,9 +200,14 @@ export default function AboutPage() {
       <section className="da-about__cta">
         <div className="container">
           <span className="da-about__eyebrow">LET’S CELEBRATE</span>
-          <h2>Make room for a little more <span>magic.</span></h2>
+          <h2>
+            Make room for a little more <span>magic.</span>
+          </h2>
           <p>Find the finishing touches for your next celebration.</p>
-          <Link href="/products" className="da-about__button da-about__button--light">
+          <Link
+            href="/products"
+            className="da-about__button da-about__button--light"
+          >
             Shop the Collection <FiArrowUpRight />
           </Link>
         </div>

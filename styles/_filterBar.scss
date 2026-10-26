@@ -1,0 +1,22 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.filter-container {
+    max-width: 310px;
+    width: 100%;
+
+    @media(max-width:767.55px) {
+        max-width: 100%;
+    }
+
+    .toolbar__count {
+        background: $color-primary;
+        padding: 6px 10px;
+        border-radius: 28px;
+    }
+}
+
+.sticky-top {
+    top: 90px;
+    z-index: 1;
+}

@@ -124,6 +124,12 @@
           "image_path": "products/4657f759dca910da335458a3.webp",
           "is_primary": true,
           "sort_order": 0
+        },
+        {
+          "id": 2,
+          "image_path": "products/96604585a0bd5b9ef19f0205.webp",
+          "is_primary": true,
+          "sort_order": 0
         }
       ],
       "category": {

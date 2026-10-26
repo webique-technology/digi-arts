@@ -2,14 +2,18 @@
 // DESIGN TOKENS: sampled from the paperme.in screenshots.
 // Change look & feel here ONLY.
 // =====================================================
-$color-primary: #ffd460;        // buttons, announcement bar, accents
-$color-primary-dark: #d19a01;   // headings
+$color-primary: #f2654d;        // buttons, announcement bar, accents
+$color-primary-dark: #5A4B43;   // headings
+$color-primary-light: #FFF8F1;   // headings
+$color-primary-beige: #EBDDD1;   // headings
+$color-charcoal: #242424;   // headings
 $color-tier-accent: #1f6fe5;    // bulk price selection (selected border / radio)
 $color-tier-edge: #8fbdf5;      // bulk price tile border
 $color-tier-bg: #eef5ff;
 $color-tier-badge: #0a6cf0;     // "Most popular"
 $color-secondary: #bcbab7;      // filter bar grey
 $color-bg: #ffffff;
+$color-white: #ffffff;
 $color-bg-alt: #f6f6f6;
 $color-gray: #dcdcdc;
 $color-text: #111111;
@@ -21,8 +25,8 @@ $color-whatsapp: #25d366;
 
 
 
-$font-heading: "Nunito", sans-serif;
-$font-body: "PT Sans", sans-serif;
+$font-heading: "Playfair Display", serif;
+$font-body: "Inter", sans-serif;
 
 $fs-xs: 0.75rem; $fs-sm: 0.875rem; $fs-md: 1rem; $fs-lg: 1.25rem;
 $fs-xl: 1.75rem; $fs-2xl: 2.5rem; $fs-3xl: 3.25rem;

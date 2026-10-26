@@ -1,22 +1,17 @@
+"use client";
 
-'use client';
-
-import { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import Visual from '@/components/Visual';
-import ProductCard from '@/components/DummyProductCard';
-import Carousel from '@/components/Carousel';
-import { HOME, SITE_INFO, instagram } from '@/data/site';
-import { TEST_IDS } from '@/components/testIds';
-import {
-  SparklesIcon,
-  GiftIcon,
-  QualityIcon,
-} from '@/components/Icons';
+import { useEffect, useRef } from "react";
+import Link from "next/link";
+import Visual from "@/components/Visual";
+import ProductCard from "@/components/DummyProductCard";
+import Carousel from "@/components/Carousel";
+import { HOME, SITE_INFO, instagram } from "@/data/site";
+import { TEST_IDS } from "@/components/testIds";
+import { SparklesIcon, GiftIcon, QualityIcon } from "@/components/Icons";
 
 const Title = ({ children, sub, bold }) => (
   <div className="stitle">
-    <h2 className={bold ? 'is-bold' : ''}>{children}</h2>
+    <h2 className={bold ? "is-bold" : ""}>{children}</h2>
     {sub && <p>{sub}</p>}
   </div>
 );
@@ -29,15 +24,10 @@ export function CollectionTiles() {
           Discover Our <span>Collections</span>
         </h2>
         <div className="best-sellers__actions">
-            <Link
-              href="/shop?bestseller=1"
-              className="best-sellers__view-all"
-            >
-              View All <span>↗</span>
-            </Link>
-
-            
-          </div>
+          <Link href="/shop?bestseller=1" className="best-sellers__view-all">
+            View All <span>↗</span>
+          </Link>
+        </div>
       </div>
 
       <div className="tiles" aria-label="Shop by collection">
@@ -58,11 +48,7 @@ export function CollectionTiles() {
               <div className="tile__overlay" />
 
               <div className="tile__text">
-                
-
-                <h3 >{t.label}</h3>
-
-               
+                <h3>{t.label}</h3>
               </div>
             </Link>
           </article>
@@ -72,14 +58,13 @@ export function CollectionTiles() {
   );
 }
 
-
 export function BestSellers({ products = [] }) {
   const sliderRef = useRef(null);
 
   const scrollProducts = (direction) => {
     sliderRef.current?.scrollBy({
       left: direction * (sliderRef.current.clientWidth * 0.8),
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -94,14 +79,9 @@ export function BestSellers({ products = [] }) {
           </div>
 
           <div className="best-sellers__actions">
-            <Link
-              href="/shop?bestseller=1"
-              className="best-sellers__view-all"
-            >
+            <Link href="/shop?bestseller=1" className="best-sellers__view-all">
               View All <span>↗</span>
             </Link>
-
-            
           </div>
         </div>
         <ProductCard />
@@ -123,8 +103,6 @@ export function BestSellers({ products = [] }) {
   );
 }
 
-
-
 export function CustomOrders() {
   return (
     <section className="custom-studio">
@@ -144,15 +122,11 @@ export function CustomOrders() {
           </h2>
 
           <p className="custom-studio__description">
-            Some ideas deserve more than ordinary.
-            Explore creative paper details made for your
-            celebrations, gifts and special moments.
+            Some ideas deserve more than ordinary. Explore creative paper
+            details made for your celebrations, gifts and special moments.
           </p>
 
-          <Link
-            href="/pages/bulk-orders"
-            className="custom-studio__cta"
-          >
+          <Link href="/pages/bulk-orders" className="custom-studio__cta">
             <span>LET'S MAKE IT PERSONAL</span>
             <span className="custom-studio__cta-arrow">↗</span>
           </Link>
@@ -164,10 +138,7 @@ export function CustomOrders() {
         </div>
 
         <div className="custom-studio__art">
-          <span
-            className="custom-studio__orbit"
-            aria-hidden="true"
-          />
+          <span className="custom-studio__orbit" aria-hidden="true" />
 
           <div className="custom-studio__stamp">
             <span>A LITTLE</span>
@@ -175,10 +146,7 @@ export function CustomOrders() {
             <span>MAGIC ✳</span>
           </div>
 
-          <Carousel
-            label="Custom orders"
-            testIdPrefix="custom-orders"
-          >
+          <Carousel label="Custom orders" testIdPrefix="custom-orders">
             {HOME.customOrders.map((c, i) => (
               <Link
                 key={i}
@@ -195,12 +163,10 @@ export function CustomOrders() {
                 />
 
                 <span className="custom-studio__photo-number">
-                  {String(i + 1).padStart(2, '0')}
+                  {String(i + 1).padStart(2, "0")}
                 </span>
 
-                <span className="custom-studio__photo-arrow">
-                  ↗
-                </span>
+                <span className="custom-studio__photo-arrow">↗</span>
               </Link>
             ))}
           </Carousel>
@@ -222,9 +188,6 @@ export function CustomOrders() {
     </section>
   );
 }
-
-
-
 
 export function InstagramRow() {
   const videoRefs = useRef([]);
@@ -249,7 +212,7 @@ export function InstagramRow() {
       },
       {
         threshold: [0, 0.6, 1],
-      }
+      },
     );
 
     videos.forEach((video) => observer.observe(video));
@@ -261,7 +224,7 @@ export function InstagramRow() {
     const carousel = carouselRef.current;
     if (!carousel) return;
 
-    const firstItem = carousel.querySelector('.insta__item');
+    const firstItem = carousel.querySelector(".insta__item");
     if (!firstItem) return;
 
     const styles = window.getComputedStyle(carousel);
@@ -270,7 +233,7 @@ export function InstagramRow() {
 
     carousel.scrollBy({
       left: direction * scrollAmount,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -321,10 +284,10 @@ export function InstagramRow() {
             <a
               key={item.id}
               className="insta__item"
-              href={item.url || SITE_INFO.instagram || '#'}
+              href={item.url || SITE_INFO.instagram || "#"}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={item.alt || 'View Instagram video'}
+              aria-label={item.alt || "View Instagram video"}
             >
               <video
                 ref={(el) => {
@@ -344,8 +307,6 @@ export function InstagramRow() {
     </section>
   );
 }
-
-
 
 export function SplitBanner() {
   const s = HOME.split;
@@ -371,16 +332,8 @@ export function CollectionCards() {
       <div className="container container--narrow">
         <div className="ccards">
           {HOME.collections.map((c) => (
-            <Link
-              key={c.label}
-              href={c.href}
-              className="ccard"
-            >
-              <Visual
-                className="ccard__img"
-                src={c.image}
-                tone={c.tone}
-              />
+            <Link key={c.label} href={c.href} className="ccard">
+              <Visual className="ccard__img" src={c.image} tone={c.tone} />
               <span>{c.label}</span>
             </Link>
           ))}
@@ -389,7 +342,6 @@ export function CollectionCards() {
     </section>
   );
 }
-
 
 export function Story() {
   const s = HOME.story;
@@ -440,7 +392,6 @@ export function Story() {
   );
 }
 
-
 // export function Clients() {
 //   if (!HOME.clients.length) return null;
 
@@ -463,27 +414,27 @@ export function Features() {
   const features = [
     {
       icon: SparklesIcon,
-      number: '01',
-      tag: 'THOUGHTFULLY DESIGNED',
-      title: 'Details that make a difference.',
+      number: "01",
+      tag: "THOUGHTFULLY DESIGNED",
+      title: "Details that make a difference.",
       description:
-        'Discover creative designs that bring something special to your space and celebrations.',
+        "Discover creative designs that bring something special to your space and celebrations.",
     },
     {
       icon: GiftIcon,
-      number: '02',
-      tag: 'MADE FOR GIFTING',
-      title: 'Make every moment memorable.',
+      number: "02",
+      tag: "MADE FOR GIFTING",
+      title: "Make every moment memorable.",
       description:
-        'Find thoughtful details for celebrations, gifting and moments worth remembering.',
+        "Find thoughtful details for celebrations, gifting and moments worth remembering.",
     },
     {
       icon: QualityIcon,
-      number: '03',
-      tag: 'QUALITY YOU CAN TRUST',
-      title: 'Beautiful from every angle.',
+      number: "03",
+      tag: "QUALITY YOU CAN TRUST",
+      title: "Beautiful from every angle.",
       description:
-        'Explore carefully selected designs that bring beauty to the little things.',
+        "Explore carefully selected designs that bring beauty to the little things.",
     },
   ];
 
@@ -491,9 +442,7 @@ export function Features() {
     <section className="features">
       <div className="container features__inner">
         <div className="features__intro">
-          <span className="features__eyebrow">
-            MORE THAN JUST DETAILS
-          </span>
+          <span className="features__eyebrow">MORE THAN JUST DETAILS</span>
 
           <h2>
             The beauty is
@@ -502,8 +451,8 @@ export function Features() {
           </h2>
 
           <p>
-            Thoughtful details can turn an ordinary moment into
-            something worth remembering.
+            Thoughtful details can turn an ordinary moment into something worth
+            remembering.
           </p>
 
           <span className="features__signature">
@@ -516,24 +465,22 @@ export function Features() {
         </div>
 
         <div className="features__list">
-          {features.map(
-            ({ icon: Icon, number, tag, title, description }) => (
-              <article className="features__item" key={number}>
-                <div className="features__item-top">
-                  <span className="features__number">{number}</span>
-                  <span className="features__tag">{tag}</span>
+          {features.map(({ icon: Icon, number, tag, title, description }) => (
+            <article className="features__item" key={number}>
+              <div className="features__item-top">
+                <span className="features__number">{number}</span>
+                <span className="features__tag">{tag}</span>
 
-                  <span className="features__icon">
-                    <Icon />
-                  </span>
-                </div>
+                <span className="features__icon">
+                  <Icon />
+                </span>
+              </div>
 
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <span className="features__line" />
-              </article>
-            )
-          )}
+              <h3>{title}</h3>
+              <p>{description}</p>
+              <span className="features__line" />
+            </article>
+          ))}
         </div>
       </div>
     </section>

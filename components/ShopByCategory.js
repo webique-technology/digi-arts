@@ -1,17 +1,45 @@
- 'use client';
+"use client";
 
-import { useRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 const categories = [
-  { name: 'Home Décor', image: '/images/categories/home-decor.webp', href: '/collections/home-decor' },
-  { name: 'Paper Gift Boxes', image: '/images/categories/gift-boxes.webp', href: '/collections/paper-gift-boxes' },
-  { name: 'Festival Décor', image: '/images/categories/festival-decor.webp', href: '/collections/festival-decor' },
-  { name: 'Wall Hangings', image: '/images/categories/wall-hanging.webp', href: '/collections/wall-hanging' },
-  { name: 'Table Standees', image: '/images/categories/table-standee.webp', href: '/collections/table-standee' },
-  { name: 'Gift Packaging', image: '/images/categories/gift-packaging.webp', href: '/collections/gift-packaging' },
-  { name: 'Varkari & Mavale', image: '/images/categories/varkari-mavale.webp', href: '/collections/varkari-mavale' },
+  {
+    name: "Home Décor",
+    image: "/images/home-decor.webp",
+    href: "/collections/home-decor",
+  },
+  {
+    name: "Paper Gift Boxes",
+    image: "/images/paper-gift-boxes.jpg",
+    href: "/collections/paper-gift-boxes",
+  },
+  {
+    name: "Festival Décor",
+    image: "/images/festivel-decor.jpg",
+    href: "/collections/festival-decor",
+  },
+  {
+    name: "Wall Hangings",
+    image: "/images/wall-hangings.avif",
+    href: "/collections/wall-hanging",
+  },
+  {
+    name: "Table Standees",
+    image: "/images/tabel-standee.jpg",
+    href: "/collections/table-standee",
+  },
+  {
+    name: "Gift Packaging",
+    image: "/images/gift-packing.jpg",
+    href: "/collections/gift-packaging",
+  },
+  {
+    name: "Varkari & Mavale",
+    image: "/images/tabel-standes.jpg",
+    href: "/collections/varkari-mavale",
+  },
 ];
 
 export default function ShopByCategory() {
@@ -21,7 +49,7 @@ export default function ShopByCategory() {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    const firstItem = slider.querySelector('.category-item');
+    const firstItem = slider.querySelector(".category-item");
     const gap = parseFloat(getComputedStyle(slider).columnGap) || 0;
     const amount = firstItem
       ? (firstItem.getBoundingClientRect().width + gap) * 2
@@ -29,7 +57,7 @@ export default function ShopByCategory() {
 
     slider.scrollBy({
       left: direction * amount,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -37,9 +65,9 @@ export default function ShopByCategory() {
     <section className="shop-category">
       <div className="container">
         <div className="shop-category__header row">
-            <h2 className="shop-category__title">
-              Shop by <span>Category</span>
-            </h2>
+          <h2 className="shop-category__title">
+            Shop by <span>Category</span>
+          </h2>
 
           {/* <div className="shop-category__navigation">
             <button type="button" onClick={() => scrollSlider(-1)} aria-label="Previous categories">
