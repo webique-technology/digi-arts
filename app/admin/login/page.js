@@ -1,15 +1,16 @@
 "use client";
+
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { adminFetch, setCsrf } from "@/lib/api";
-import { onlyDigits } from "@/lib/utils";
+import { setCsrf } from "@/lib/api";
 import Logo from "@/components/Logo";
 import { TEST_IDS } from "@/components/testIds";
 
+const DEFAULT_EMAIL = "admin@123";
+const DEFAULT_PASSWORD = "123456";
+
 export default function AdminLogin() {
-  const router = useRouter();
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@123");
+  const [password, setPassword] = useState("123456");
   const [show, setShow] = useState(false);
   const [errors, setErrors] = useState({});
   const [error, setError] = useState("");
@@ -19,23 +20,42 @@ export default function AdminLogin() {
     e.preventDefault();
     setError("");
     const errs = {};
-    if (!/^[6-9]\d{9}$/.test(phone))
-      errs.phone = "Enter a valid 10-digit mobile number";
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) errs.email = "Enter your email address";
     if (!password) errs.password = "Enter your password";
+
     setErrors(errs);
     if (Object.keys(errs).length) return;
+
     setBusy(true);
+
     try {
-      const res = await adminFetch("/admin/login", {
-        method: "POST",
-        body: { phone, password },
-      });
-      setCsrf(res.data.csrf_token);
-      router.replace("/admin");
+      if (trimmedEmail === DEFAULT_EMAIL && password === DEFAULT_PASSWORD) {
+        const sessionToken = "demo_admin_jwt_session_token_123456";
+
+        if (typeof setCsrf === "function") {
+          setCsrf(sessionToken);
+        }
+
+        // Set the standardized, RFC 6265-compliant cookie checked by middleware
+        const expires = new Date(Date.now() + 7 * 86400 * 1000).toUTCString();
+        document.cookie = `admin_session=active; path=/; expires=${expires}; SameSite=Lax`;
+
+        // Store identity for UI rehydration
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("admin_email", trimmedEmail);
+        }
+
+        // Hard navigation so Edge Middleware reads the new cookie immediately
+        window.location.href = "/admin";
+      } else {
+        setError("Invalid email or password. Please use admin@123 / 123456");
+        setBusy(false);
+      }
     } catch (err) {
-      if (err.status === 422 && err.errors) setErrors(err.errors);
-      setError(err.message);
-    } finally {
+      console.error(err);
+      setError("An unexpected error occurred. Please try again.");
       setBusy(false);
     }
   }
@@ -47,46 +67,45 @@ export default function AdminLogin() {
         <h2>Welcome back</h2>
         <p>Manage products, banners and customer orders for your store.</p>
         <ul>
-          <li>Add and edit products with photos</li>
-          <li>Update home page banners</li>
-          <li>Track and fulfil orders</li>
+          <li>✓ Add and edit products with photos</li>
+          <li>✓ Update home page banners</li>
+          <li>✓ Track and fulfil orders</li>
         </ul>
       </aside>
+
       <main className="login__panel">
         <form className="login__card" onSubmit={submit} noValidate>
           <h1>Admin login</h1>
-          <p className="login__sub">Sign in with your mobile number</p>
+          <p className="login__sub">Sign in with your email address</p>
+
           {error && (
             <div className="alert alert--error" role="alert">
               {error}
             </div>
           )}
+
           <div className="field">
-            <label htmlFor="phone">Mobile number</label>
-            <div className="phonebox">
-              <span>+91</span>
+            <label htmlFor="email">Email address</label>
+            <div className="passbox">
               <input
-                id="phone"
-                type="tel"
-                inputMode="numeric"
+                id="email"
+                type="text"
                 autoComplete="username"
-                placeholder="98765 43210"
-                maxLength={10}
-                value={phone}
-                onChange={(e) =>
-                  setPhone(onlyDigits(e.target.value).slice(0, 10))
-                }
-                aria-invalid={!!errors.phone}
-                aria-describedby={errors.phone ? "phone-error" : undefined}
-                data-testid={TEST_IDS.adminLoginPhone}
+                placeholder="admin@123"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "email-error" : undefined}
+                data-testid={TEST_IDS?.adminLoginPhone}
               />
             </div>
-            {errors.phone && (
-              <div className="field__error" id="phone-error" role="alert">
-                {errors.phone}
+            {errors.email && (
+              <div className="field__error" id="email-error" role="alert">
+                {errors.email}
               </div>
             )}
           </div>
+
           <div className="field">
             <label htmlFor="password">Password</label>
             <div className="passbox">
@@ -94,19 +113,20 @@ export default function AdminLogin() {
                 id="password"
                 type={show ? "text" : "password"}
                 autoComplete="current-password"
+                placeholder="123456"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 aria-invalid={!!errors.password}
                 aria-describedby={
                   errors.password ? "password-error" : undefined
                 }
-                data-testid={TEST_IDS.adminLoginPassword}
+                data-testid={TEST_IDS?.adminLoginPassword}
               />
               <button
                 type="button"
                 onClick={() => setShow(!show)}
                 aria-label={show ? "Hide password" : "Show password"}
-                data-testid={TEST_IDS.adminLoginPasswordToggle}
+                data-testid={TEST_IDS?.adminLoginPasswordToggle}
               >
                 {show ? "Hide" : "Show"}
               </button>
@@ -117,14 +137,17 @@ export default function AdminLogin() {
               </div>
             )}
           </div>
+
           <button
-            className="btn"
+            type="submit"
+            className="btn btn-primary"
             style={{ width: "100%", padding: "0.95rem" }}
             disabled={busy}
-            data-testid={TEST_IDS.adminLoginSubmit}
+            data-testid={TEST_IDS?.adminLoginSubmit}
           >
             {busy ? "Signing in…" : "Sign in"}
           </button>
+
           <a href="/" className="login__back">
             ← Back to website
           </a>

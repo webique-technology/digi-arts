@@ -130,20 +130,22 @@ export default async function ProductsPage({ searchParams = {} }) {
         duration={5000}
       />
       <div className="collection__banner">
-        <h1 className="collection__title">{heading}</h1>
-        <nav className="collection__breadcrumb" aria-label="Breadcrumb">
-          <Link href="/">Home</Link>
-          <span>/</span>
-          {slug ? (
-            <>
-              <Link href="/products">Products</Link>
-              <span>/</span>
-              <span aria-current="page">{heading}</span>
-            </>
-          ) : (
-            <span aria-current="page">Products</span>
-          )}
-        </nav>
+        <div className="position-relative z-3">
+          <h1 className="collection__title text-white">{heading}</h1>
+          <nav className="collection__breadcrumb" aria-label="Breadcrumb">
+            <Link href="/">Home</Link>
+            <span className="text-light">/</span>
+            {slug ? (
+              <>
+                <Link href="/products">Products</Link>
+                <span className="text-light">/</span>
+                <span aria-current="page">{heading}</span>
+              </>
+            ) : (
+              <span aria-current="page" className="text-light">Products</span>
+            )}
+          </nav>
+        </div>
       </div>
 
       <div className="container py-4 py-md-5">

@@ -6,8 +6,8 @@ import { IoCartOutline } from "react-icons/io5";
 export default function AddToCartButton({
   product,
   qty = 1,
-  icon = false,
-  className = "",
+  icon = true,
+  className = "primary-btn",
   preview = false,
 }) {
   const { add } = useCart();
@@ -16,7 +16,7 @@ export default function AddToCartButton({
   return (
     <button
       type="button"
-      className={`btn btn-cart d-flex align-items-center justify-content-center fw-semibold gap-2 ${className}`}
+      className={`button d-flex align-items-center justify-content-center fw-semibold gap-2 ${className}`}
       disabled={disabled}
       onClick={() => add(product, qty, { preview })}
       aria-label={
@@ -24,7 +24,7 @@ export default function AddToCartButton({
       }
       data-testid={TEST_IDS.addToCart(product.id ?? product.slug)}
     >
-      <IoCartOutline className="h3 m-0" />
+      {icon === true && <IoCartOutline className="h3 m-0" />}
       {soldOut ? "Out of stock" : "Add to cart"}
     </button>
   );

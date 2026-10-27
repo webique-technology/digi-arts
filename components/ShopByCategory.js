@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y, Autoplay } from "swiper/modules";
-
+import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 // Swiper core styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -78,7 +78,7 @@ export default function ShopByCategory() {
               className="shop-category__nav-btn"
               aria-label="Previous categories"
             >
-              &#8592;
+              <IoMdArrowBack />
             </button>
             <button
               ref={nextRef}
@@ -86,7 +86,7 @@ export default function ShopByCategory() {
               className="shop-category__nav-btn"
               aria-label="Next categories"
             >
-              &#8594;
+               <IoMdArrowForward />
             </button>
           </div>
         </div>

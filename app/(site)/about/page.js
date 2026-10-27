@@ -44,7 +44,7 @@ export default function AboutPage() {
       <section className="da-about__hero">
         <div className="container">
           <div className="da-about__hero-grid">
-            <div className="da-about__hero-content">
+            <div className="da-about__hero-content position-relative z-3">
               <span className="da-about__eyebrow">A LITTLE ABOUT US</span>
 
               <h1>

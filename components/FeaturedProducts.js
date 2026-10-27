@@ -4,13 +4,12 @@ import { useRef } from "react";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, A11y } from "swiper/modules";
-
+import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 import { DEMO_PRODUCTS } from "@/lib/catalog";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import ProductCard from "./ProductCard";
-
 
 export default function FeaturedProducts({
   products = [],
@@ -28,10 +27,7 @@ export default function FeaturedProducts({
   const deals = displayProducts.slice(0, 12);
 
   return (
-    <section
-      className="featured-products"
-      aria-label="Featured Products"
-    >
+    <section className="featured-products" aria-label="Featured Products">
       <div className="fp-decoration fp-decoration-one" />
       <div className="fp-decoration fp-decoration-two" />
 
@@ -48,13 +44,6 @@ export default function FeaturedProducts({
           </h2>
 
           <div className="best-sellers__actions d-flex align-items-center gap-3">
-            <Link
-              href="/products"
-              className="best-sellers__view-all text-decoration-none"
-            >
-              Explore All Products <span>↗</span>
-            </Link>
-
             {/* Swiper Custom Navigation Buttons */}
             <div className="fp-navigation d-flex gap-2">
               <button
@@ -64,7 +53,7 @@ export default function FeaturedProducts({
                 style={{ width: "38px", height: "38px" }}
                 aria-label="Previous products"
               >
-                ‹
+                <IoMdArrowBack />
               </button>
               <button
                 ref={nextRef}
@@ -73,7 +62,7 @@ export default function FeaturedProducts({
                 style={{ width: "38px", height: "38px" }}
                 aria-label="Next products"
               >
-                ›
+                <IoMdArrowForward />
               </button>
             </div>
           </div>
@@ -118,7 +107,7 @@ export default function FeaturedProducts({
             >
               {deals.map((product, idx) => (
                 <SwiperSlide key={product.id || idx} className="h-auto">
-                 <ProductCard p={product}/>
+                  <ProductCard p={product} />
                 </SwiperSlide>
               ))}
             </Swiper>
