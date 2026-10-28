@@ -261,7 +261,7 @@ export default function Header() {
             <SearchIcon />
           </button>
           <Link
-            href="/admin/login"
+            href="/account"
             aria-label="Admin sign in"
             data-testid={TEST_IDS.headerAdminLogin}
             className=" bg-white d-none d-md-flex"

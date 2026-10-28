@@ -22,7 +22,7 @@ export default function BottomNav() {
   const isHomeActive = pathname === "/";
   const isAccountActive =
     pathname.startsWith("/account") ||
-    pathname.startsWith("/admin/login") ||
+    pathname.startsWith("/account") ||
     pathname.startsWith("/profile");
   const isCartActive = Boolean(open) || pathname === "/cart";
   const isWhatsappActive = pathname === "#whatsapp";
@@ -56,7 +56,7 @@ export default function BottomNav() {
           {/* 2. Account Tab */}
           <Col xs={3}>
             <Link
-              href="/admin/login"
+              href="/account"
               className={`bottom-nav__item ${
                 isAccountActive ? "bottom-nav__item--active" : ""
               }`}

@@ -1,0 +1,787 @@
+// Main Layout
+.account-section {
+    background-color: #faf9f6;
+    min-height: 85vh;
+    padding: 30px 0 60px;
+}
+
+// Breadcrumb
+.account-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    margin-bottom: 24px;
+
+    &__link {
+        color: #7a726b;
+        text-decoration: none;
+
+        &:hover {
+            color: #e04d30;
+        }
+    }
+
+    &__divider {
+        color: #c0b8b0;
+    }
+
+    &__current {
+        color: #242024;
+        font-weight: 600;
+    }
+}
+
+// Sidebar
+.account-sidebar {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #f0ece6;
+    padding: 24px 18px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+
+    &__profile {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-bottom: 20px;
+        margin-bottom: 18px;
+        border-bottom: 1px solid #f2ede7;
+    }
+
+    &__avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #fdf0ed;
+        color: #e04d30;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    &__user-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: #242024;
+        margin: 0;
+    }
+
+    &__greeting {
+        font-size: 12px;
+        color: #8c827a;
+        margin: 2px 0 0;
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 11px 16px;
+        border-radius: 12px;
+        border: none;
+        background: transparent;
+        color: #4a443e;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: #faf8f5;
+            color: #e04d30;
+        }
+
+        &.is-active {
+            background: #fdf0ed;
+            color: #e04d30;
+            font-weight: 600;
+        }
+
+        &--logout {
+            margin-top: 10px;
+            color: #8c827a;
+
+            &:hover {
+                color: #dc3545;
+                background: #fde8e8;
+            }
+        }
+    }
+
+    &__icon {
+        font-size: 18px;
+    }
+}
+
+// Right Main Titles
+.account-page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #242024;
+    margin: 0 0 24px;
+}
+
+.account-header-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    .account-page-title {
+        margin: 0;
+    }
+}
+
+// Dashboard Summary Cards
+.account-summary-row {
+    margin-bottom: 24px;
+}
+
+.account-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #ffffff;
+    border: 1px solid #f0ece6;
+    border-radius: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    &__icon-wrapper {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+
+        &--orange {
+            background: #fff4ed;
+            color: #f76707;
+        }
+
+        &--red {
+            background: #fdf0ed;
+            color: #e04d30;
+        }
+    }
+
+    &__label {
+        font-size: 15px;
+        font-weight: 700;
+        color: #242024;
+        margin: 0;
+    }
+
+    &__count {
+        font-size: 12px;
+        color: #8c827a;
+        margin: 3px 0 0;
+    }
+}
+
+// White Cards
+.account-card {
+    background: #ffffff;
+    border: 1px solid #f0ece6;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #f2ede7;
+        margin-bottom: 16px;
+    }
+
+    &__heading {
+        font-size: 16px;
+        font-weight: 700;
+        color: #242024;
+        margin: 0;
+    }
+
+    &__view-all {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: transparent;
+        border: none;
+        color: #e04d30;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    &__title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #242024;
+        margin-bottom: 18px;
+
+        &--danger {
+            color: #dc3545;
+        }
+    }
+
+    &--danger {
+        border-color: #fde8e8;
+    }
+
+    &__danger-desc {
+        font-size: 13px;
+        color: #6c757d;
+        margin-bottom: 16px;
+    }
+}
+
+// Order Rows
+.account-order-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid #f5f2ed;
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    &__id {
+        font-size: 15px;
+        font-weight: 700;
+        color: #242024;
+        margin: 0;
+    }
+
+    &__meta {
+        font-size: 12px;
+        color: #8c827a;
+        margin: 3px 0 0;
+    }
+
+    &__summary {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    &__amount {
+        font-size: 15px;
+        font-weight: 700;
+        color: #242024;
+    }
+
+    &__status {
+        font-size: 12px;
+        font-weight: 600;
+
+        &--delivered {
+            color: #2b8a3e;
+        }
+
+        &--shipped {
+            color: #f76707;
+        }
+    }
+}
+
+// Expandable Orders in Tab 2
+.account-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.account-order-card {
+    background: #ffffff;
+    border: 1px solid #f0ece6;
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    &__id {
+        font-size: 16px;
+        font-weight: 700;
+        color: #242024;
+        margin: 0;
+    }
+
+    &__date {
+        font-size: 12px;
+        color: #8c827a;
+        margin-top: 2px;
+        display: block;
+    }
+
+    &__header-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    &__pricing {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &__amount {
+        font-size: 15px;
+        font-weight: 700;
+        color: #242024;
+    }
+
+    &__items-count {
+        font-size: 11px;
+        color: #8c827a;
+    }
+
+    &__arrow {
+        font-size: 20px;
+        color: #7a726b;
+    }
+
+    &__expanded {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid #f2ede7;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 0;
+    }
+
+    &__item-thumb {
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        background: #ede8e3;
+        flex-shrink: 0;
+    }
+
+    &__item-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #242024;
+        margin: 0;
+    }
+
+    &__item-qty {
+        font-size: 12px;
+        color: #8c827a;
+        margin: 2px 0 0;
+    }
+
+    &__item-price {
+        margin-left: auto;
+        font-size: 14px;
+        font-weight: 600;
+        color: #242024;
+    }
+
+    &__address-box {
+        background: #f7f6f2;
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin: 16px 0;
+    }
+
+    &__address-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: #7a726b;
+        margin: 0 0 4px;
+    }
+
+    &__address-text {
+        font-size: 13px;
+        color: #242024;
+        margin: 0;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 10px;
+    }
+}
+
+// Status Badges
+.account-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+
+    &--delivered {
+        background: #ebfbee;
+        color: #2b8a3e;
+    }
+
+    &--shipped {
+        background: #fff4ed;
+        color: #f76707;
+    }
+
+    &--processing {
+        background: #e7f5ff;
+        color: #1c7ed6;
+    }
+}
+
+// Buttons
+.account-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &--primary {
+        background: #e04d30;
+        color: #ffffff;
+
+        &:hover {
+            background: #c73e22;
+            color: #ffffff;
+        }
+    }
+
+    &--secondary {
+        background: #f7f5f2;
+        border-color: #e5dfd8;
+        color: #333333;
+
+        &:hover {
+            background: #ebe6df;
+        }
+    }
+
+    &--outline {
+        background: transparent;
+        border-color: #e5dfd8;
+        color: #4a443e;
+
+        &:hover {
+            border-color: #e04d30;
+            color: #e04d30;
+        }
+    }
+
+    &--danger {
+        background: #dc3545;
+        color: #ffffff;
+
+        &:hover {
+            background: #bd2130;
+        }
+    }
+}
+
+// Saved Addresses
+.account-address-card {
+    background: #ffffff;
+    border: 1px solid #f0ece6;
+    border-radius: 14px;
+    padding: 20px;
+    height: 100%;
+    position: relative;
+
+    &.is-default {
+        border: 2px solid #e04d30;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+
+    &__badges {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__tag {
+        background: #f0ece6;
+        color: #4a443e;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 6px;
+    }
+
+    &__default-badge {
+        background: #fdf0ed;
+        color: #e04d30;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 6px;
+    }
+
+    &__controls {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__recipient {
+        font-size: 15px;
+        font-weight: 700;
+        color: #242024;
+        margin: 0 0 6px;
+    }
+
+    &__lines {
+        font-size: 13px;
+        color: #6c757d;
+        line-height: 1.5;
+        margin-bottom: 6px;
+    }
+
+    &__phone {
+        font-size: 13px;
+        color: #242024;
+        font-weight: 500;
+        margin-bottom: 14px;
+    }
+
+    &__set-default-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f2ede7;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #4a443e;
+        cursor: pointer;
+
+        &:hover {
+            background: #e5ded6;
+        }
+    }
+}
+
+.account-icon-btn {
+    background: transparent;
+    border: none;
+    color: #8c827a;
+    font-size: 16px;
+    padding: 4px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: #e04d30;
+    }
+}
+
+// Form Inputs with Embedded Icons
+.account-form {
+    &__group {
+        margin-bottom: 18px;
+    }
+
+    &__label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #4a443e;
+        margin-bottom: 6px;
+    }
+
+    &__input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    &__icon {
+        position: absolute;
+        top: 50%;
+        left: 14px;
+        transform: translateY(-50%);
+        color: #8c827a;
+        font-size: 18px;
+        pointer-events: none;
+    }
+
+    &__control {
+        height: 44px;
+        border-radius: 10px;
+        border: 1px solid #e8e3de;
+        background: #faf8f5;
+        padding-left: 42px;
+        font-size: 13px;
+        color: #242024;
+
+        &:focus {
+            border-color: #e04d30;
+            background: #ffffff;
+            box-shadow: none;
+        }
+    }
+}
+
+// Auth Modal
+.auth-modal {
+
+    &__dialog {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 32px 28px;
+        position: relative;
+        margin: 0;
+    }
+
+    &__close-btn {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        background: transparent;
+        border: none;
+        font-size: 24px;
+        color: #8c827a;
+        cursor: pointer;
+    }
+
+    &__title {
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: #242024;
+        margin-bottom: 6px;
+    }
+
+    &__subtitle {
+        font-size: 13px;
+        color: #7a726b;
+        margin-bottom: 22px;
+    }
+
+    &__input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    &__input-icon {
+        position: absolute;
+        top: 50%;
+        left: 14px;
+        transform: translateY(-50%);
+        color: #8c827a;
+        font-size: 20px;
+    }
+
+    &__input {
+        height: 48px;
+        padding-left: 44px;
+        border-radius: 12px;
+        border: 1px solid #e8e3de;
+        background: #faf8f5;
+        font-size: 14px;
+
+        &:focus {
+            border-color: #e04d30;
+            background: #ffffff;
+            box-shadow: none;
+        }
+    }
+
+    &__submit-btn {
+        width: 100%;
+        height: 46px;
+        border-radius: 12px;
+        background: #e04d30;
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+
+        &:hover {
+            background: #c73e22;
+        }
+    }
+
+    &__change-btn {
+        display: block;
+        margin: 14px auto 0;
+        background: transparent;
+        border: none;
+        color: #7a726b;
+        font-size: 12px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+// Add Address Modal
+.account-address-modal {
+    &__body {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 26px;
+    }
+
+    &__title {
+        font-family: 'Playfair Display', serif;
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+}
+
+.auth-modal,
+.account-address-modal {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: fit-content;
+
+    .modal-dialog {
+        margin: 0 !important;
+    }
+}
