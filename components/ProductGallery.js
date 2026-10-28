@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { imageUrl } from "@/lib/api";
 import { TEST_IDS } from "./testIds";
 
-// Determines if media item is a video based on type, keys, or file extension
+// Determines if media item is a video
 function isVideoItem(item) {
   if (!item) return false;
   if (item.type === "video" || item.media_type === "video" || item.is_video) {
@@ -17,7 +17,7 @@ function isVideoItem(item) {
   return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(path);
 }
 
-// Generates an offscreen canvas snapshot from a video URL at a specific second
+// Generates an offscreen canvas snapshot from a video URL
 function generateVideoSnapshot(sourceUrl, atTime = 0.5) {
   return new Promise((resolve, reject) => {
     if (!sourceUrl || typeof window === "undefined") {
@@ -25,9 +25,9 @@ function generateVideoSnapshot(sourceUrl, atTime = 0.5) {
     }
 
     const video = document.createElement("video");
-    video.crossOrigin = "anonymous";
     video.muted = true;
     video.playsInline = true;
+    video.preload = "auto";
 
     const cleanup = () => {
       video.pause();
@@ -37,11 +37,7 @@ function generateVideoSnapshot(sourceUrl, atTime = 0.5) {
 
     video.src = sourceUrl;
 
-    video.addEventListener("loadedmetadata", () => {
-      video.currentTime = Math.min(atTime, Math.max(0, video.duration - 0.1));
-    });
-
-    video.addEventListener("seeked", () => {
+    const onSeeked = () => {
       try {
         const canvas = document.createElement("canvas");
         canvas.width = video.videoWidth || 640;
@@ -57,16 +53,21 @@ function generateVideoSnapshot(sourceUrl, atTime = 0.5) {
         cleanup();
         reject(err);
       }
+    };
+
+    video.addEventListener("loadedmetadata", () => {
+      video.currentTime = Math.min(atTime, Math.max(0, video.duration - 0.1));
     });
+
+    video.addEventListener("seeked", onSeeked, { once: true });
 
     video.addEventListener("error", () => {
       cleanup();
-      reject(new Error("Unable to capture video snapshot"));
+      reject(new Error("Unable to load video for snapshot"));
     });
   });
 }
 
-// Play icon overlay badge for video thumbnails
 function VideoPlayBadge() {
   return (
     <span
@@ -94,6 +95,7 @@ export default function ProductGallery({
 }) {
   const [i, setI] = useState(0);
   const [snapshots, setSnapshots] = useState({});
+  const videoRef = useRef(null);
   const strip = useRef(null);
 
   // Normalize images and optional videos into one unified media list
@@ -126,7 +128,7 @@ export default function ProductGallery({
     return [...formattedImages, ...formattedVideos];
   }, [images, videos]);
 
-  // Automatically generate snapshots for any video lacking a poster image
+  // Capture snapshots for thumbnails
   useEffect(() => {
     mediaList.forEach((item) => {
       if (item.type === "video" && !item.poster && !snapshots[item.src]) {
@@ -139,7 +141,7 @@ export default function ProductGallery({
             }));
           })
           .catch((err) => {
-            console.warn("Snapshot fallback active:", err.message);
+            console.warn("Snapshot fallback active for", item.src, err.message);
           });
       }
     });
@@ -150,7 +152,7 @@ export default function ProductGallery({
     setI((index + mediaList.length) % mediaList.length);
   };
 
-  // Keep selected thumbnail in view inside the scroll strip
+  // Keep selected thumbnail in view
   useEffect(() => {
     const el = strip.current?.children[i];
     if (el && strip.current) {
@@ -160,6 +162,13 @@ export default function ProductGallery({
       });
     }
   }, [i]);
+
+  // Force video element to reload when switching to a video item
+  useEffect(() => {
+    if (mediaList[i]?.type === "video" && videoRef.current) {
+      videoRef.current.load();
+    }
+  }, [i, mediaList]);
 
   if (!mediaList.length) {
     return (
@@ -187,18 +196,21 @@ export default function ProductGallery({
       <div className="gallery__stage position-relative overflow-hidden rounded-2">
         {activeMedia.type === "video" ? (
           <video
+            ref={videoRef}
             key={activeSrc}
+            src={activeSrc}
             className="gallery__main gallery__main--video rounded-2 w-100"
             controls
             playsInline
+            preload="metadata"
             poster={activePoster}
             style={{
               maxHeight: "500px",
+              minHeight: "350px",
               objectFit: "contain",
-              backgroundColor: "#000",
+              backgroundColor: "#1a1a1a",
             }}
           >
-            <source src={activeSrc} />
             Your browser does not support playing this video.
           </video>
         ) : (
@@ -277,6 +289,7 @@ export default function ProductGallery({
             type="button"
             onClick={() => selectMedia(i + 1)}
             aria-label="Next product media"
+            data-testid={TEST_IDS?.productGalleryNext}
           >
             ›
           </button>

@@ -117,26 +117,6 @@ export default function ProductBuyBox({
           </button>
         </div>
       </div>
-
-      {/* Assurance Icons row */}
-      <div
-        className="row text-center g-2 text-muted mb-2"
-        style={{ fontSize: "0.7rem" }}
-      >
-        <div className="col-4">
-          <div className="p-1 rounded bg-light mb-1 d-inline-block">🏷</div>
-          <div>Lowest Price</div>
-        </div>
-        <div className="col-4">
-          <div className="p-1 rounded bg-light mb-1 d-inline-block">💵</div>
-          <div>Cash on Delivery</div>
-        </div>
-        <div className="col-4">
-          <div className="p-1 rounded bg-light mb-1 d-inline-block">🔄</div>
-          <div>7-day Returns</div>
-        </div>
-      </div>
-
     </div>
   );
 }

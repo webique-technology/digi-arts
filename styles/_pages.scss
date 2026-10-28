@@ -1,6 +1,8 @@
 @use 'variables' as v;
 @use 'mixins' as m;
 
+
+
 // ---------- Home ----------
 
 .hero {
@@ -3492,17 +3494,56 @@
 
 // ---------- Explore categories ----------
 .explore {
-  padding: 4rem 0 2rem;
+  padding: 2.5rem 0;
 
-  &__title {
-    text-align: center;
-    font-weight: 300;
-    font-size: 2.8rem;
-    margin-bottom: 2rem;
+  .explore-categories-swiper {
+    padding-bottom: 2rem !important;
 
-    @include m.down(v.$bp-md) {
-      font-size: 1.9rem;
+    // Swiper slide card styling
+    .xcard {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+      }
     }
+
+    // Pagination styling
+    .swiper-pagination {
+      bottom: 0px !important;
+
+      .swiper-pagination-bullet-active {
+        background: #0e7041; // Theme primary color
+      }
+    }
+  }
+
+  // Navigation arrows
+  .explore-prev-btn,
+  .explore-next-btn {
+    font-size: 1.25rem;
+    line-height: 1;
+    border-color: #dee2e6;
+    color: #495057;
+
+    &:hover {
+      background-color: #f8f9fa;
+      border-color: #adb5bd;
+      color: #212529;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 

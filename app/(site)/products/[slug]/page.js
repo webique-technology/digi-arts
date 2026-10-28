@@ -14,11 +14,21 @@ export const revalidate = 15;
 
 function resolveImagePath(img) {
   if (!img) return "/demo-products/placeholder.webp";
+
   let rawPath = typeof img === "object" ? img.image_path || img.src : img;
   if (!rawPath || typeof rawPath !== "string")
     return "/demo-products/placeholder.webp";
-  if (rawPath.startsWith("http://") || rawPath.startsWith("https://"))
+
+  // Keep full URLs and /videos/ paths exactly as they are!
+  if (
+    rawPath.startsWith("http://") ||
+    rawPath.startsWith("https://") ||
+    rawPath.startsWith("/videos/")
+  ) {
     return rawPath;
+  }
+
+  // Only rewrite product images to demo-products
   const fileName = rawPath.split("/").filter(Boolean).pop();
   return `/demo-products/${fileName}`;
 }
@@ -92,9 +102,15 @@ export default async function ProductPage({ params }) {
 
   const productImages = rawList.map((item, index) => {
     const rawPath = typeof item === "object" ? item.image_path : item;
+    const isVideo =
+      (typeof item === "object" &&
+        (item.type === "video" || item.media_type === "video")) ||
+      /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(rawPath);
+
     return {
       id: item.id || index + 1,
       image_path: resolveImagePath(rawPath),
+      type: isVideo ? "video" : "image",
       is_primary: index === 0,
     };
   });
@@ -180,10 +196,6 @@ export default async function ProductPage({ params }) {
 
             {/* 2. Middle Details Column */}
             <div className="col-12 col-md-7 col-xl-5">
-              <span className="text-uppercase fw-bold text-danger small letter-spacing-1">
-                VISIT THE DIGIARTS STORE
-              </span>
-
               <h1 className="h4 fw-bold text-dark mt-1 mb-1 font-serif">
                 {title}
               </h1>
@@ -196,9 +208,6 @@ export default async function ProductPage({ params }) {
                 <span className="text-warning">★★★★☆</span>
                 <span className="fw-semibold text-dark">4.8</span>
                 <span className="text-muted">| 142 ratings</span>
-                <span className="badge bg-success-subtle text-success border border-success-subtle">
-                  50+ bought in past month
-                </span>
               </div>
 
               <hr className="my-2 text-muted opacity-25" />
@@ -220,7 +229,7 @@ export default async function ProductPage({ params }) {
               </div>
 
               {/* Offers Box */}
-              <div className="offers-box border rounded-3 p-3 my-3 bg-light-subtle">
+              {/* <div className="offers-box border rounded-3 p-3 my-3 bg-light-subtle">
                 <div className="fw-bold small text-dark mb-2 d-flex align-items-center gap-1">
                   🏷 Available Offers
                 </div>
@@ -252,7 +261,7 @@ export default async function ProductPage({ params }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Size Selectors */}
               {/* <div className="my-3">

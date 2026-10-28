@@ -123,7 +123,7 @@ export default function ProductCard({
           </div>
         </Link>
 
-        <button
+        {/* <button
           type="button"
           onClick={handleToggleFavourite}
           aria-label={
@@ -137,7 +137,7 @@ export default function ProductCard({
           ) : (
             <FaRegHeart className="fs-5 text-dark" />
           )}
-        </button>
+        </button> */}
 
         {isSale && <span className="pcard__badge">SPECIAL PRICE</span>}
         <span className="pcard__art-label">DIGI ART'S</span>

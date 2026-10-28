@@ -128,7 +128,14 @@
         {
           "id": 2,
           "image_path": "products/96604585a0bd5b9ef19f0205.webp",
-          "is_primary": true,
+          "is_primary": false,
+          "sort_order": 0
+        },
+        {
+          "id": 3,
+          "image_path": "/videos/insta-1.mp4",
+          "type": "video",
+          "is_primary": false,
           "sort_order": 0
         }
       ],

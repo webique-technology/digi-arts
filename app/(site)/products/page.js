@@ -129,7 +129,7 @@ export default async function ProductsPage({ searchParams = {} }) {
         text="The store API is offline. Sample products can be added to the preview cart; checkout is disabled."
         duration={5000}
       />
-      <div className="collection__banner">
+      <div className="collection__banner2">
         <div className="position-relative z-3">
           <h1 className="collection__title text-white">{heading}</h1>
           <nav className="collection__breadcrumb" aria-label="Breadcrumb">

@@ -256,7 +256,7 @@ export default function Header() {
             aria-expanded={search}
             onClick={() => setSearch(!search)}
             data-testid={TEST_IDS.headerSearchToggle}
-            className=" bg-light"
+            className=" bg-white"
           >
             <SearchIcon />
           </button>
@@ -264,7 +264,7 @@ export default function Header() {
             href="/admin/login"
             aria-label="Admin sign in"
             data-testid={TEST_IDS.headerAdminLogin}
-            className=" bg-light"
+            className=" bg-white"
           >
             <UserIcon />
           </Link>
@@ -272,7 +272,7 @@ export default function Header() {
             aria-label={`Open cart${count > 0 ? `, ${count} items` : ""}`}
             onClick={() => setOpen(true)}
             data-testid={TEST_IDS.headerCart}
-            className=" bg-light"
+            className=" bg-white"
           >
             <BagIcon />
             {count > 0 && <span className="header__count">{count}</span>}

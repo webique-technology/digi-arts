@@ -98,7 +98,7 @@
   position: sticky;
   top: 0;
   z-index: 99;
-  background: v.$color-bg;
+  background: v.$color-bg-main;
   box-shadow: 0 0px 0px 1px rgb(0 0 0 / 10%);
 
   &__inner {
@@ -1408,8 +1408,8 @@
   min-width: 0;
   overflow: hidden;
 
-  // background: v.$color-bg;
-  // border: 1px solid v.$color-border;
+  background: v.$color-bg;
+  border: 1px solid v.$color-border;
   border-radius: 14px;
 
   transition:
@@ -1448,7 +1448,7 @@
     aspect-ratio: 4 / 4.5;
     overflow: hidden;
     // padding: 12px;
-    border-radius: 14px;
+    // border-radius: 14px;
   }
 
   &__img {
@@ -1805,16 +1805,25 @@
     }
   }
 
+
   &__banner {
     position: relative;
     overflow: hidden;
     padding: 55px 20px;
     text-align: center;
     // border-radius: 12px;
+    background-color: v.$color-primary;
     // background:
     //   radial-gradient(circle at 10% 20%, #ffffffb3 0 2px, transparent 3px),
     //   radial-gradient(circle at 90% 80%, #ffffff80 0 3px, transparent 4px),
     //   linear-gradient(120deg, #fce7f3 0%, #f3e8ff 55%, #fdf2f8 100%);
+  }
+
+  &__banner2 {
+    position: relative;
+    overflow: hidden;
+    padding: 55px 20px;
+    text-align: center;
     background-image: url("../public/images/tile-decor.jpg");
     background-size: cover;
     background-position: center;

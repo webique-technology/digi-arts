@@ -558,7 +558,7 @@ export default function CheckoutFlow() {
                       )}
 
                       {/* Option 3: Cash On Delivery */}
-                      <div
+                      {/* <div
                         className={`payment-option-header p-3 d-flex align-items-center justify-content-between cursor-pointer ${
                           f.paymentMethod === "cod"
                             ? "bg-light-green border-success border-2"
@@ -584,7 +584,7 @@ export default function CheckoutFlow() {
                         <span className="badge bg-light text-dark border px-2 py-1">
                           Pay on delivery
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
 
