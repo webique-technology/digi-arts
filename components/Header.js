@@ -264,7 +264,7 @@ export default function Header() {
             href="/admin/login"
             aria-label="Admin sign in"
             data-testid={TEST_IDS.headerAdminLogin}
-            className=" bg-white"
+            className=" bg-white d-none d-md-flex"
           >
             <UserIcon />
           </Link>
@@ -272,7 +272,7 @@ export default function Header() {
             aria-label={`Open cart${count > 0 ? `, ${count} items` : ""}`}
             onClick={() => setOpen(true)}
             data-testid={TEST_IDS.headerCart}
-            className=" bg-white"
+            className=" bg-white d-none d-md-flex"
           >
             <BagIcon />
             {count > 0 && <span className="header__count">{count}</span>}
@@ -282,7 +282,7 @@ export default function Header() {
 
       {search && (
         <form className="header__search" onSubmit={submit} role="search">
-          <div className="container">
+          <div className="container d-flex gap-1">
             <input
               autoFocus
               type="search"
@@ -290,8 +290,9 @@ export default function Header() {
               aria-label="Search products"
               value={q}
               onChange={(e) => setQ(e.target.value)}
+              className="w-100"
             />
-            <button type="submit" aria-label="Submit search">
+            <button type="submit" className="flex-shrink-0 py-1 px-2" aria-label="Submit search">
               <SearchIcon />
             </button>
           </div>

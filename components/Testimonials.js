@@ -71,7 +71,7 @@ export default function Testimonials() {
       <Container className="overflow-hidden">
         <div className="position-relative overflow-hidden">
           {/* Header */}
-          <div className="cust-reviews-header text-center mb-5">
+          <div className="cust-reviews-header text-center title-row-margin">
             <h2 className="shop-category__title fp-heading">What Our Customers Say</h2>
             <p className="cust-reviews-subtitle text-muted">
               Real reviews from real celebrations
@@ -83,7 +83,7 @@ export default function Testimonials() {
             <Swiper
               modules={[Navigation, Autoplay, A11y]}
               spaceBetween={24}
-              slidesPerView={1}
+              slidesPerView={1.15}
               loop={true}
               speed={600}
               autoplay={{
@@ -103,6 +103,10 @@ export default function Testimonials() {
                 576: {
                   slidesPerView: 1.15,
                   spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 24,
                 },
                 992: {
                   slidesPerView: 3,

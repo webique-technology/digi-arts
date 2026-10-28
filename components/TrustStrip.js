@@ -4,12 +4,12 @@ import { Container, Row, Col } from "react-bootstrap";
 import { FiBox, FiTruck, FiCreditCard, FiShield } from "react-icons/fi";
 
 const TRUST_FEATURES = [
-  {
-    id: 1,
-    icon: <FiBox className="trust-strip__icon" />,
-    boldText: "Free Delivery",
-    subText: "on Orders Above ₹499",
-  },
+  // {
+  //   id: 1,
+  //   icon: <FiBox className="trust-strip__icon" />,
+  //   boldText: "Free Delivery",
+  //   subText: "on Orders Above ₹499",
+  // },
   {
     id: 2,
     icon: <FiTruck className="trust-strip__icon" />,
@@ -25,7 +25,7 @@ const TRUST_FEATURES = [
   {
     id: 4,
     icon: <FiShield className="trust-strip__icon" />,
-    boldText: "100% Authentic",
+    boldText: "Handmade",
     subText: "Products",
   },
 ];
@@ -34,20 +34,20 @@ export default function TrustStrip() {
   return (
     <section className="trust-strip">
       <Container>
-        <Row className="trust-strip__row g-3 g-md-0 justify-content-center align-items-center">
+        <Row className="trust-strip__row g-md-0 justify-content-center align-items-start">
           {TRUST_FEATURES.map((item) => (
             <Col
               key={item.id}
-              xs={12}
+              xs={4}
               sm={6}
-              lg={3}
+              lg={4}
               className="d-flex justify-content-start justify-content-lg-center"
             >
-              <div className="trust-strip__item d-flex align-items-center">
+              <div className="trust-strip__item d-flex flex-column flex-md-row gap-1 align-items-center">
                 <div className="trust-strip__icon-badge d-flex align-items-center justify-content-center flex-shrink-0">
                   {item.icon}
                 </div>
-                <div className="trust-strip__text ms-3">
+                <div className="trust-strip__text text-center text-md-start">
                   <span className="trust-strip__text-bold fw-bold text-dark">
                     {item.boldText}
                   </span>{" "}

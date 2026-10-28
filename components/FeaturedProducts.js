@@ -10,6 +10,7 @@ import { DEMO_PRODUCTS } from "@/lib/catalog";
 import "swiper/css";
 import "swiper/css/navigation";
 import ProductCard from "./ProductCard";
+import { Container } from "react-bootstrap";
 
 export default function FeaturedProducts({
   products = [],
@@ -27,20 +28,17 @@ export default function FeaturedProducts({
   const deals = displayProducts.slice(0, 12);
 
   return (
-    <section className="featured-products" aria-label="Featured Products">
+    <section
+      className="featured-products section-padding"
+      aria-label="Featured Products"
+    >
       <div className="fp-decoration fp-decoration-one" />
       <div className="fp-decoration fp-decoration-two" />
 
-      <div className="container fp-container">
-        <div className="best-sellers__header d-flex justify-content-between align-items-center mb-4">
+      <Container className="container fp-container">
+        <div className="best-sellers__header title-row-margin d-flex justify-content-between align-items-center">
           <h2 className="shop-category__title fp-heading mb-0">
-            {title.includes(" of the ") ? (
-              <>
-                {title.split(" of the ")[0]} of the <span>Day</span>
-              </>
-            ) : (
-              title
-            )}
+            Deals of the Day
           </h2>
 
           <div className="best-sellers__actions d-flex align-items-center gap-3">
@@ -88,18 +86,22 @@ export default function FeaturedProducts({
                 swiper.params.navigation.nextEl = nextRef.current;
               }}
               spaceBetween={20}
-              slidesPerView={1}
+              slidesPerView={2}
               breakpoints={{
-                576: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
+                // 576: {
+                //   slidesPerView: 2,
+                //   spaceBetween: 20,
+                // },
                 768: {
                   slidesPerView: 3,
                   spaceBetween: 24,
                 },
-                1200: {
+                992: {
                   slidesPerView: 4,
+                  spaceBetween: 24,
+                },
+                1200: {
+                  slidesPerView: 5,
                   spaceBetween: 24,
                 },
               }}
@@ -117,7 +119,7 @@ export default function FeaturedProducts({
             No deals available at the moment.
           </div>
         )}
-      </div>
+      </Container>
     </section>
   );
 }

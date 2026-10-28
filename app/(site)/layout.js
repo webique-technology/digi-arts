@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import CartProvider from "@/components/CartProvider";
 import CartDrawer from "@/components/CartDrawer";
 import JsonLd from "@/components/JsonLd";
+import BottomNav from "@/components/BottomNav"; // 1. Imported BottomNav
 import { WhatsappIcon } from "@/components/Icons";
 import { SITE } from "@/lib/utils";
 import { SITE_INFO } from "@/data/site";
@@ -23,6 +24,10 @@ export default function SiteLayout({ children }) {
       <main>{children}</main>
       <Footer />
       <CartDrawer />
+
+      {/* 2. Added Mobile Bottom Navigation */}
+      <BottomNav />
+
       {SITE_INFO.whatsapp && (
         <a
           className="whatsapp"

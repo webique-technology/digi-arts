@@ -1,82 +1,95 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 import Link from "next/link";
 import Visual from "@/components/Visual";
-import { ProductCard } from "@/components/DummyProductCard";
+import ProductCard from "@/components/ProductCard";
 import Carousel from "@/components/Carousel";
 import { HOME, SITE_INFO, instagram } from "@/data/site";
-import { PRODUCTS_DATA } from "@/data/productData";
 import { TEST_IDS } from "@/components/testIds";
 import { SparklesIcon, GiftIcon, QualityIcon } from "@/components/Icons";
+import { Container } from "react-bootstrap";
+// 1. Import demo products JSON as safe default fallback
+import demoProductsData from "@/data/demoCatalog.json";
+// Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-const Title = ({ children, sub, bold }) => (
-  <div className="stitle">
-    <h2 className={bold ? "is-bold" : ""}>{children}</h2>
-    {sub && <p>{sub}</p>}
-  </div>
-);
+// for Best Seller component
+const DEFAULT_PRODUCTS = Array.isArray(demoProductsData)
+  ? demoProductsData
+  : demoProductsData?.products || demoProductsData?.data || [];
+
+const DEFAULT_BANNER_SLIDES = [
+  { id: 1, image: "/images/diwali-digiart.webp", title: "Special Collection" },
+  { id: 2, image: "/images/hero-banner-sm-2-digiarte.webp", title: "New Arrivals" },
+];
+// for Best Seller component //
 
 export function CollectionTiles() {
   return (
-    <section className="container collections-section py-5">
-      <div className="best-sellers__header">
-        <h2 className="shop-category__title fp-heading">
-          Discover Our <span>Collections</span>
-        </h2>
-        <div className="best-sellers__actions">
-          <Link href="/shop?bestseller=1" className="best-sellers__view-all">
-            View All <span>↗</span>
-          </Link>
-        </div>
-      </div>
-
-      <div className="tiles" aria-label="Shop by collection">
-        {HOME.tiles.map((t, index) => (
-          <article className={`tile tile--${index + 1}`} key={t.label}>
-            <Link
-              href={t.href}
-              className="tile__image-link"
-              aria-label={`Explore ${t.label}`}
-            >
-              <Visual
-                className="tile__img"
-                src={t.image}
-                alt={t.label}
-                tone={t.tone}
-              />
-              <div className="tile__overlay" />
-              <div className="tile__text">
-                <h3>{t.label}</h3>
-              </div>
+    <section className="collections-section section-padding">
+      <Container>
+        <div className="best-sellers__header title-row-margin">
+          <h2 className="shop-category__title fp-heading">
+            Discover Our <span>Collections</span>
+          </h2>
+          <div className="best-sellers__actions">
+            <Link href="/shop?bestseller=1" className="best-sellers__view-all">
+              View All <span>↗</span>
             </Link>
-          </article>
-        ))}
-      </div>
+          </div>
+        </div>
+
+        <div className="tiles" aria-label="Shop by collection">
+          {HOME.tiles.map((t, index) => (
+            <article className={`tile tile--${index + 1}`} key={t.label}>
+              <Link
+                href={t.href}
+                className="tile__image-link"
+                aria-label={`Explore ${t.label}`}
+              >
+                <Visual
+                  className="tile__img"
+                  src={t.image}
+                  alt={t.label}
+                  tone={t.tone}
+                />
+                <div className="tile__overlay" />
+                <div className="tile__text">
+                  <h3>{t.label}</h3>
+                </div>
+              </Link>
+            </article>
+          ))}
+        </div>
+      </Container>
     </section>
   );
 }
 
-export function BestSellers({ products = PRODUCTS_DATA }) {
-  const sliderRef = useRef(null);
+export function BestSellers({ products = [], banners = [] }) {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
 
-  const scrollProducts = (direction) => {
-    sliderRef.current?.scrollBy({
-      left: direction * (sliderRef.current.clientWidth * 0.8),
-      behavior: "smooth",
-    });
-  };
-
-  const productList = products?.length ? products : PRODUCTS_DATA;
+  const bannerList = banners?.length > 0 ? banners : DEFAULT_BANNER_SLIDES;
+  const sourceProducts = products?.length > 0 ? products : [];
+  const bestsellers = sourceProducts.filter((item) =>
+    Boolean(item.is_bestseller),
+  );
+  const productList = bestsellers.length >= 6 ? bestsellers : sourceProducts;
+  const displayProducts = productList.slice(0, 6);
 
   return (
-    <section className="best-sellers">
-      <div className="container">
-        <div className="best-sellers__header">
+    <section className="best-sellers section-padding">
+      <Container>
+        <div className="best-sellers__header title-row-margin">
           <div>
-            <h2 className="shop-category__title fp-heading">
-              Best Sellers from <span>DIGI ART'S</span>
-            </h2>
+            <h2 className="best-sellers__title fp-heading">Best Sellers</h2>
           </div>
 
           <div className="best-sellers__actions">
@@ -86,13 +99,70 @@ export function BestSellers({ products = PRODUCTS_DATA }) {
           </div>
         </div>
 
-        {/* Mapped grid rendering each individual ProductCard */}
-        <div className="dummy-products-grid" ref={sliderRef}>
-          {productList.map((item) => (
-            <ProductCard key={item.id} product={item} />
-          ))}
+        {/* Main 2-Column Layout */}
+        <div className="best-sellers__layout">
+          {/* Left Column: Big Image Swiper Slider */}
+          <div className="best-sellers__banner-col">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              navigation={{
+                prevEl: prevRef.current,
+                nextEl: nextRef.current,
+              }}
+              onBeforeInit={(swiper) => {
+                swiper.params.navigation.prevEl = prevRef.current;
+                swiper.params.navigation.nextEl = nextRef.current;
+              }}
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 4500, disableOnInteraction: false }}
+              loop={bannerList.length > 1}
+              className="best-sellers__banner-swiper"
+            >
+              {bannerList.map((banner, index) => (
+                <SwiperSlide key={banner.id || index}>
+                  <div className="best-sellers__banner-card">
+                    <img
+                      src={banner.image || banner.src || banner}
+                      alt={banner.title || `Best seller banner ${index + 1}`}
+                      loading="lazy"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+
+              {/* Custom Arrow Buttons */}
+              <button
+                ref={prevRef}
+                type="button"
+                className="best-sellers__banner-arrow best-sellers__banner-prev"
+                aria-label="Previous banner"
+              >
+                <IoMdArrowBack />
+              </button>
+
+              <button
+                ref={nextRef}
+                type="button"
+                className="best-sellers__banner-arrow best-sellers__banner-next"
+                aria-label="Next banner"
+              >
+                <IoMdArrowForward />
+              </button>
+            </Swiper>
+          </div>
+
+          {/* Right Column: 6 Product Cards Grid */}
+          <div className="best-sellers__products-grid">
+            {displayProducts.length > 0 ? (
+              displayProducts.map((item) => (
+                <ProductCard key={item.id} product={item} />
+              ))
+            ) : (
+              <div className="best-sellers__empty">No products available</div>
+            )}
+          </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
@@ -185,7 +255,7 @@ export function CustomOrders() {
 
 export function InstagramRow() {
   const videoRefs = useRef([]);
-  const carouselRef = useRef(null);
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     const videos = videoRefs.current.filter(Boolean);
@@ -214,29 +284,12 @@ export function InstagramRow() {
     return () => observer.disconnect();
   }, []);
 
-  const scrollCarousel = (direction) => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    const firstItem = carousel.querySelector(".insta__item");
-    if (!firstItem) return;
-
-    const styles = window.getComputedStyle(carousel);
-    const gap = parseFloat(styles.columnGap) || 0;
-    const scrollAmount = (firstItem.offsetWidth + gap) * 2;
-
-    carousel.scrollBy({
-      left: direction * scrollAmount,
-      behavior: "smooth",
-    });
-  };
-
   return (
-    <section className="instagram-section collection__banner">
+    <section className="instagram-section collection__banner section-padding">
       <div className="container">
-        <div className="instagram-section__header">
+        <div className="instagram-section__header title-row-margin">
           <div>
-            <h2 className="shop-category__title fp-heading">
+            <h2 className="shop-category__title fp-heading text-start">
               Trending Now on <span>Instagram</span>
             </h2>
           </div>
@@ -257,46 +310,80 @@ export function InstagramRow() {
               <button
                 type="button"
                 aria-label="Previous videos"
-                onClick={() => scrollCarousel(-1)}
+                onClick={() => swiperRef.current?.slidePrev()}
               >
-                &#8592;
+                <IoMdArrowBack />
               </button>
 
               <button
                 type="button"
                 aria-label="Next videos"
-                onClick={() => scrollCarousel(1)}
+                onClick={() => swiperRef.current?.slideNext()}
               >
-                &#8594;
+                <IoMdArrowForward />
               </button>
             </div>
           </div>
         </div>
 
-        <div className="insta" ref={carouselRef}>
+        <Swiper
+          modules={[Navigation]}
+          onBeforeInit={(swiper) => {
+            swiperRef.current = swiper;
+          }}
+          loop={true}
+          grabCursor={true}
+          simulateTouch={true}
+          touchEventsTarget="container"
+          preventClicks={true}
+          preventClicksPropagation={true}
+          edgeSwipeDetection={true}
+          touchStartPreventDefault={false}
+          spaceBetween={16}
+          slidesPerView={2}
+          breakpoints={{
+            480: { slidesPerView: 2, spaceBetween: 16 },
+            768: { slidesPerView: 3, spaceBetween: 20 },
+            1024: { slidesPerView: 4, spaceBetween: 24 },
+            1280: { slidesPerView: 5, spaceBetween: 24 },
+          }}
+          className="insta"
+        >
           {instagram.map((item, index) => (
-            <a
-              key={item.id}
-              className="insta__item"
-              href={item.url || SITE_INFO.instagram || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={item.alt || "View Instagram video"}
-            >
-              <video
-                ref={(el) => {
-                  videoRefs.current[index] = el;
-                }}
-                className="insta__media"
-                src={item.video}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-              />
-            </a>
+            <SwiperSlide key={item.id} className="insta__slide">
+              <a
+                className="insta__item"
+                href={item.url || SITE_INFO.instagram || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.alt || "View Instagram video"}
+                draggable="false"
+                onDragStart={(e) => e.preventDefault()}
+                style={{ display: "block", userSelect: "none" }}
+              >
+                <video
+                  ref={(el) => {
+                    videoRefs.current[index] = el;
+                  }}
+                  className="insta__media"
+                  src={item.video}
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  draggable="false"
+                  onDragStart={(e) => e.preventDefault()}
+                  style={{
+                    pointerEvents: "none",
+                    userSelect: "none",
+                    width: "100%",
+                    display: "block",
+                  }}
+                />
+              </a>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </section>
   );

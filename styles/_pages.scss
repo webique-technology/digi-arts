@@ -2,6 +2,42 @@
 @use 'mixins' as m;
 
 
+// --------- common ---------------- //
+
+.section-padding {
+  padding: 80px 0;
+
+  @media(max-width:992px) {
+    padding: 65px 0;
+  }
+
+  @media(max-width:768px) {
+    padding: 50px 0;
+  }
+
+  @media(max-width:576px) {
+    padding: 30px 0;
+  }
+}
+
+.title-row-margin {
+  margin-bottom: 3rem;
+
+  @media(max-width:992px) {
+    margin-bottom: 2.5rem;
+  }
+
+  @media(max-width:768px) {
+    margin-bottom: 2rem;
+  }
+
+  @media(max-width:576px) {
+    margin-bottom: 1.75rem;
+  }
+}
+
+// --------- common ---------------- //
+
 
 // ---------- Home ----------
 
@@ -10,19 +46,6 @@
   background: #fbf5f8;
   --hero-ink: #38213f;
   --hero-accent: #a43f7b;
-
-  &__stage {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 16 / 6;
-    min-height: 390px;
-    background: #f7eaf2;
-
-    @include m.down(v.$bp-md) {
-      aspect-ratio: 4 / 5;
-      min-height: 490px;
-    }
-  }
 
   &__slide {
     position: absolute;
@@ -59,30 +82,6 @@
     background:
       radial-gradient(circle at 80% 30%, #e9c3df, transparent 30%),
       linear-gradient(115deg, #fff6fa, #e9d9f4);
-  }
-
-  &__content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 45px 8%;
-    text-align: left;
-    color: var(--hero-ink);
-
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.94) 29%, rgba(0, 0, 0, 0.72) 43%, rgba(0, 0, 0, 0.08) 68%, transparent 100%);
-
-    @include m.down(v.$bp-md) {
-      align-items: flex-end;
-      padding: 0 25px 70px;
-
-      background: linear-gradient(0deg,
-          rgba(0, 0, 0, 0.99) 0%,
-          rgba(0, 0, 0, 0.95) 36%,
-          rgba(0, 0, 0, 0.4) 58%,
-          transparent 78%);
-    }
   }
 
   &__copy {
@@ -416,16 +415,14 @@
 
 
 .best-sellers {
-  padding: 64px 0;
   overflow: hidden;
   background: #fff;
 
   &__header {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 24px;
-    margin-bottom: 28px;
   }
 
   &__eyebrow {
@@ -439,14 +436,10 @@
 
   &__title {
     margin: 0;
-    color: #542478;
+    color: v.$color-title;
     font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 3vw, 40px);
+    font-size: clamp(28px, 3vw, 38px);
     font-weight: 600;
-
-    span {
-      color: #242024;
-    }
   }
 
   &__subtitle {
@@ -474,49 +467,170 @@
     }
   }
 
-  &__arrows {
-    display: flex;
-    gap: 8px;
+  // 2-Column Responsive Layout
+  &__layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: stretch;
 
-    button {
-      width: 40px;
-      height: 40px;
+    @media (min-width: 992px) {
+      grid-template-columns: 38% 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: 420px 1fr;
+      gap: 28px;
+    }
+  }
+
+  // Left Column - Swiper Banner
+  &__banner-col {
+    position: relative;
+    width: 100%;
+    min-width: 0; // Prevents grid overflow issues
+    height: 100%;
+
+    @media (max-width: 992px) {
+      max-height: 450px;
+    }
+
+    @media (max-width: 768px) {
+      max-height: 350px;
+    }
+  }
+
+  &__banner-swiper {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+
+    .swiper-slide {
+      height: auto;
+      display: flex;
+    }
+
+    // Swiper arrow buttons using existing color palette
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 36px;
+      height: 36px;
       border: 1px solid #e8e0eb;
       border-radius: 50%;
       background: #fff;
       color: #542478;
-      font-size: 20px;
-      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       transition: 0.25s ease;
+
+      &::after {
+        font-size: 14px;
+        font-weight: 700;
+      }
 
       &:hover {
         background: #542478;
         color: #fff;
       }
     }
-  }
 
-  &__slider {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: calc((100% - 60px) / 4);
-    gap: 20px;
-    overflow-x: auto;
-    padding: 4px 2px 14px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
+    .swiper-pagination-bullet-active {
+      background: #542478;
     }
   }
 
-  &__slide {
-    min-width: 0;
-    scroll-snap-align: start;
+  &__banner-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #e8e0eb;
+    background: #fff;
+    color: v.$color-primary-dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: 0.25s ease;
+
+    &:hover {
+      background: v.$color-primary-dark;
+      color: v.$color-white;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &__banner-prev {
+    left: 14px;
+  }
+
+  &__banner-next {
+    right: 14px;
+  }
+
+  &__banner-card {
+    width: 100%;
+    height: 100%;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e8e0eb;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media(max-width:768px) {
+      min-height: 400px;
+      max-height: 400px;
+    }
+
+    @media(max-width:576px) {
+      min-height: 300px;
+      max-height: 300px;
+    }
+  }
+
+  // Right Column - 6 Product Cards Grid (3 columns x 2 rows)
+  &__products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-content: start;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 576px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+
   }
 
   &__empty {
+    grid-column: 1 / -1;
+    text-align: center;
     padding: 30px 0;
     color: #777;
   }
@@ -654,18 +768,6 @@
 
 @media (max-width: 576px) {
   .best-sellers {
-    padding: 42px 0;
-
-    &__header {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    &__actions {
-      width: 100%;
-      justify-content: space-between;
-    }
 
     &__slider {
       grid-auto-columns: calc((100% - 14px) / 1.7);
@@ -764,7 +866,6 @@
 .dummy-product {
   position: relative;
   min-width: 0;
-  font-family: v.$font-heading;
   overflow: hidden;
   border: 1px solid #eee8f0;
   border-radius: 13px;
@@ -786,7 +887,7 @@
   &__visual {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 4 / 4.7;
+    aspect-ratio: 3 / 2.85;
     background: linear-gradient(145deg, #fbf7fc, #f3edf6);
 
     &::after {
@@ -847,15 +948,15 @@
     top: 13px;
     left: 13px;
     z-index: 3;
-    padding: 7px 10px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 4px;
+    padding: 4px 12px;
+    // border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
     background: rgba(84, 36, 120, 0.94);
     color: #fff;
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.8px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     box-shadow: 0 3px 10px rgba(40, 20, 50, 0.1);
     backdrop-filter: blur(8px);
 
@@ -954,6 +1055,7 @@
     display: -webkit-box;
     overflow: hidden;
     margin: 0;
+    font-family: v.$font-heading;
     color: v.$color-text;
     font-size: 16px;
     font-weight: 600;
@@ -1197,10 +1299,6 @@
   .dummy-product {
     border-radius: 9px;
 
-    &__visual {
-      aspect-ratio: 4 / 4.8;
-    }
-
     &__badge {
       top: 8px;
       left: 8px;
@@ -1314,15 +1412,13 @@
 
 
 .instagram-section {
-  padding: 64px 0;
   overflow: hidden;
 
   &__header {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 24px;
-    margin-bottom: 28px;
 
     p {
       margin: 10px 0 0;
@@ -1396,35 +1492,23 @@
 }
 
 .insta {
-  display: grid;
-  grid-auto-flow: column;
-
-  // Desktop: exactly 5.5 reels visible
-  grid-auto-columns: calc((100% - 60px) / 5.5);
-
-  gap: 12px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
   padding-bottom: 8px;
 
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
+  &__slide {
+    height: auto;
+    display: flex;
   }
 
   &__item {
     display: block;
-    min-width: 0;
     width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 3 / 5;
     overflow: hidden;
     border-radius: 10px;
     background: #f6f6f6;
-    scroll-snap-align: start;
   }
 
   &__media {
@@ -1439,10 +1523,6 @@
 @media (min-width: 1400px) {
   .insta {
     grid-auto-columns: calc((100% - 60px) / 5.5);
-
-    &__item {
-      aspect-ratio: 3 / 4.2;
-    }
   }
 }
 
@@ -1458,10 +1538,6 @@
   .insta {
     grid-auto-columns: calc((100% - 8px) / 1.5);
     gap: 8px;
-
-    &__item {
-      aspect-ratio: 3 / 4;
-    }
   }
 }
 
@@ -2735,13 +2811,12 @@
 /* SHOP BY CATEGORY */
 
 .shop-category {
-  padding: 70px 0 40px;
   // background: #fffaf6;
   overflow: hidden;
 
   &__title {
     margin: 0;
-    color: #000;
+    color: v.$color-title;
     font-weight: 600;
     font-size: 38px;
     letter-spacing: -0.5px;
@@ -2873,7 +2948,6 @@
 /* MOBILE RESPONSIVE */
 @media (max-width: 575px) {
   .shop-category {
-    padding: 45px 0 30px;
 
     &__title {
       font-size: 26px;
@@ -2927,7 +3001,7 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: 32px;
-    margin-bottom: 38px;
+    // margin-bottom: 38px;
   }
 
   &__eyebrow {
@@ -3162,7 +3236,7 @@
 
     &__header {
       display: block;
-      margin-bottom: 25px;
+      // margin-bottom: 25px;
     }
 
     &__eyebrow {
@@ -4892,7 +4966,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 8px 14px;
-  font: 600 0.9rem "Inter", sans-serif;
+  font: 600 16px "Inter", sans-serif;
   cursor: pointer;
   text-align: center;
   transition: opacity 0.2s, transform 0.2s;
@@ -4903,6 +4977,13 @@
     border: 1px solid v.$color-primary !important;
     border-radius: 8px !important;
     background: v.$color-primary !important;
+    color: v.$color-white !important;
+  }
+
+  &.primary-light-btn {
+    border: 1px solid v.$color-light-red !important;
+    border-radius: 8px !important;
+    background: v.$color-light-red !important;
     color: v.$color-white !important;
   }
 
@@ -4918,6 +4999,19 @@
     border-radius: 8px !important;
     background: v.$color-primary-beige !important;
     color: v.$color-white !important;
+  }
+
+  &.fourth-btn {
+    border: 1px solid #e8dcef;
+    background: #f8f2fb;
+    border-radius: 8px !important;
+    color: v.$color-primary-dark !important;
+
+    &:hover {
+      background-color: v.$color-primary;
+      color: v.$color-white !important;
+      border: v.$color-primary;
+    }
   }
 
 }
@@ -5058,3 +5152,165 @@
 }
 
 // contact page //
+
+// ------- / bottom nav style / -----------//
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1050; // Higher than sticky headers and sliders
+
+  background: #ffffff;
+  border-top: 1px solid #e8e0eb;
+  box-shadow: 0 -4px 16px rgba(84, 36, 120, 0.07);
+
+  // Safe area support for iOS home bar indicator
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  // Hide on desktop & tablets (>= 768px)
+  @media (min-width: 768px) {
+    display: none !important;
+  }
+
+  // Handle mobile rotated to landscape orientation
+  @media (max-width: 991px) and (orientation: landscape) and (max-height: 500px) {
+    display: block !important;
+
+    .bottom-nav__item {
+      padding: 4px 0 6px;
+    }
+
+    .bottom-nav__icon {
+      font-size: 18px;
+    }
+
+    .bottom-nav__label {
+      font-size: 10px;
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    // Inactive tab state
+    color: #777777;
+
+    &:hover {
+      color: #542478;
+    }
+
+    // Active tab state
+    &--active {
+      color: #542478;
+
+      .bottom-nav__label {
+        font-weight: 700;
+        color: #542478;
+      }
+
+      .bottom-nav__icon {
+        transform: scale(1.1);
+        color: #542478;
+      }
+    }
+  }
+
+  &__icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3px;
+  }
+
+  &__icon {
+    font-size: 22px;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  &__label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  // Cart count badge
+  &__badge {
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 10px;
+    background: v.$color-primary; // Accent pink
+    color: v.$color-white;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid v.$color-white;
+  }
+}
+
+
+.bottom-nav {
+  // Reset for button tab
+  &__btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+
+  // Animation pulse on the badge when items are added
+  &__badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 10px;
+    background: #e83e8c; // Accent color matching your header count
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    animation: popIn 0.25s ease-out;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.6);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Add padding to body on mobile so the fixed navbar doesn't cover footer content
+@media (max-width: 767.98px) {
+  body {
+    padding-bottom: calc(57px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+// ------- // bottom nav style // -----------//

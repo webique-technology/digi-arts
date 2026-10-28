@@ -7,25 +7,20 @@ import Stars from "./Stars";
 import AddToCartButton from "./AddToCartButton";
 import { formatPrice, isOnSale } from "@/lib/utils";
 import { TEST_IDS } from "./testIds";
-import { Col, Row } from "react-bootstrap";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 // Extracts the file name and maps it directly to /demo-products/<filename>
 function resolveImagePath(img) {
   if (!img) return "/demo-products/placeholder.webp";
 
-  // Handle if image is an object like { image_path: "..." }
   let rawPath = typeof img === "object" ? img.image_path || img.src : img;
   if (typeof rawPath !== "string") return "/demo-products/placeholder.webp";
 
-  // If it's already an external HTTP/HTTPS URL, preserve it
   if (rawPath.startsWith("http://") || rawPath.startsWith("https://")) {
     return rawPath;
   }
 
-  // Extracts just the filename (e.g. "4657f759dca910da335458a3.webp")
   const fileName = rawPath.split("/").filter(Boolean).pop();
-
   return `/demo-products/${fileName}`;
 }
 
@@ -39,19 +34,43 @@ export default function ProductCard({
 
   if (!item) return null;
 
-  // Handles primary_image, image, or the first item from the images array
+  // Handles primary_image, image, or first non-video item from images array
   const rawImage =
     item.primary_image ||
     item.image ||
     (Array.isArray(item.images) && item.images.length > 0
-      ? item.images[0].image_path || item.images[0]
+      ? item.images.find((img) => img.type !== "video")?.image_path ||
+        item.images[0].image_path ||
+        item.images[0]
       : null);
 
   const img = resolveImagePath(rawImage);
   const title = item.title || item.name || "Product";
   const slug = item.slug || String(item.id);
+  const categoryName = item.category_name || item.category?.name;
   const reviews = Number(item.review_count) || 0;
   const [isFavourite, setIsFavourite] = useState(false);
+
+  // Price calculations
+  const originalPrice = Number(item.price) || 0;
+  const salePrice =
+    item.sale_price !== null && item.sale_price !== undefined
+      ? Number(item.sale_price)
+      : null;
+
+  const isSale =
+    typeof isOnSale === "function"
+      ? isOnSale(item)
+      : salePrice !== null && salePrice > 0 && salePrice < originalPrice;
+
+  // Calculate discount percentage (e.g. -25%)
+  const discountPercent =
+    isSale && originalPrice > 0
+      ? Math.round(((originalPrice - salePrice) / originalPrice) * 100)
+      : 0;
+
+  // Bestseller badge check
+  const isBestseller = Boolean(item.is_bestseller);
 
   useEffect(() => {
     try {
@@ -96,12 +115,6 @@ export default function ProductCard({
   };
 
   const productUrl = `/products/${slug}`;
-  const isSale =
-    typeof isOnSale === "function"
-      ? isOnSale(item)
-      : item.sale_price !== null &&
-        item.sale_price !== undefined &&
-        Number(item.sale_price) < Number(item.price);
 
   return (
     <article
@@ -112,6 +125,7 @@ export default function ProductCard({
           : undefined
       }
     >
+      {/* Product Image Area */}
       <div className="pcard__visual position-relative">
         <Link
           href={productUrl}
@@ -123,34 +137,35 @@ export default function ProductCard({
           </div>
         </Link>
 
-        {/* <button
-          type="button"
-          onClick={handleToggleFavourite}
-          aria-label={
-            isFavourite ? "Remove from favourites" : "Add to favourites"
-          }
-          className="add-to-favourite-btn position-absolute top-0 end-0 z-3 mt-2 me-2 border-0 rounded-circle bg-white shadow-sm d-flex align-items-center justify-content-center p-2 text-dark"
-          style={{ cursor: "pointer", width: "36px", height: "36px" }}
-        >
-          {isFavourite ? (
-            <FaHeart className="fs-5 text-danger" />
-          ) : (
-            <FaRegHeart className="fs-5 text-dark" />
-          )}
-        </button> */}
+        {/* Top-Left: Bestseller Pill Badge */}
+        {isBestseller && (
+          <span className="pcard__badge-bestseller">Bestseller</span>
+        )}
 
-        {isSale && <span className="pcard__badge">SPECIAL PRICE</span>}
-        <span className="pcard__art-label">DIGI ART'S</span>
+        {/* Bottom-Right: Discount Badge (-25%) */}
+        {isSale && discountPercent > 0 && (
+          <span className="pcard__badge-discount">-{discountPercent}%</span>
+        )}
       </div>
 
+      {/* Product Info */}
       <div className="pcard__info">
+        {/* Category Label */}
+        {categoryName && (
+          <span className="pcard__category">{categoryName}</span>
+        )}
+
+        {/* Product Title (Strict 1 Line) */}
         <Link
           href={productUrl}
           className="pcard__title-link text-decoration-none"
         >
-          <h3 className="pcard__title">{title}</h3>
+          <h3 className="pcard__title" title={title}>
+            {title}
+          </h3>
         </Link>
 
+        {/* Rating (if any) */}
         {reviews > 0 && (
           <div className="pcard__rating">
             <Stars value={item.rating} />
@@ -160,41 +175,41 @@ export default function ProductCard({
           </div>
         )}
 
-        <Row className="align-items-center mt-2">
-          <Col sm={12} md={6}>
-            <div className="pcard__price gap-0">
-              {isSale ? (
-                <>
-                  <span className="pcard__price-sale">
-                    {typeof formatPrice === "function"
-                      ? formatPrice(item.sale_price)
-                      : `₹${item.sale_price}`}
-                  </span>{" "}
-                  <s className="text-muted">
-                    {typeof formatPrice === "function"
-                      ? formatPrice(item.price)
-                      : `₹${item.price}`}
-                  </s>
-                </>
-              ) : (
-                <span>
+        {/* Bottom Row: Price on left, Cart Button on right */}
+        <div className="pcard__bottom">
+          <div className="pcard__price">
+            {isSale ? (
+              <>
+                <span className="pcard__price-sale">
                   {typeof formatPrice === "function"
-                    ? formatPrice(item.price)
-                    : `₹${item.price}`}
+                    ? formatPrice(salePrice)
+                    : `₹${salePrice}`}
                 </span>
-              )}
-            </div>
-          </Col>
-          <Col sm={12} md={6}>
-            <div className="pcard__footer">
-              <AddToCartButton
-                product={item}
-                icon={variant === "best"}
-                preview={preview}
-              />
-            </div>
-          </Col>
-        </Row>
+                <s className="pcard__price-original">
+                  {typeof formatPrice === "function"
+                    ? formatPrice(originalPrice)
+                    : `₹${originalPrice}`}
+                </s>
+              </>
+            ) : (
+              <span>
+                {typeof formatPrice === "function"
+                  ? formatPrice(originalPrice)
+                  : `₹${originalPrice}`}
+              </span>
+            )}
+          </div>
+
+          <div className="pcard__action">
+            <AddToCartButton
+              product={item}
+              icon={true}
+              preview={preview}
+              text={false}
+              className="button fourth-btn"
+            />
+          </div>
+        </div>
       </div>
     </article>
   );

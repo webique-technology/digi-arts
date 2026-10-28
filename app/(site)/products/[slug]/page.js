@@ -149,7 +149,7 @@ export default async function ProductPage({ params }) {
     <>
       <JsonLd data={productLd} />
 
-      <main className="product-detail-page bg-white py-3">
+      <main className="product-detail-page py-3">
         <div className="container px-lg-5">
           <MessagePopup
             title="Demo catalog preview"

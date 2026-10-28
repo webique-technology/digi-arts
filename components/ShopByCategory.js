@@ -63,9 +63,9 @@ export default function ShopByCategory() {
   const nextRef = useRef(null);
 
   return (
-    <section className="shop-category">
+    <section className="shop-category section-padding pb-0">
       <div className="container position-relative">
-        <div className="shop-category__header d-flex justify-content-between align-items-center mb-4">
+        <div className="shop-category__header title-row-margin d-flex justify-content-between align-items-center">
           <h2 className="shop-category__title mb-0">
             Shop by <span>Category</span>
           </h2>
@@ -95,7 +95,7 @@ export default function ShopByCategory() {
         <Swiper
           modules={[Navigation, A11y]}
           spaceBetween={20}
-          slidesPerView={2.3}
+          slidesPerView={3.5}
           loop={true} // Enables infinite loop
           speed={800} // Transition slide speed in ms
           navigation={{
@@ -112,12 +112,12 @@ export default function ShopByCategory() {
             swiper.params.navigation.nextEl = nextRef.current;
           }}
           breakpoints={{
-            480: {
-              slidesPerView: 3.2,
+            576: {
+              slidesPerView: 4.5,
               spaceBetween: 20,
             },
             768: {
-              slidesPerView: 4.5,
+              slidesPerView: 5.5,
               spaceBetween: 24,
             },
             992: {

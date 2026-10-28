@@ -14,9 +14,11 @@ import {
 } from "@/components/home/Sections";
 import { getPublic } from "@/lib/api";
 import { HERO_FALLBACK } from "@/data/site";
-import { PRODUCTS_DATA } from "@/data/productData";
 import Testimonials from "@/components/Testimonials";
 import TrustStrip from "@/components/TrustStrip";
+
+// 1. Import demo products JSON directly (replaces the missing productData.js)
+import demoProductsData from "@/data/demoCatalog.json";
 
 export const revalidate = 15;
 export const metadata = { alternates: { canonical: "/" } };
@@ -24,15 +26,17 @@ export const metadata = { alternates: { canonical: "/" } };
 export default async function Home() {
   const [b, best, smallBags] = await Promise.all([
     getPublic("/banners"),
-    getPublic("/products?bestseller=1&limit=4"),
+    getPublic("/products?bestseller=1&limit=6"), // Increased limit to 6 for the 6 cards
     getPublic("/products?category=small-bags&limit=4"),
   ]);
 
-  let products = best?.data || [];
+  // Safely extract JSON array whether it is a direct array or { products: [...] }
+  const fallbackProducts = Array.isArray(demoProductsData)
+    ? demoProductsData
+    : demoProductsData?.products || demoProductsData?.data || [];
 
-  if (!products.length) {
-    products = (await getPublic("/products?limit=4"))?.data || [];
-  }
+  // Use API products if available; otherwise use demoProduct.json
+  let products = best?.data?.length ? best.data : fallbackProducts;
 
   const banners = b?.data?.length ? b.data : HERO_FALLBACK;
   const smallBagsProducts = Array.isArray(smallBags)
@@ -53,9 +57,10 @@ export default async function Home() {
       <ShopByCategory />
       <FestivalCollections />
       <FeaturedProducts products={products} />
-      <CollectionTiles />
+      {/* <CollectionTiles /> */}
 
-      <BestSellers products={PRODUCTS_DATA} />
+      {/* Passing products (will fall back to demoProduct.json if API is empty) */}
+      <BestSellers products={products} />
 
       {/* <CustomOrders /> */}
       <InstagramRow />

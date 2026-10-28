@@ -161,7 +161,7 @@ export default async function ProductsPage({ searchParams = {} }) {
               <>
                 <Row className="g-4">
                   {paginatedProducts.map((p) => (
-                    <Col sm={6} lg={4} key={p.id}>
+                    <Col xs={6} md={4} key={p.id}>
                       <ProductCard p={p} />
                     </Col>
                   ))}
