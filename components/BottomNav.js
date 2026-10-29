@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container, Row, Col } from "react-bootstrap";
+import { useAuth } from "./AuthProvider";
 import { useCart } from "./CartProvider";
 import { BagIcon } from "./Icons";
 import {
@@ -15,9 +16,18 @@ import {
 } from "react-icons/ri";
 
 export default function BottomNav() {
-  const pathname = usePathname();
-  // 1. Get live count and drawer opener from CartProvider
+  const { isLoggedIn, openLogin } = useAuth();
   const { count = 0, setOpen, open } = useCart();
+  const pathname = usePathname();
+
+  const handleAccountClick = (e) => {
+    e.preventDefault();
+    if (isLoggedIn) {
+      router.push("/account");
+    } else {
+      openLogin();
+    }
+  };
 
   const isHomeActive = pathname === "/";
   const isAccountActive =
@@ -55,9 +65,9 @@ export default function BottomNav() {
 
           {/* 2. Account Tab */}
           <Col xs={3}>
-            <Link
-              href="/account"
-              className={`bottom-nav__item ${
+            <button
+              onClick={handleAccountClick}
+              className={`bottom-nav__item bottom-nav__btn ${
                 isAccountActive ? "bottom-nav__item--active" : ""
               }`}
             >
@@ -69,7 +79,7 @@ export default function BottomNav() {
                 )}
               </div>
               <span className="bottom-nav__label">Account</span>
-            </Link>
+            </button>
           </Col>
 
           {/* 3. Cart Button (Live Count & Drawer Trigger) */}
@@ -110,7 +120,7 @@ export default function BottomNav() {
                   <RiWhatsappLine className="bottom-nav__icon" />
                 )}
               </div>
-              <span className="bottom-nav__label">Account</span>
+              <span className="bottom-nav__label">Whatsapp</span>
             </Link>
           </Col>
         </Row>

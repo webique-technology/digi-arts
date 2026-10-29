@@ -784,4 +784,9 @@
     .modal-dialog {
         margin: 0 !important;
     }
+
+    @media(max-width:440px){
+        border: none !important;
+        background: none !important;
+    }
 }

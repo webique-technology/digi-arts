@@ -19,6 +19,8 @@ import TrustStrip from "@/components/TrustStrip";
 
 // 1. Import demo products JSON directly (replaces the missing productData.js)
 import demoProductsData from "@/data/demoCatalog.json";
+import BlogSection from "@/components/blog/BlogSection";
+import { BLOG_POSTS } from "@/data/blogData";
 
 export const revalidate = 15;
 export const metadata = { alternates: { canonical: "/" } };
@@ -68,6 +70,7 @@ export default async function Home() {
       {/* <CollectionCards /> */}
       {/* <Story /> */}
       <Testimonials />
+      <BlogSection posts={BLOG_POSTS}/>
       <TrustStrip />
       {/* <Features /> */}
     </>

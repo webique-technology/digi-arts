@@ -1,30 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Container, Row, Col } from "react-bootstrap";
 
 import AccountSidebar from "@/components/accoount/AccountSidebar";
-import AuthModal from "@/components/accoount/AuthModal";
+import { useAuth } from "@/components/AuthProvider";// 1. Use the global AuthContext
 
 export default function AccountLayout({ children }) {
-  const [user, setUser] = useState(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
+  const router = useRouter();
+  // 2. Get user and the global logout function from AuthProvider
+  const { user, isLoggedIn, logout } = useAuth();
 
+  // Route protection: If user is not logged in, redirect to home
   useEffect(() => {
-    const session = localStorage.getItem("user_session");
-    if (session) {
-      setUser(JSON.parse(session));
-    } else {
-      setShowAuthModal(true);
+    const session =
+      typeof window !== "undefined" && localStorage.getItem("user_session");
+    if (!session) {
+      router.replace("/");
     }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user_session");
-    setUser(null);
-    setShowAuthModal(true);
-  };
+  }, [router, isLoggedIn]);
 
   return (
     <section className="account-section">
@@ -39,9 +35,9 @@ export default function AccountLayout({ children }) {
         </div>
 
         <Row className="g-4 account-layout">
-          {/* Persistent Left Sidebar */}
+          {/* Persistent Left Sidebar with global logout */}
           <Col lg={3} md={4} className="account-sidebar-col">
-            <AccountSidebar user={user} onLogoutClick={handleLogout} />
+            <AccountSidebar user={user} onLogoutClick={logout} />
           </Col>
 
           {/* Dynamic Page Content */}
@@ -50,13 +46,6 @@ export default function AccountLayout({ children }) {
           </Col>
         </Row>
       </Container>
-
-      {/* Login Popup */}
-      <AuthModal
-        show={showAuthModal}
-        onHide={() => setShowAuthModal(false)}
-        onLoginSuccess={(userData) => setUser(userData)}
-      />
     </section>
   );
 }

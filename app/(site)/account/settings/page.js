@@ -88,46 +88,6 @@ export default function SettingsPage() {
         </Form>
       </div>
 
-      {/* Password Form */}
-      <div className="account-card account-card--form">
-        <h3 className="account-card__title">Change Password</h3>
-        <Form className="account-form">
-          <Form.Group className="account-form__group">
-            <Form.Label className="account-form__label">
-              Current Password
-            </Form.Label>
-            <div className="account-form__input-wrapper">
-              <RiLockPasswordLine className="account-form__icon" />
-              <Form.Control type="password" className="account-form__control" />
-            </div>
-          </Form.Group>
-
-          <Form.Group className="account-form__group">
-            <Form.Label className="account-form__label">
-              New Password
-            </Form.Label>
-            <div className="account-form__input-wrapper">
-              <RiLockPasswordLine className="account-form__icon" />
-              <Form.Control type="password" className="account-form__control" />
-            </div>
-          </Form.Group>
-
-          <Form.Group className="account-form__group">
-            <Form.Label className="account-form__label">
-              Confirm New Password
-            </Form.Label>
-            <div className="account-form__input-wrapper">
-              <RiLockPasswordLine className="account-form__icon" />
-              <Form.Control type="password" className="account-form__control" />
-            </div>
-          </Form.Group>
-
-          <button type="button" className="account-btn account-btn--secondary">
-            Update Password
-          </button>
-        </Form>
-      </div>
-
       {/* Danger Zone */}
       <div className="account-card account-card--danger">
         <h3 className="account-card__title account-card__title--danger">

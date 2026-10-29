@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useAuth } from "./AuthProvider";
 import { useRouter } from "next/navigation";
 import Logo from "./Logo";
 // import { NAV } from '@/data/site';
@@ -22,6 +23,7 @@ export default function Header() {
   const [mobile, setMobile] = useState(false);
   const [search, setSearch] = useState(false);
   const [q, setQ] = useState("");
+  const { isLoggedIn, openLogin } = useAuth();
 
   const NAV = [
     {
@@ -131,6 +133,10 @@ export default function Header() {
       href: "/about",
     },
     {
+      label: "Blogs",
+      href: "/blog",
+    },
+    {
       label: "Contact",
       href: "/contact",
     },
@@ -156,6 +162,20 @@ export default function Header() {
       q.trim() ? `/products?q=${encodeURIComponent(q.trim())}` : "/products",
     );
     setSearch(false);
+  };
+
+  const handleUserClick = (e) => {
+    e.preventDefault();
+    const session =
+      typeof window !== "undefined" && localStorage.getItem("user_session");
+
+    if (isLoggedIn && session) {
+      // Logged in -> go to account dashboard
+      router.push("/account");
+    } else {
+      // Logged out -> open login modal immediately
+      openLogin();
+    }
   };
 
   return (
@@ -192,43 +212,8 @@ export default function Header() {
               {n.children && (
                 <div className="nav__sub">
                   <Row className="justify-content-around">
-                  {n.children.slice(0, 4).map((c) => (
-                    <Col lg={2} key={c.label}>
-                      <Link
-                        href={c.href}
-                        data-testid={TEST_IDS.headerNavigation(
-                          "desktop",
-                          c.href,
-                        )}
-                        className="nav-link-main"
-                      >
-                        {c.label}
-                        {c.children && <ChevronDown />}
-                      </Link>
-
-                      {c.children && (
-                        <ul className="nav__sub--nested p-0">
-                          {c.children.map((sub) => (
-                            <li key={sub.label}>
-                              <Link
-                                href={sub.href}
-                                data-testid={TEST_IDS.headerNavigation(
-                                  "desktop",
-                                  sub.href,
-                                )}
-                                className="fw-normal"
-                              >
-                                {sub.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </Col>
-                  ))}
-                  <Col lg={2}>
-                    {n.children.slice(4).map((c) => (
-                      <div key={c.label}>
+                    {n.children.slice(0, 4).map((c) => (
+                      <Col lg={2} key={c.label}>
                         <Link
                           href={c.href}
                           data-testid={TEST_IDS.headerNavigation(
@@ -240,10 +225,45 @@ export default function Header() {
                           {c.label}
                           {c.children && <ChevronDown />}
                         </Link>
-                      </div>
+
+                        {c.children && (
+                          <ul className="nav__sub--nested p-0">
+                            {c.children.map((sub) => (
+                              <li key={sub.label}>
+                                <Link
+                                  href={sub.href}
+                                  data-testid={TEST_IDS.headerNavigation(
+                                    "desktop",
+                                    sub.href,
+                                  )}
+                                  className="fw-normal"
+                                >
+                                  {sub.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </Col>
                     ))}
-                  </Col>
-                </Row>
+                    <Col lg={2}>
+                      {n.children.slice(4).map((c) => (
+                        <div key={c.label}>
+                          <Link
+                            href={c.href}
+                            data-testid={TEST_IDS.headerNavigation(
+                              "desktop",
+                              c.href,
+                            )}
+                            className="nav-link-main"
+                          >
+                            {c.label}
+                            {c.children && <ChevronDown />}
+                          </Link>
+                        </div>
+                      ))}
+                    </Col>
+                  </Row>
                 </div>
               )}
             </li>
@@ -262,7 +282,8 @@ export default function Header() {
           </button>
           <Link
             href="/account"
-            aria-label="Admin sign in"
+            onClick={handleUserClick}
+            aria-label="User account"
             data-testid={TEST_IDS.headerAdminLogin}
             className=" bg-white d-none d-md-flex"
           >
@@ -292,7 +313,11 @@ export default function Header() {
               onChange={(e) => setQ(e.target.value)}
               className="w-100"
             />
-            <button type="submit" className="flex-shrink-0 py-1 px-2" aria-label="Submit search">
+            <button
+              type="submit"
+              className="flex-shrink-0 py-1 px-2"
+              aria-label="Submit search"
+            >
               <SearchIcon />
             </button>
           </div>

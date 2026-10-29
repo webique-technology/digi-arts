@@ -121,6 +121,9 @@ export default function Footer() {
                   <Link href="/careers">Careers</Link>
                 </li>
                 <li>
+                  <Link href="/blog">Blogs</Link>
+                </li>
+                <li>
                   <Link href="/contact">Contact Us</Link>
                 </li>
               </ul>
@@ -191,7 +194,7 @@ export default function Footer() {
         <Container>
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
             <span className="da-footer__copyright text-center text-md-start">
-              © 2024 DigiArts. All rights reserved.
+              © 2026 DigiArts. All rights reserved.
             </span>
 
             <div className="da-footer__badges d-flex align-items-center justify-content-center flex-wrap gap-2">
