@@ -6,21 +6,21 @@ import Image from 'next/image';
 const festivals = [
   {
     name: 'Diwali Festival',
-    image: '/images/offer-3.jpg',
+    image: '/images/offer-1.webp',
     href: '/collections/diwali-festival',
     className: 'festival-card--diwali',
     label: 'FESTIVE FAVOURITES',
   },
   {
     name: 'Ganesh Festival',
-    image: '/images/offer-2.jpg',
+    image: '/images/offer-2.webp',
     href: '/collections/ganesh-festival',
     className: 'festival-card--ganesh',
     label: 'MADE FOR CELEBRATIONS',
   },
   {
     name: 'Christmas Collection',
-    image: '/images/offer-1.jpg',
+    image: '/images/offer-3.webp',
     href: '/collections/christmas',
     className: 'festival-card--christmas',
     label: 'GIFTING SEASON',
@@ -50,7 +50,7 @@ export default function FestivalCollections() {
 
             <div className="festival-card__overlay" />
 
-            <div className="festival-card__content">
+            <div className="festival-card__content d-none">
             <h3>{featured.name}</h3>
  <span class="hero__cta width-btn" >Explore Collection<span class="hero__cta-icon" aria-hidden="true">↗</span></span>
             </div>
@@ -73,7 +73,7 @@ export default function FestivalCollections() {
 
                 <div className="festival-card__overlay" />
 
-                <div className="festival-card__content">
+                <div className="festival-card__content d-none">
 
                   <h3>{festival.name}</h3>
 
