@@ -1005,6 +1005,16 @@
   }
 }
 
+.collection__banner2 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
 @media (max-width: 767px) {
   .collections-section {
     .tiles {

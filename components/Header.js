@@ -123,6 +123,18 @@ export default function Header() {
           label: "Valentine Day",
           href: "/products?category=valentine-day",
         },
+        {
+          label: "Wall Hanging",
+          href: "/products?category=wall-hanging",
+        },
+        {
+          label: "Table Standee",
+          href: "/products?category=table-standee",
+        },
+        {
+          label: "Bamboo Products",
+          href: "/products?category=bamboo-products",
+        },
       ],
     },
     {

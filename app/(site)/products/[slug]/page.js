@@ -159,7 +159,7 @@ export default async function ProductPage({ params }) {
 
           {/* Breadcrumbs */}
           <nav
-            className="detail-breadcrumb mb-3 text-muted small"
+            className="detail-breadcrumb mb-5 py-2 text-muted small"
             aria-label="Breadcrumb"
           >
             <Link href="/" className="text-decoration-none text-muted">
@@ -196,13 +196,10 @@ export default async function ProductPage({ params }) {
 
             {/* 2. Middle Details Column */}
             <div className="col-12 col-md-7 col-xl-5">
-              <h1 className="h4 fw-bold text-dark mt-1 mb-1 font-serif">
+              <h1 className="fw-medium product-title  mt-1 mb-2" style={{ fontSize: "1.40rem" }}>
                 {title}
               </h1>
-              <p className="text-muted small mb-2">
-                Handcrafted Premium Festive & Return Gift Bag with Gold Accents
-              </p>
-
+              
               {/* Rating + Social Proof */}
               <div className="d-flex align-items-center gap-2 mb-3 small">
                 <span className="text-warning">★★★★☆</span>
@@ -218,7 +215,7 @@ export default async function ProductPage({ params }) {
                   <span className="text-danger fs-4 fw-bold">
                     -{discountPercent}%
                   </span>
-                  <span className="fs-2 fw-bold text-dark">
+                  <span className="fs-3 fw-bold text-dark">
                     ₹{price.toLocaleString("en-IN")}
                   </span>
                 </div>
@@ -306,56 +303,40 @@ export default async function ProductPage({ params }) {
               <div className="card border rounded-3 p-3 my-3">
                 <div className="d-flex justify-content-between align-items-center mb-2">
                   <strong className="small text-dark">
-                    Product Highlights
+                    Product Description
                   </strong>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-danger py-0 px-2"
-                    style={{ fontSize: "0.7rem" }}
-                  >
-                    COPY
-                  </button>
                 </div>
-                <div className="small text-muted mb-2 d-flex justify-content-between">
-                  <span>Product Weight</span>
-                  <span className="fw-semibold text-dark">
-                    {p.weight || "100 g"}
-                  </span>
-                </div>
-                <ul className="small text-muted ps-3 mb-0">
-                  <li>
-                    Heavyweight 250 GSM handmade paper with festive golden foil
-                    stripes.
-                  </li>
-                  <li>
-                    Comfortable braided satin cotton cord handles for safe
-                    carrying.
-                  </li>
-                  <li>Holds up to 2.5 kg weight without base sagging.</li>
-                  <li>Comes with matching attached gift message tag.</li>
-                </ul>
-              </div>
-
-              {/* Description Box */}
-              <div className="card border rounded-3 p-3 my-3">
-                <strong className="small text-dark mb-2">Description</strong>
+                {p.description && (
+                  <p className="small text-muted mb-0">{p.description}</p>
+                )}
+                <hr className="my-4 text-muted opacity-25" />
+              
+                <strong className="small text-dark mb-2">Product Features</strong>
                 <div className="small text-muted">
-                  <div className="row py-1 border-bottom">
-                    <div className="col-4 fw-semibold">Material:</div>
-                    <div className="col-8">Handmade paper</div>
-                  </div>
-                  <div className="row py-1 border-bottom">
-                    <div className="col-4 fw-semibold">Size:</div>
-                    <div className="col-8">
-                      {p.dimensions || "10 × 12 × 4 Inches"}
+                 {p.features && p.features.length > 0 ? (
+                    <ul className="features-list mb-0">
+                      {p.features.map((feature, index) => (
+                        <li key={index} className="mb-1">
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+
+                <hr className="my-4 text-muted opacity-25" />
+                 <strong className="small text-dark mb-2">Product Specifications</strong>
+                <div className="small text-muted">
+                  {p.specifications && Object.keys(p.specifications).length > 0 ? (
+                    <div className="specifications-table">
+                      {Object.entries(p.specifications).map(([key, value]) => (
+                        <div className="specification-row" key={key}>
+                          <span className="specification-label">{key}</span>
+                          <span className="specification-value">{value}</span>
+                        </div>
+                      ))}
                     </div>
-                  </div>
-                  <div className="row py-1">
-                    <div className="col-4 fw-semibold">Colour:</div>
-                    <div className="col-8">
-                      {p.color || "Terracotta & Gold Stripe"}
-                    </div>
-                  </div>
+                  ) : null}
                 </div>
               </div>
             </div>

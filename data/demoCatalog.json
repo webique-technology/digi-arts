@@ -928,8 +928,8 @@
     {
   "id": 27,
   "title": "DIGI ART'S Chhatrapati Kandil | Shivaji Maharaj Diwali Hanging Lantern | Pack of 1",
-  "slug": "digi-arts-chhatrapati-kandil-shivaji-maharaj-diwali-hanging-lantern",
-  "description": "Celebrate festive traditions with DIGI ART'S Chhatrapati Kandil, featuring Chhatrapati Shivaji Maharaj-inspired artwork, decorative golden borders and bright yellow tassels. This paper hanging lantern adds a traditional accent to balconies, entrances and home decorations during Diwali and other celebrations. Assembly guidance is available through the product's QR code.\n\nKey Features:\n• Pack of 1 decorative Chhatrapati Kandil\n• Size: 20 inch height × 8 inch width (including hanging thread and tassels in height)\n• Chhatrapati Shivaji Maharaj-themed artwork with golden detailing and yellow tassels\n• Suitable for Diwali, festive entrances, balconies and home decoration\n\nSpecifications:\n• Brand: DIGI ART'S\n• Product: Chhatrapati Kandil\n• Pack Quantity: 1\n• Dimensions: 50.8 cm H × 20.32 cm W (20 × 8 inch)\n• Material: Paper; hanging thread included",
+  "slug": "digi-arts-chhatrapati-kandil",
+  "description": "Celebrate festive traditions with DIGI ART'S Chhatrapati Kandil, featuring Chhatrapati Shivaji Maharaj-inspired artwork, decorative golden borders and bright yellow tassels. This paper hanging lantern adds a traditional accent to balconies, entrances and home decorations during Diwali and other celebrations. Assembly guidance is available through the product's QR code.",
   "price": 499.00,
   "sale_price": 999.00,
   "stock": 0,
@@ -977,7 +977,20 @@
     "id": 0,
     "name": "Diwali Kandil",
     "slug": "diwali-kandil"
-  }
+  },
+  "features": [
+  "Pack of 1 decorative Chhatrapati Kandil",
+  "Size: 20 inch height × 8 inch width",
+  "Chhatrapati Shivaji Maharaj-themed artwork with golden detailing and yellow tassels",
+  "Suitable for Diwali, festive entrances, balconies and home decoration"
+],
+"specifications": {
+  "Brand": "DIGI ART'S",
+  "Product": "Chhatrapati Kandil",
+  "Pack Quantity": "1",
+  "Dimensions": "50.8 cm H × 20.32 cm W (20 × 8 inch)",
+  "Material": "Paper; hanging thread included"
+}
 },
 {
   "id": 28,

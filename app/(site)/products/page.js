@@ -11,6 +11,8 @@ import { Col, Row } from "react-bootstrap";
 import ProductCard from "@/components/ProductCard";
 import MessagePopup from "@/components/MessagePopup";
 
+
+
 const titleCase = (s = "") =>
   s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
@@ -53,6 +55,23 @@ export default async function ProductsPage({ searchParams = {} }) {
 
   const slug =
     typeof searchParams.category === "string" ? searchParams.category : "";
+
+    const bannerImages = {
+  "ganesh-festival": "/images/inner-banner/2_result.webp",
+  "diwali-festival": "/images/inner-banner/1_result.webp",
+  "makar-sankranti": "/images/inner-banner/3_result.webp",
+  "packaging-box": "/images/inner-banner/4_result.webp",
+  "independence-day": "/images/inner-banner/5_result.webp",
+  "christmas-day": "/images/inner-banner/christmas-day.webp",
+  "wax-candle": "/images/inner-banner/wax-candle.webp",
+  "valentine-day": "/images/inner-banner/6_result.webp",
+  "wall-hanging": "/images/inner-banner/7_result.webp",
+  "table-standee": "/images/inner-banner/8_result.webp",
+  "bamboo-products": "/images/inner-banner/9_result.webp",
+};
+
+const bannerImage = bannerImages[slug] || "/images/inner-banner/9_result.webp";
+
   const query = (searchParams.q || "").toLowerCase().trim();
   const minPrice = parseFloat(searchParams.min) || 0;
   const maxPrice = parseFloat(searchParams.max) || Infinity;
@@ -129,24 +148,17 @@ export default async function ProductsPage({ searchParams = {} }) {
         text="The store API is offline. Sample products can be added to the preview cart; checkout is disabled."
         duration={5000}
       />
-      <div className="collection__banner2">
-        <div className="position-relative z-3">
-          <h1 className="collection__title text-white">{heading}</h1>
-          <nav className="collection__breadcrumb" aria-label="Breadcrumb">
-            <Link href="/">Home</Link>
-            <span className="text-light">/</span>
-            {slug ? (
-              <>
-                <Link href="/products">Products</Link>
-                <span className="text-light">/</span>
-                <span aria-current="page">{heading}</span>
-              </>
-            ) : (
-              <span aria-current="page" className="text-light">Products</span>
-            )}
-          </nav>
-        </div>
-      </div>
+     <div className="collection__banner2">
+  <img
+    src={bannerImage}
+    alt={`${heading} banner`}
+    className="collection__banner2-img"
+  />
+
+  <div className="collection__banner2-content position-relative z-3">
+    {/* existing banner content */}
+  </div>
+</div>
 
       <div className="container py-4 py-md-5">
         <div className="row g-4">

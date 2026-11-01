@@ -1,10 +1,117 @@
 .product-detail-page {
     // background-color: #fafafa;
+.product-title{
+    font-family: "Inter", sans-serif;
+}
+    .features-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
 
-    .font-serif {
-        font-family: Georgia, serif, system-ui;
+  li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 8px !important;
+    line-height: 1.6;
+
+    &::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 2px;
+      color: #d19a01;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+}
+.specifications-table {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .specification-row {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    border-bottom: 1px solid #e5e7eb;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .specification-label,
+  .specification-value {
+    padding: 10px 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .specification-label {
+    font-weight: 600;
+    color: #374151;
+    background: #f9fafb;
+  }
+
+  .specification-value {
+    color: #4b5563;
+    border-left: 1px solid #e5e7eb;
+  }
+}
+
+.delivery-info-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  margin: 12px 0;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+
+  .bi-truck {
+    font-size: 22px;
+    color: #d19a01;
+  }
+
+  .delivery-info-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .delivery-info-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  small {
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .delivery-info-price {
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: #111827;
+  }
+}
+
+@media (max-width: 576px) {
+  .specifications-table {
+    .specification-row {
+      grid-template-columns: 38% 62%;
     }
 
+    .specification-label,
+    .specification-value {
+      padding: 8px;
+      font-size: 13px;
+    }
+  }
+}
     .letter-spacing-1 {
         letter-spacing: 0.08em;
     }

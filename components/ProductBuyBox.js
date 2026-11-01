@@ -36,11 +36,6 @@ export default function ProductBuyBox({
         ₹{Number(price).toLocaleString("en-IN")}
       </div>
 
-      <div className="small text-muted mb-2">
-        <span className="text-success fw-bold">FREE delivery</span> by{" "}
-        <strong>Thursday</strong> on orders over ₹999.
-      </div>
-
       {!isSoldOut ? (
         <span className="text-success fw-bold small d-block mb-3">
           ● In Stock
@@ -73,8 +68,23 @@ export default function ProductBuyBox({
         </select>
       </div>
 
+      <div className="delivery-info-row">
+  <i className="bi bi-truck"></i>
+
+  <div className="delivery-info-content">
+    <span className="delivery-info-title">
+      Delivery Charges
+    </span>
+    <small>Shipping charges apply per order</small>
+  </div>
+
+  <span className="delivery-info-price">
+    ₹50
+  </span>
+</div>
+
       {/* Size Select */}
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <label
           className="form-label small text-muted mb-1"
           htmlFor="buybox-size"
@@ -92,7 +102,7 @@ export default function ProductBuyBox({
           <option value="standard">Standard</option>
           <option value="medium">Medium</option>
         </select>
-      </div>
+      </div> */}
 
       {/* Buttons: AddToCartButton + Buy Now */}
       <div className="row g-2 mb-3">
