@@ -62,15 +62,15 @@ export default async function ProductsPage({ searchParams = {} }) {
   "makar-sankranti": "/images/inner-banner/3_result.webp",
   "packaging-box": "/images/inner-banner/4_result.webp",
   "independence-day": "/images/inner-banner/5_result.webp",
-  "christmas-day": "/images/inner-banner/christmas-day.webp",
-  "wax-candle": "/images/inner-banner/wax-candle.webp",
-  "valentine-day": "/images/inner-banner/6_result.webp",
-  "wall-hanging": "/images/inner-banner/7_result.webp",
+  "christmas-day": "/images/inner-banner/6_result.webp",
+  "wax-candle": "/images/inner-banner/8_result.webp",
+  "valentine-day": "/images/inner-banner/7_result.webp",
+  "wall-hanging": "/images/inner-banner/9_result.webp",
   "table-standee": "/images/inner-banner/8_result.webp",
-  "bamboo-products": "/images/inner-banner/9_result.webp",
+  "bamboo-products": "/images/inner-banner/10_result.webp",
 };
 
-const bannerImage = bannerImages[slug] || "/images/inner-banner/9_result.webp";
+const bannerImage = bannerImages[slug] || "/images/inner-banner/1_result.webp";
 
   const query = (searchParams.q || "").toLowerCase().trim();
   const minPrice = parseFloat(searchParams.min) || 0;
