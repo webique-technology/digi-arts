@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { stripHtml, truncate, finalPrice, SITE } from "@/lib/utils";
 import ProductGallery from "@/components/ProductGallery";
+import ProductCard from "@/components/ProductCard";
 import ExploreCategories from "@/components/ExploreCategories";
 import { EXPLORE_PRODUCT } from "@/data/site";
 import JsonLd from "@/components/JsonLd";
@@ -144,6 +145,32 @@ export default async function ProductPage({ params }) {
         : "https://schema.org/OutOfStock",
     },
   };
+  const allProducts = Array.isArray(demoCatalog)
+  ? demoCatalog
+  : demoCatalog.products || [];
+
+const currentCategorySlug =
+  p.category_slug ||
+  (typeof p.category === "object"
+    ? p.category?.slug
+    : "");
+
+const relatedProducts = allProducts
+  .filter((item) => {
+    const itemSlug = item.slug || String(item.id);
+
+    const itemCategorySlug =
+      item.category_slug ||
+      (typeof item.category === "object"
+        ? item.category?.slug
+        : "");
+
+    return (
+      itemSlug !== slug &&
+      itemCategorySlug === currentCategorySlug
+    );
+  })
+  .slice(0, 4);
 
   return (
     <>
@@ -225,80 +252,6 @@ export default async function ProductPage({ params }) {
                 </div>
               </div>
 
-              {/* Offers Box */}
-              {/* <div className="offers-box border rounded-3 p-3 my-3 bg-light-subtle">
-                <div className="fw-bold small text-dark mb-2 d-flex align-items-center gap-1">
-                  🏷 Available Offers
-                </div>
-                <div className="row g-2">
-                  <div className="col-6">
-                    <div className="offer-card border rounded p-2 bg-white h-100">
-                      <strong className="d-block small text-dark">
-                        Bank Offer
-                      </strong>
-                      <span
-                        className="text-muted"
-                        style={{ fontSize: "0.75rem" }}
-                      >
-                        Flat Rs. 50 off on UPI transactions above Rs. 499
-                      </span>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="offer-card border rounded p-2 bg-white h-100">
-                      <strong className="d-block small text-dark">
-                        Bulk Savings
-                      </strong>
-                      <span
-                        className="text-muted"
-                        style={{ fontSize: "0.75rem" }}
-                      >
-                        Buy 5 or more, get additional 10% off automated
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-
-              {/* Size Selectors */}
-              {/* <div className="my-3">
-                <div className="d-flex justify-content-between small mb-2">
-                  <span className="fw-bold text-dark">Select Size:</span>
-                  <span
-                    className="text-danger fw-semibold"
-                    style={{ cursor: "pointer" }}
-                  >
-                    Size Guide
-                  </span>
-                </div>
-                <div className="d-flex gap-2">
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger active text-start py-1 px-3 rounded-2"
-                  >
-                    <span className="d-block fw-bold small">Free Size</span>
-                    <small style={{ fontSize: "0.7rem" }}>
-                      Standard 10 × 12 × 4 in
-                    </small>
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-secondary text-start py-1 px-3 rounded-2"
-                  >
-                    <span className="d-block fw-bold small">Medium</span>
-                    <small style={{ fontSize: "0.7rem" }}>8 × 10 × 3 in</small>
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-secondary text-start py-1 px-3 rounded-2"
-                    disabled
-                  >
-                    <span className="d-block fw-bold small">Jumbo</span>
-                    <small style={{ fontSize: "0.7rem" }}>Out of stock</small>
-                  </button>
-                </div>
-              </div> */}
-
               {/* Product Highlights Card */}
               <div className="card border rounded-3 p-3 my-3">
                 <div className="d-flex justify-content-between align-items-center mb-2">
@@ -352,11 +305,18 @@ export default async function ProductPage({ params }) {
         </div>
       </main>
 
-      <ExploreCategories
-        items={EXPLORE_PRODUCT}
-        title="Explore Other Categories"
-        variant="large"
-      />
+      {relatedProducts.length > 0 && (
+  <section className="container px-lg-5 py-5">
+    <h2 className="explore__title mb-4">Related Products</h2>
+    <div className="row g-3">
+      {relatedProducts.map((product) => (
+        <div key={product.id} className="col-6 col-md-4 col-lg-3">
+          <ProductCard product={product} />
+        </div>
+      ))}
+    </div>
+  </section>
+)}
     </>
   );
 }

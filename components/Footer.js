@@ -78,7 +78,7 @@ export default function Footer() {
                   <FaFacebookF />
                 </a>
                 <a
-                  href="instagram.com/digi_arts11?xtok=MWY0aHRvbWt5cndzOQ=="
+                  href="https://www.instagram.com/digi_arts11?xtok=MWY0aHRvbWt5cndzOQ=="
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
