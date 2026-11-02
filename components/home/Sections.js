@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
@@ -8,7 +8,7 @@ import Link from "next/link";
 import Visual from "@/components/Visual";
 import ProductCard from "@/components/ProductCard";
 import Carousel from "@/components/Carousel";
-import { HOME, SITE_INFO, instagram } from "@/data/site";
+import { HOME, SITE_INFO, youtubeVideos } from "@/data/site";
 import { TEST_IDS } from "@/components/testIds";
 import { SparklesIcon, GiftIcon, QualityIcon } from "@/components/Icons";
 import { Container } from "react-bootstrap";
@@ -28,6 +28,7 @@ const DEFAULT_BANNER_SLIDES = [
   { id: 1, image: "/images/diwali-digiart.webp", title: "Special Collection" },
   { id: 2, image: "/images/hero-banner-sm-2-digiarte.webp", title: "New Arrivals" },
 ];
+
 // for Best Seller component //
 
 export function CollectionTiles() {
@@ -256,7 +257,13 @@ export function CustomOrders() {
 export function InstagramRow() {
   const videoRefs = useRef([]);
   const swiperRef = useRef(null);
-
+const [activeVideo, setActiveVideo] = useState(null);
+const getYouTubeId = (url) => {
+  const match = url?.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|watch\?v=))([^?&/]+)/
+  );
+  return match?.[1] || "";
+};
   useEffect(() => {
     const videos = videoRefs.current.filter(Boolean);
 
@@ -285,24 +292,24 @@ export function InstagramRow() {
   }, []);
 
   return (
-    <section className="instagram-section collection__banner section-padding">
+     <section className="instagram-section collection__banner section-padding">
       <div className="container">
         <div className="instagram-section__header title-row-margin">
           <div>
             <h2 className="shop-category__title fp-heading text-start">
-              Trending Now on <span>Instagram</span>
+              Trending Now on <span>YouTube</span>
             </h2>
           </div>
 
           <div className="instagram-section__actions">
-            {SITE_INFO.instagram && (
+            {SITE_INFO.youtube && (
               <a
-                href={SITE_INFO.instagram}
+                href={SITE_INFO.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="instagram-section__follow"
               >
-                Follow Instagram <span aria-hidden="true">↗</span>
+                Subscribe on YouTube <span aria-hidden="true">↗</span>
               </a>
             )}
 
@@ -331,13 +338,13 @@ export function InstagramRow() {
           onBeforeInit={(swiper) => {
             swiperRef.current = swiper;
           }}
-          loop={true}
-          grabCursor={true}
-          simulateTouch={true}
+          loop
+          grabCursor
+          simulateTouch
           touchEventsTarget="container"
-          preventClicks={true}
-          preventClicksPropagation={true}
-          edgeSwipeDetection={true}
+          preventClicks={false}
+          preventClicksPropagation={false}
+          edgeSwipeDetection
           touchStartPreventDefault={false}
           spaceBetween={16}
           slidesPerView={2}
@@ -349,41 +356,63 @@ export function InstagramRow() {
           }}
           className="insta"
         >
-          {instagram.map((item, index) => (
-            <SwiperSlide key={item.id} className="insta__slide">
-              <a
-                className="insta__item"
-                href={item.url || SITE_INFO.instagram || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={item.alt || "View Instagram video"}
-                draggable="false"
-                onDragStart={(e) => e.preventDefault()}
-                style={{ display: "block", userSelect: "none" }}
-              >
-                <video
-                  ref={(el) => {
-                    videoRefs.current[index] = el;
-                  }}
-                  className="insta__media"
-                  src={item.video}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  draggable="false"
-                  onDragStart={(e) => e.preventDefault()}
-                  style={{
-                    pointerEvents: "none",
-                    userSelect: "none",
-                    width: "100%",
-                    display: "block",
-                  }}
-                />
-              </a>
-            </SwiperSlide>
-          ))}
+          {youtubeVideos.map((item) => {
+            const videoId = getYouTubeId(item.video);
+
+            return (
+              <SwiperSlide key={item.id} className="insta__slide">
+                <div className="insta__item">
+                  <iframe
+                    className="insta__media"
+                    src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1`}
+                    title={item.alt || "YouTube Short"}
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    style={{
+                      pointerEvents: "none",
+                      width: "100%",
+                      display: "block",
+                    }}
+                  />
+
+                  <button
+                    type="button"
+                    className="insta__click-layer"
+                    aria-label="Open YouTube Short"
+                    onClick={() => setActiveVideo(videoId)}
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
+
+        {activeVideo && (
+          <div
+            className="youtube__modal"
+            onClick={() => setActiveVideo(null)}
+          >
+            <button
+              type="button"
+              className="youtube__close"
+              onClick={() => setActiveVideo(null)}
+              aria-label="Close video"
+            >
+              ×
+            </button>
+
+            <div
+              className="youtube__modal-content"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${activeVideo}?autoplay=1`}
+                title="YouTube Short"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

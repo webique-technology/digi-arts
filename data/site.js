@@ -221,48 +221,43 @@ export const EXPLORE_PRODUCT = [
   },
 ];
 
-export const instagram = [
+export const youtubeVideos = [
   {
     id: 1,
     type: "video",
-    video: "/videos/insta-1.mp4",
-    url: "https://www.instagram.com/",
-    alt: "Handcrafted paper products making",
+    video: "https://www.youtube.com/shorts/5toAEF0rw98",
+    alt: "",
   },
   {
     id: 2,
     type: "video",
-    video: "/videos/insta-2.mp4",
-    url: "https://www.instagram.com/",
-    alt: "Decorative gift packaging",
+    video: "https://www.youtube.com/shorts/UE6IGCpXXOw",
+    alt: "",
   },
   {
     id: 3,
     type: "video",
-    video: "/videos/insta-3.mp4",
-    url: "https://www.instagram.com/",
-    alt: "Handcrafted product showcase",
+    video: "https://www.youtube.com/shorts/7jWmUTK1zRU",
+    alt: "",
   },
   {
     id: 4,
     type: "video",
-    video: "/videos/insta-4.mp4",
-    url: "https://www.instagram.com/",
-    alt: "Decorative wall hanging",
+    video: "https://www.youtube.com/shorts/__HIbEMowZY",
+    url: "",
+    alt: "",
   },
   {
     id: 5,
     type: "video",
-    video: "/videos/insta-5.mp4",
-    url: "https://www.instagram.com/",
-    alt: "Gift packaging process",
+    video: "https://www.youtube.com/shorts/KYzuLV4hCbM",
+    alt: "",
   },
   {
     id: 6,
     type: "video",
-    video: "/videos/insta-6.mp4",
-    url: "https://www.instagram.com/",
-    alt: "Decorative wall hanging",
+    video: "https://www.youtube.com/shorts/KAAQgaSSwTQ",
+    alt: "",
   },
 ];
 
