@@ -1,6 +1,8 @@
-import { BLOG_POSTS, BLOG_CATEGORIES } from "@/data/blogData";
 import BlogPageContent from "@/components/blog/BlogPageContent";
-// Full Next.js 14 SEO Metadata
+import { getBlogs, getBlogCategories } from "@/lib/blogs";
+
+export const revalidate = 60;
+
 export const metadata = {
   title:
     "Journal & Stories | Digi Art's - Handcrafted Festive Decor & Traditions",
@@ -28,6 +30,7 @@ export const metadata = {
   },
 };
 
-export default function BlogPage() {
-  return <BlogPageContent posts={BLOG_POSTS} categories={BLOG_CATEGORIES} />;
+export default async function BlogPage() {
+  const [posts, categories] = await Promise.all([getBlogs(), getBlogCategories()]);
+  return <BlogPageContent posts={posts} categories={categories} />;
 }

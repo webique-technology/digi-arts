@@ -6,22 +6,13 @@ import Visual from "./Visual";
 import Stars from "./Stars";
 import AddToCartButton from "./AddToCartButton";
 import { formatPrice, isOnSale } from "@/lib/utils";
+import { imageUrl } from "@/lib/api";
 import { TEST_IDS } from "./testIds";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-// Extracts the file name and maps it directly to /demo-products/<filename>
 function resolveImagePath(img) {
-  if (!img) return "/demo-products/placeholder.webp";
-
-  let rawPath = typeof img === "object" ? img.image_path || img.src : img;
-  if (typeof rawPath !== "string") return "/demo-products/placeholder.webp";
-
-  if (rawPath.startsWith("http://") || rawPath.startsWith("https://")) {
-    return rawPath;
-  }
-
-  const fileName = rawPath.split("/").filter(Boolean).pop();
-  return `/demo-products/${fileName}`;
+  const rawPath = img && typeof img === "object" ? img.image_path || img.src : img;
+  return typeof rawPath === "string" ? imageUrl(rawPath) : "";
 }
 
 export default function ProductCard({

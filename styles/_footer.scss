@@ -18,7 +18,7 @@
     }
 
     &__brand-title {
-        font-family: "Playfair Display", Georgia, serif;
+        font-family: var(--font-heading), serif;
         font-size: 2rem;
         font-weight: 700;
         color: #ffffff;
@@ -47,7 +47,7 @@
     }
 
     &__newsletter-title {
-        font-family: "Playfair Display", Georgia, serif;
+        font-family: var(--font-heading), serif;
         font-size: 1.05rem;
         font-weight: 600;
         color: #ffffff;
@@ -117,7 +117,7 @@
 
     /* Column Headings */
     &__heading {
-        font-family: "Playfair Display", Georgia, serif;
+        font-family: var(--font-heading), serif;
         font-size: 1.15rem;
         font-weight: 600;
         color: #ffffff;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import {
   RiUser3Line,
@@ -8,16 +8,27 @@ import {
   RiPhoneLine,
   RiLockPasswordLine,
 } from "react-icons/ri";
-import { ACCOUNT_DATA } from "@/data/accountData";
+import { useAuth } from "@/components/AuthProvider";
+import { apiFetch } from "@/lib/api";
 
 export default function SettingsPage() {
-  const [profile, setProfile] = useState(ACCOUNT_DATA.user);
+  const { user, setUser } = useAuth();
+  const [profile, setProfile] = useState({ name: "", email: "", phone: "" });
   const [statusMessage, setStatusMessage] = useState("");
 
-  const handleSaveProfile = (e) => {
+  useEffect(() => {
+    if (user) setProfile({ name: user.name || "", email: user.email || "", phone: user.phone || "" });
+  }, [user]);
+
+  const handleSaveProfile = async (e) => {
     e.preventDefault();
-    localStorage.setItem("user_session", JSON.stringify(profile));
-    setStatusMessage("Profile details updated successfully!");
+    try {
+      const r = await apiFetch("/auth/me", { method: "PUT", body: { name: profile.name, email: profile.email } });
+      setUser(r.data.user);
+      setStatusMessage("Profile details updated successfully!");
+    } catch (err) {
+      setStatusMessage(err.message || "Could not update profile");
+    }
     setTimeout(() => setStatusMessage(""), 3000);
   };
 
@@ -74,6 +85,7 @@ export default function SettingsPage() {
               <Form.Control
                 type="tel"
                 value={profile.phone}
+                readOnly
                 onChange={(e) =>
                   setProfile({ ...profile, phone: e.target.value })
                 }

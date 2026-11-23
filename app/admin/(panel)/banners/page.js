@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { useCallback, useEffect, useState } from "react";
 import { adminFetch, imageUrl } from "@/lib/api";
 import { useAdmin } from "@/components/admin/AdminProvider";
@@ -110,16 +111,20 @@ export default function AdminBanners() {
                   <td>
                     <div className="table__actions">
                       <Link
-                        className="btn btn--sm btn--outline"
+                        className="iconbtn"
                         href={`/admin/banners/${r.id}`}
+                        aria-label={`Edit ${r.title || "banner"}`}
+                        title="Edit"
                       >
-                        Edit
+                        <FiEdit2 aria-hidden="true" />
                       </Link>
                       <button
-                        className="btn btn--sm btn--danger"
+                        className="iconbtn iconbtn--danger"
                         onClick={() => setDel(r)}
+                        aria-label={`Delete ${r.title || "banner"}`}
+                        title="Delete"
                       >
-                        Delete
+                        <FiTrash2 aria-hidden="true" />
                       </button>
                     </div>
                   </td>

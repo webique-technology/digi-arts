@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import {
@@ -7,13 +8,20 @@ import {
   RiMapPinLine,
   RiArrowRightLine,
 } from "react-icons/ri";
-import { ACCOUNT_DATA } from "@/data/accountData";
+import { apiFetch } from "@/lib/api";
+import { useMyOrders } from "@/lib/orders";
 
 export default function DashboardPage() {
-  const totalOrders = ACCOUNT_DATA.orders.length;
-  const totalAddresses = ACCOUNT_DATA.addresses.length;
+  const { orders, total: totalOrders, loading } = useMyOrders();
+  const [totalAddresses, setTotalAddresses] = useState(null);
+
+  useEffect(() => {
+    apiFetch("/auth/addresses")
+      .then((r) => setTotalAddresses((r.data || []).length))
+      .catch(() => setTotalAddresses(null));
+  }, []);
   // Dynamic slice of the 2 most recent orders
-  const recentOrders = ACCOUNT_DATA.orders.slice(0, 2);
+  const recentOrders = orders.slice(0, 2);
 
   return (
     <div className="account-dashboard">
@@ -46,7 +54,7 @@ export default function DashboardPage() {
               <div className="account-summary-card__details">
                 <h4 className="account-summary-card__label">Addresses</h4>
                 <p className="account-summary-card__count">
-                  {totalAddresses} items
+                  {totalAddresses === null ? "…" : `${totalAddresses} saved`}
                 </p>
               </div>
             </div>
@@ -64,10 +72,13 @@ export default function DashboardPage() {
         </div>
 
         <div className="account-card__order-list">
+          {!loading && !recentOrders.length && (
+            <p className="account-orders__empty">No orders yet.</p>
+          )}
           {recentOrders.map((order) => (
             <div key={order.id} className="account-order-row">
               <div className="account-order-row__info">
-                <h5 className="account-order-row__id">{order.id}</h5>
+                <h5 className="account-order-row__id">{order.number}</h5>
                 <p className="account-order-row__meta">
                   {order.itemCount} item{order.itemCount > 1 ? "s" : ""} •{" "}
                   {order.formattedDate}
@@ -75,7 +86,7 @@ export default function DashboardPage() {
               </div>
               <div className="account-order-row__summary">
                 <span className="account-order-row__amount">
-                  ₹{order.total}
+                  ₹{order.total.toLocaleString("en-IN")}
                 </span>
                 <span
                   className={`account-order-row__status account-order-row__status--${order.statusType}`}

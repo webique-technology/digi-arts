@@ -18,6 +18,20 @@ The browser always calls `/api/*` on the Next.js domain; `next.config.js` proxie
 | POST | `/api/contact` | `name, phone?, email?, message` (phone or email required) |
 | POST | `/api/newsletter` | `email` |
 
+## Customer (`customer_token` cookie)
+| Method | Path | Notes |
+|---|---|---|
+| POST | `/api/auth/otp/send` | `{phone}` |
+| POST | `/api/auth/otp/verify` | `{phone, otp}` -> `{user}`; sets the session cookie |
+| GET | `/api/auth/session` | `{user}` or `{user:null}` for guests (never 401) |
+| GET/PUT | `/api/auth/me` | profile; PUT `{name?, email?}` |
+| GET | `/api/auth/orders` | own orders, paginated |
+| GET | `/api/auth/addresses` | saved addresses |
+| POST | `/api/auth/addresses` | `{tag (Home/Office/Other), name, phone, line1, city, state, pincode, is_default?}`; max 10. Returns the full list |
+| PUT/DELETE | `/api/auth/addresses/{id}` | edit / delete; returns the full list |
+| POST | `/api/auth/addresses/{id}/default` | make default; returns the full list |
+| POST | `/api/auth/logout` | |
+
 ## Admin (session + CSRF)
 | Method | Path | Notes |
 |---|---|---|
@@ -38,6 +52,8 @@ The browser always calls `/api/*` on the Next.js domain; `next.config.js` proxie
 | GET/PATCH | `/api/admin/orders/{id}` | detail with items / `{status}` (`new,confirmed,shipped,delivered,cancelled`) |
 | GET | `/api/admin/messages` | contact messages |
 | PATCH/DELETE | `/api/admin/messages/{id}` | `{is_read}` / delete |
+| GET | `/api/admin/subscribers` | newsletter subscribers |
+| DELETE | `/api/admin/subscribers/{id}` | remove subscriber |
 
 ### Product multipart fields
 `title, category_id, price, sale_price, stock, status, is_bestseller, description, meta_title, meta_description`,

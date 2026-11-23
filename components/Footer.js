@@ -9,12 +9,30 @@ import Logo from "./Logo"; // Or replace with <Image src="/images/logo.png" ... 
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
-    if (!email) return;
-    // Newsletter submission logic
-    setEmail("");
+    if (!email.trim()) return;
+    setBusy(true);
+    setMsg(null);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json.success === false)
+        throw new Error(json.message || "Could not subscribe right now");
+      setMsg({ ok: true, text: "Thanks for subscribing!" });
+      setEmail("");
+    } catch (err) {
+      setMsg({ ok: false, text: err.message });
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -60,10 +78,23 @@ export default function Footer() {
                     aria-label="Enter your email"
                     required
                   />
-                  <button type="submit" className="da-footer__subscribe-btn">
-                    Subscribe
+                  <button
+                    type="submit"
+                    className="da-footer__subscribe-btn"
+                    disabled={busy}
+                  >
+                    {busy ? "…" : "Subscribe"}
                   </button>
                 </Form>
+                {msg && (
+                  <p
+                    className="small mt-2 mb-0"
+                    style={{ color: msg.ok ? "#c8ecd2" : "#ffc2b8" }}
+                    role="status"
+                  >
+                    {msg.text}
+                  </p>
+                )}
               </div>
 
               {/* Social Media Links */}

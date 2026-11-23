@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Container, Row, Col } from "react-bootstrap";
 
 import AccountSidebar from "@/components/accoount/AccountSidebar";
+import { apiFetch } from "@/lib/api";
 import { useAuth } from "@/components/AuthProvider";// 1. Use the global AuthContext
 
 export default function AccountLayout({ children }) {
@@ -13,13 +14,11 @@ export default function AccountLayout({ children }) {
   // 2. Get user and the global logout function from AuthProvider
   const { user, isLoggedIn, logout } = useAuth();
 
-  // Route protection: If user is not logged in, redirect to home
+  // middleware.js guards the route; this catches a session that expires while the page is open
   useEffect(() => {
-    const session =
-      typeof window !== "undefined" && localStorage.getItem("user_session");
-    if (!session) {
-      router.replace("/");
-    }
+    apiFetch("/auth/session")
+      .then((r) => { if (!r.data.user) router.replace("/"); })
+      .catch(() => {});
   }, [router, isLoggedIn]);
 
   return (

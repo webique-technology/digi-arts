@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as v;
 
 @mixin up($bp) {
@@ -24,28 +25,85 @@
   white-space: nowrap;
 }
 
-@mixin button($bg: v.$color-primary, $fg: #fff) {
+// Outline buttons pass $bg: transparent plus $border; they fill with the border colour on hover.
+@mixin button($bg: v.$color-primary, $fg: #fff, $border: null, $hover-bg: null, $hover-fg: null) {
+  @if not $border {
+    $border: $bg;
+  }
+  $outline: $bg == transparent;
+  @if not $hover-bg {
+    @if $outline {
+      $hover-bg: $border;
+    } @else {
+      $hover-bg: color.adjust($bg, $lightness: -7%);
+    }
+  }
+  @if not $hover-fg {
+    @if $outline {
+      $hover-fg: #fff;
+    } @else {
+      $hover-fg: $fg;
+    }
+  }
+  $hover-border: $hover-bg;
+  @if $outline {
+    $hover-border: $border;
+  }
+
+  // Bootstrap's .btn reads these for every state; without them its :hover/:active turn the button transparent
+  --bs-btn-color: #{$fg};
+  --bs-btn-bg: #{$bg};
+  --bs-btn-border-color: #{$border};
+  --bs-btn-hover-color: #{$hover-fg};
+  --bs-btn-hover-bg: #{$hover-bg};
+  --bs-btn-hover-border-color: #{$hover-border};
+  --bs-btn-active-color: #{$hover-fg};
+  --bs-btn-active-bg: #{$hover-bg};
+  --bs-btn-active-border-color: #{$hover-border};
+  --bs-btn-disabled-color: #{$fg};
+  --bs-btn-disabled-bg: #{$bg};
+  --bs-btn-disabled-border-color: #{$border};
+  --bs-btn-disabled-opacity: 0.5;
+  --bs-btn-focus-box-shadow: none;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
-  border: 1px solid $bg;
+  border: 1px solid $border;
   border-radius: v.$radius;
   background: $bg;
   color: $fg;
   font: 600 0.9rem v.$font-body;
   cursor: pointer;
   text-align: center;
-  transition: opacity 0.2s, transform 0.2s;
+  transition: background-color 0.18s, border-color 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s;
 
-  &:hover {
-    opacity: 0.9;
+  &:hover:not(:disabled) {
+    background: $hover-bg;
+    border-color: $hover-border;
+    color: $hover-fg;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.28);
+  }
+
+  &:active:not(:disabled) {
+    transform: none;
+    box-shadow: none;
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover:not(:disabled) {
+      transform: none;
+    }
   }
 }
 

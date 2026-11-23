@@ -6,59 +6,60 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y, Autoplay } from "swiper/modules";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
+import { imageUrl } from "@/lib/api";
 // Swiper core styles
 import "swiper/css";
 import "swiper/css/navigation";
 
-const categories = [
+const CATEGORIES = [
   {
-    name: "Ganesh Festival",
+    label: "Ganesh Festival",
     image: "/images/ganesh-festival-digiart.webp",
     href: "/products?category=ganesh-festival",
   },
   {
-    name: "Diwali Festival",
+    label: "Diwali Festival",
     image: "/images/diwali-digiart.webp",
     href: "/products?category=diwali-festival",
   },
   {
-    name: "Independence Day",
+    label: "Independence Day",
     image: "/images/independence-day-digiart.webp",
     href: "/products?category=independence-day",
   },
   {
-    name: "Makar Sankranti",
+    label: "Makar Sankranti",
     image: "/images/makar-sankranti-digiart.webp",
     href: "/products?category=makar-sankranti",
   },
   {
-    name: "Gift Packaging",
+    label: "Gift Packaging",
     image: "/images/pakaging-box-digiart.webp",
     href: "/products?category=gift-packaging",
   },
   {
-    name: "Christmas Festival",
+    label: "Christmas Festival",
     image: "/images/christmas-banner-digiart.webp",
     href: "/products?category=christmas-festival",
   },
   {
-    name: "Holi Festival",
+    label: "Holi Festival",
     image: "/images/holi-digiart.webp",
     href: "/products?category=holi-festival",
   },
   {
-    name: "Valentine Day",
+    label: "Valentine Day",
     image: "/images/valentine-day-digiart.webp",
     href: "/products?category=valentine-day",
   },
   {
-    name: "Decorative Wax Candle",
+    label: "Decorative Wax Candle",
     image: "/images/decorative-wax-candle-digiart.jpg",
     href: "/products?category=decorative-wax-candle",
   },
 ];
 
-export default function ShopByCategory() {
+export default function ShopByCategory({ items = CATEGORIES }) {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -131,14 +132,14 @@ export default function ShopByCategory() {
           }}
           className="shop-category__swiper"
         >
-          {categories.map((category) => (
-            <SwiperSlide key={category.name} className="shop-category__slide">
+          {items.map((category) => (
+            <SwiperSlide key={category.href} className="shop-category__slide">
               <Link href={category.href} className="category-item">
                 <div className="category-item__image-wrap">
                   <div className="category-item__image">
                     <Image
-                      src={category.image}
-                      alt={category.name}
+                      src={imageUrl(category.image)}
+                      alt={category.label}
                       fill
                       sizes="(max-width: 575px) 28vw, (max-width: 991px) 22vw, 150px"
                     />
@@ -147,7 +148,7 @@ export default function ShopByCategory() {
                     &#8599;
                   </span>
                 </div>
-                <p className="category-item__name">{category.name}</p>
+                <p className="category-item__name">{category.label}</p>
               </Link>
             </SwiperSlide>
           ))}

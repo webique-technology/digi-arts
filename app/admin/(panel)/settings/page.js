@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { adminFetch } from '@/lib/api';
+import { adminFetch, setCsrf } from '@/lib/api';
 import { useAdmin } from '@/components/admin/AdminProvider';
 import FormField from '@/components/FormField';
 
@@ -15,13 +15,14 @@ export default function Settings() {
     e.preventDefault();
     const er = {};
     if (!f.current_password) er.current_password = 'Enter your current password';
-    if (f.new_password.length < 8) er.new_password = 'Use at least 8 characters';
+    if (f.new_password.length < 10) er.new_password = 'Use at least 10 characters';
     if (f.new_password !== f.confirm) er.confirm = 'Passwords do not match';
     setErrors(er); if (Object.keys(er).length) return;
     setBusy(true);
     try {
-      await adminFetch('/admin/password', { method: 'POST', body: { current_password: f.current_password, new_password: f.new_password } });
-      toast('Password updated'); setF({ current_password: '', new_password: '', confirm: '' });
+      const r = await adminFetch('/admin/password', { method: 'POST', body: { current_password: f.current_password, new_password: f.new_password } });
+      setCsrf(r.data?.csrf_token);
+      toast('Password updated. Other devices have been signed out.'); setF({ current_password: '', new_password: '', confirm: '' });
     } catch (err) { if (err.status === 422 && err.errors) setErrors(err.errors); else onError(err); } finally { setBusy(false); }
   }
   return (

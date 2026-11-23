@@ -1,17 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   RiArrowDownSLine,
   RiArrowUpSLine,
   RiEyeLine,
 } from "react-icons/ri";
-import { ACCOUNT_DATA } from "@/data/accountData";
+import { imageUrl } from "@/lib/api";
+import { useMyOrders } from "@/lib/orders";
 
 export default function OrdersPage() {
-  const [orders] = useState(ACCOUNT_DATA.orders);
-  // Default first order to open
-  const [expandedOrderId, setExpandedOrderId] = useState(orders[0]?.id || null);
+  const { orders, loading, error } = useMyOrders();
+  const [expandedOrderId, setExpandedOrderId] = useState(null);
+
+  useEffect(() => {
+    if (orders.length) setExpandedOrderId(orders[0].id);
+  }, [orders]);
 
   const toggleOrder = (id) => {
     setExpandedOrderId((prev) => (prev === id ? null : id));
@@ -20,6 +25,14 @@ export default function OrdersPage() {
   return (
     <div className="account-orders">
       <h1 className="account-page-title">My Orders</h1>
+
+      {loading && <p className="account-orders__empty">Loading your orders…</p>}
+      {error && <p className="account-orders__empty">{error}</p>}
+      {!loading && !error && !orders.length && (
+        <p className="account-orders__empty">
+          You haven&apos;t placed any orders yet. <Link href="/products">Start shopping</Link>
+        </p>
+      )}
 
       <div className="account-orders-list">
         {orders.map((order) => {
@@ -32,7 +45,7 @@ export default function OrdersPage() {
                 onClick={() => toggleOrder(order.id)}
               >
                 <div className="account-order-card__title-meta">
-                  <h4 className="account-order-card__id">{order.id}</h4>
+                  <h4 className="account-order-card__id">{order.number}</h4>
                   <span className="account-order-card__date">
                     {order.date}
                   </span>
@@ -46,7 +59,7 @@ export default function OrdersPage() {
                   </span>
                   <div className="account-order-card__pricing">
                     <span className="account-order-card__amount">
-                      ₹{order.total}
+                      ₹{order.total.toLocaleString("en-IN")}
                     </span>
                     <span className="account-order-card__items-count">
                       {order.itemCount} item{order.itemCount > 1 ? "s" : ""}
@@ -63,7 +76,9 @@ export default function OrdersPage() {
                 <div className="account-order-card__expanded">
                   {order.items?.map((item) => (
                     <div key={item.id} className="account-order-card__item">
-                      <div className="account-order-card__item-thumb" />
+                      <div className="account-order-card__item-thumb">
+                        {item.image && <img src={imageUrl(item.image)} alt="" />}
+                      </div>
                       <div className="account-order-card__item-info">
                         <h5 className="account-order-card__item-name">
                           {item.name}
@@ -73,7 +88,7 @@ export default function OrdersPage() {
                         </p>
                       </div>
                       <span className="account-order-card__item-price">
-                        ₹{item.price}
+                        ₹{item.price.toLocaleString("en-IN")}
                       </span>
                     </div>
                   ))}

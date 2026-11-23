@@ -1,5 +1,6 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { adminFetch } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
 import { useAdmin } from '@/components/admin/AdminProvider';
@@ -74,7 +75,7 @@ export default function AdminCoupons() {
                     <td>{c.used_count}{c.usage_limit ? ` / ${c.usage_limit}` : ''}</td>
                     <td>{c.expires_at ? <>{c.expires_at}{expired(c) && <span className="badge badge--off" style={{ marginLeft: 6 }}>Expired</span>}</> : '—'}</td>
                     <td><button className={`badge ${c.status ? 'badge--ok' : 'badge--off'}`} style={{ border: 0, cursor: 'pointer' }} onClick={() => toggle(c)}>{c.status ? 'Active' : 'Inactive'}</button></td>
-                    <td><div className="table__actions"><button className="btn btn--sm btn--outline" onClick={() => edit(c)}>Edit</button><button className="btn btn--sm btn--danger" onClick={() => setDel(c)}>Delete</button></div></td>
+                    <td><div className="table__actions"><button className="iconbtn" onClick={() => edit(c)} aria-label={`Edit ${c.code}`} title="Edit"><FiEdit2 aria-hidden="true" /></button><button className="iconbtn iconbtn--danger" onClick={() => setDel(c)} aria-label={`Delete ${c.code}`} title="Delete"><FiTrash2 aria-hidden="true" /></button></div></td>
                   </tr>))}
             </tbody>
           </table>

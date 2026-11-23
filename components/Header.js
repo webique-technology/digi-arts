@@ -79,7 +79,7 @@ export default function Header() {
               label: "T-light Candles",
               href: "/products?category=t-light-candles",
             },
-            
+
           ],
         },
         {
@@ -179,10 +179,7 @@ export default function Header() {
 
   const handleUserClick = (e) => {
     e.preventDefault();
-    const session =
-      typeof window !== "undefined" && localStorage.getItem("user_session");
-
-    if (isLoggedIn && session) {
+    if (isLoggedIn) {
       // Logged in -> go to account dashboard
       router.push("/account");
     } else {

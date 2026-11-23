@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { useCart } from "./CartProvider";
-import { imageUrl } from "@/lib/api";
+import { apiFetch, imageUrl } from "@/lib/api";
 import { rupee, shippingFor, onlyDigits, quantityLineTotal } from "@/lib/utils";
 import {
   FaQuestionCircle,
@@ -18,34 +18,8 @@ import {
 } from "react-icons/fa";
 import { SiVisa, SiMastercard } from "react-icons/si";
 import Logo from "./Logo";
+import { INDIAN_STATES as STATES } from "@/lib/states";
 
-const STATES = [
-  "Andhra Pradesh",
-  "Assam",
-  "Bihar",
-  "Chandigarh",
-  "Chhattisgarh",
-  "Delhi",
-  "Goa",
-  "Gujarat",
-  "Haryana",
-  "Himachal Pradesh",
-  "Jammu and Kashmir",
-  "Jharkhand",
-  "Karnataka",
-  "Kerala",
-  "Madhya Pradesh",
-  "Maharashtra",
-  "Odisha",
-  "Punjab",
-  "Rajasthan",
-  "Tamil Nadu",
-  "Telangana",
-  "Uttar Pradesh",
-  "Uttarakhand",
-  "West Bengal",
-  "Other",
-];
 
 const SAVED = "Digi Art’s Store_customer";
 
@@ -80,17 +54,39 @@ export default function CheckoutFlow() {
   const [couponMsg, setCouponMsg] = useState("");
   const [couponBusy, setCouponBusy] = useState(false);
 
-  // Restore saved contact & address details
+  // Restore saved contact & address details; otherwise use a signed-in customer's default address
   useEffect(() => {
+    let saved = null;
     try {
-      const s = JSON.parse(localStorage.getItem(SAVED) || "null");
-      if (s) {
-        setF((cur) => ({
-          ...cur,
-          ...s,
-        }));
-      }
+      saved = JSON.parse(localStorage.getItem(SAVED) || "null");
     } catch {}
+    if (saved) {
+      setF((cur) => ({ ...cur, ...saved }));
+      return;
+    }
+    apiFetch("/auth/session")
+      .then((r) => {
+        const user = r.data?.user;
+        const a = user?.addresses?.find((x) => x.is_default) || user?.addresses?.[0];
+        if (!a) return;
+        const [firstName, ...rest] = a.name.split(/\s+/);
+        setF((cur) =>
+          cur.address
+            ? cur
+            : {
+                ...cur,
+                firstName,
+                lastName: rest.join(" "),
+                address: a.line1,
+                city: a.city,
+                state: STATES.includes(a.state) ? a.state : cur.state,
+                pincode: a.pincode,
+                phone: a.phone,
+                email: cur.email || user.email || "",
+              },
+        );
+      })
+      .catch(() => {});
   }, []);
 
   const handleChange = (k) => (e) => {

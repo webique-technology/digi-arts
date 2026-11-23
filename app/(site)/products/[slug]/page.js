@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { stripHtml, truncate, finalPrice, SITE } from "@/lib/utils";
+import { stripHtml, truncate, finalPrice, isOnSale, SITE } from "@/lib/utils";
 import ProductGallery from "@/components/ProductGallery";
 import ProductCard from "@/components/ProductCard";
 import ExploreCategories from "@/components/ExploreCategories";
-import { EXPLORE_PRODUCT } from "@/data/site";
 import JsonLd from "@/components/JsonLd";
-import demoCatalog from "@/data/demoCatalog.json";
+import { getPublicResult, imageUrl } from "@/lib/api";
+import { DEMO_PRODUCTS, isCatalogUnavailable } from "@/lib/catalog";
 import MessagePopup from "@/components/MessagePopup";
 // import ProductBuyBoxSticky from "@/components/ProductBuyBoxSticky";
 import ProductBuyBox from "@/components/ProductBuyBox";
@@ -14,45 +14,30 @@ import ProductBuyBox from "@/components/ProductBuyBox";
 export const revalidate = 15;
 
 function resolveImagePath(img) {
-  if (!img) return "/demo-products/placeholder.webp";
-
-  let rawPath = typeof img === "object" ? img.image_path || img.src : img;
-  if (!rawPath || typeof rawPath !== "string")
-    return "/demo-products/placeholder.webp";
-
-  // Keep full URLs and /videos/ paths exactly as they are!
-  if (
-    rawPath.startsWith("http://") ||
-    rawPath.startsWith("https://") ||
-    rawPath.startsWith("/videos/")
-  ) {
-    return rawPath;
-  }
-
-  // Only rewrite product images to demo-products
-  const fileName = rawPath.split("/").filter(Boolean).pop();
-  return `/demo-products/${fileName}`;
+  const rawPath = img && typeof img === "object" ? img.image_path || img.src : img;
+  return typeof rawPath === "string" ? imageUrl(rawPath) : "";
 }
 
-function getProductBySlugOrId(slug) {
-  const products = Array.isArray(demoCatalog)
-    ? demoCatalog
-    : demoCatalog.products || [];
-  return products.find(
-    (item) =>
-      item.slug === slug ||
-      String(item.id) === String(slug) ||
-      (item.title &&
-        item.title
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-|-$/g, "") === slug),
-  );
+// Product from the API; falls back to the bundled demo catalog only when the API is unreachable.
+async function loadProduct(slug) {
+  const res = await getPublicResult(`/products/${encodeURIComponent(slug)}`);
+  if (!isCatalogUnavailable(res)) return { product: res.data, offline: false };
+  return { product: DEMO_PRODUCTS.find((item) => item.slug === slug) || null, offline: true };
+}
+
+async function loadRelated(product, offline) {
+  if (offline) {
+    return DEMO_PRODUCTS.filter(
+      (item) => item.slug !== product.slug && item.category_slug === product.category_slug,
+    ).slice(0, 4);
+  }
+  const res = await getPublicResult(`/products/${encodeURIComponent(product.slug)}/related`);
+  return res.data || [];
 }
 
 export async function generateMetadata({ params }) {
   const resolvedParams = await params;
-  const p = getProductBySlugOrId(resolvedParams.slug);
+  const { product: p } = await loadProduct(resolvedParams.slug);
 
   if (!p) return { title: "Product not found", robots: { index: false } };
 
@@ -86,7 +71,7 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductPage({ params }) {
   const resolvedParams = await params;
-  const p = getProductBySlugOrId(resolvedParams.slug);
+  const { product: p, offline } = await loadProduct(resolvedParams.slug);
 
   if (!p) notFound();
 
@@ -116,17 +101,16 @@ export default async function ProductPage({ params }) {
     };
   });
 
-  const price = Number(p.price) || 449;
-  const originalPrice = Number(p.originalPrice || p.mrp || 599);
-  const discountPercent =
-    originalPrice > price
-      ? Math.round(((originalPrice - price) / originalPrice) * 100)
-      : 25;
+  const price = Number(finalPrice(p)) || 0;
+  const originalPrice = isOnSale(p) ? Number(p.price) : null;
+  const discountPercent = originalPrice
+    ? Math.round(((originalPrice - price) / originalPrice) * 100)
+    : 0;
 
   const categoryName =
     typeof p.category === "object" && p.category?.name
       ? p.category.name
-      : p.category_name || "Gift Bags";
+      : p.category_name || "";
 
   const productLd = {
     "@context": "https://schema.org",
@@ -145,32 +129,7 @@ export default async function ProductPage({ params }) {
         : "https://schema.org/OutOfStock",
     },
   };
-  const allProducts = Array.isArray(demoCatalog)
-  ? demoCatalog
-  : demoCatalog.products || [];
-
-const currentCategorySlug =
-  p.category_slug ||
-  (typeof p.category === "object"
-    ? p.category?.slug
-    : "");
-
-const relatedProducts = allProducts
-  .filter((item) => {
-    const itemSlug = item.slug || String(item.id);
-
-    const itemCategorySlug =
-      item.category_slug ||
-      (typeof item.category === "object"
-        ? item.category?.slug
-        : "");
-
-    return (
-      itemSlug !== slug &&
-      itemCategorySlug === currentCategorySlug
-    );
-  })
-  .slice(0, 4);
+  const relatedProducts = await loadRelated(p, offline);
 
   return (
     <>
@@ -178,11 +137,13 @@ const relatedProducts = allProducts
 
       <main className="product-detail-page py-3">
         <div className="container px-lg-5">
-          <MessagePopup
-            title="Demo catalog preview"
-            text="The store API is offline. Sample products can be added to the preview cart; checkout is disabled."
-            duration={5000}
-          />
+          {offline && (
+            <MessagePopup
+              title="Demo catalog preview"
+              text="The store API is offline. Sample products can be added to the preview cart; checkout is disabled."
+              duration={5000}
+            />
+          )}
 
           {/* Breadcrumbs */}
           <nav
@@ -198,7 +159,7 @@ const relatedProducts = allProducts
             </Link>
             <span className="mx-1">/</span>
             <Link
-              href={`/products?category=${p.category_slug || "gift-bags"}`}
+              href={p.category_slug ? `/products?category=${p.category_slug}` : "/products"}
               className="text-decoration-none text-muted"
             >
               {categoryName}
@@ -239,16 +200,22 @@ const relatedProducts = allProducts
               {/* Main Price */}
               <div className="my-3">
                 <div className="d-flex align-items-baseline gap-2">
-                  <span className="text-danger fs-4 fw-bold">
-                    -{discountPercent}%
-                  </span>
+                  {discountPercent > 0 && (
+                    <span className="text-danger fs-4 fw-bold">
+                      -{discountPercent}%
+                    </span>
+                  )}
                   <span className="fs-3 fw-bold text-dark">
                     ₹{price.toLocaleString("en-IN")}
                   </span>
                 </div>
                 <div className="small text-muted">
-                  M.R.P.: <del>₹{originalPrice.toLocaleString("en-IN")}</del>{" "}
-                  <span className="ms-2">Inclusive of all taxes</span>
+                  {originalPrice && (
+                    <>
+                      M.R.P.: <del>₹{originalPrice.toLocaleString("en-IN")}</del>{" "}
+                    </>
+                  )}
+                  <span className={originalPrice ? "ms-2" : ""}>Inclusive of all taxes</span>
                 </div>
               </div>
 
@@ -299,7 +266,7 @@ const relatedProducts = allProducts
               className="col-12 col-xl-3 sticky-xl-top z-3"
               style={{ top: "85px" }}
             >
-              <ProductBuyBox product={p} price={price} inStock={inStock} />
+              <ProductBuyBox product={p} price={price} inStock={inStock} preview={offline} />
             </div>
           </article>
         </div>
@@ -311,7 +278,7 @@ const relatedProducts = allProducts
     <div className="row g-3">
       {relatedProducts.map((product) => (
         <div key={product.id} className="col-6 col-md-4 col-lg-3">
-          <ProductCard product={product} />
+          <ProductCard product={product} preview={offline} />
         </div>
       ))}
     </div>

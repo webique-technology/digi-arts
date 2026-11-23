@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { useCallback, useEffect, useState } from 'react';
 import { adminFetch, imageUrl } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
@@ -42,11 +43,11 @@ export default function AdminProducts() {
               : st.rows.map((r) => (
                 <tr key={r.id}>
                   <td>{r.primary_image ? <img className="table__thumb" src={imageUrl(r.primary_image)} alt="" /> : <div className="table__thumb" />}</td>
-                  <td>{r.title}</td><td>{r.category_name || '—'}</td>
+                  <td><Link className="table__link" href={`/admin/products/${r.id}`}>{r.title}</Link></td><td>{r.category_name || '—'}</td>
                   <td>{r.sale_price ? <>{formatPrice(r.sale_price)} <s>{formatPrice(r.price)}</s></> : formatPrice(r.price)}</td>
                   <td>{r.stock}</td>
                   <td><button className={`badge ${Number(r.status) ? 'badge--ok' : 'badge--off'}`} style={{ border: 0, cursor: 'pointer' }} onClick={() => toggle(r)}>{Number(r.status) ? 'Active' : 'Inactive'}</button></td>
-                  <td><div className="table__actions"><Link className="btn btn--sm btn--outline" href={`/admin/products/${r.id}`}>Edit</Link><button className="btn btn--sm btn--danger" onClick={() => setDel(r)}>Delete</button></div></td>
+                  <td><div className="table__actions"><Link className="iconbtn" href={`/admin/products/${r.id}`} aria-label={`Edit ${r.title}`} title="Edit"><FiEdit2 aria-hidden="true" /></Link><button className="iconbtn iconbtn--danger" onClick={() => setDel(r)} aria-label={`Delete ${r.title}`} title="Delete"><FiTrash2 aria-hidden="true" /></button></div></td>
                 </tr>))}
           </tbody>
         </table>

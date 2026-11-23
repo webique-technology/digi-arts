@@ -2,9 +2,19 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FiArrowLeft } from "react-icons/fi";
 import { adminFetch, imageUrl } from "@/lib/api";
 import { useAdmin } from "./AdminProvider";
 import ImageDropzone from "./ImageDropzone";
+
+const SEO_DESC_LENGTH = 160;
+
+// Plain-text description trimmed to a search-snippet length, cut at a word boundary
+const seoDescription = (text = "") => {
+  const plain = String(text).replace(/\s+/g, " ").trim();
+  if (plain.length <= SEO_DESC_LENGTH) return plain;
+  return plain.slice(0, SEO_DESC_LENGTH).replace(/\s+\S*$/, "") + "…";
+};
 
 export default function ProductForm({ product }) {
   const router = useRouter();
@@ -19,8 +29,14 @@ export default function ProductForm({ product }) {
     status: String(product?.status ?? 1),
     is_bestseller: String(product?.is_bestseller ?? 0),
     description: product?.description || "",
-    meta_title: product?.meta_title || "",
-    meta_description: product?.meta_description || "",
+    meta_title: product?.meta_title || product?.title || "",
+    meta_description: product?.meta_description || seoDescription(product?.description),
+  });
+  // SEO fields follow title/description until the admin edits them
+  const [seoCustom, setSeoCustom] = useState({
+    meta_title: !!product?.meta_title && product.meta_title !== product.title,
+    meta_description:
+      !!product?.meta_description && product.meta_description !== seoDescription(product.description),
   });
   const existing = (product?.images || []).map((im) => ({
     key: `e${im.id}`,
@@ -40,7 +56,22 @@ export default function ProductForm({ product }) {
       .then((r) => setCats(r.data || []))
       .catch(onError);
   }, [onError]);
-  const set = (k) => (e) => setF((s) => ({ ...s, [k]: e.target.value }));
+  const set = (k) => (e) => {
+    const value = e.target.value;
+    if (k === "meta_title" || k === "meta_description") {
+      setSeoCustom((c) => ({ ...c, [k]: value !== "" }));
+    }
+    setF((s) => ({
+      ...s,
+      [k]: value,
+      ...(k === "title" && !seoCustom.meta_title ? { meta_title: value } : {}),
+      ...(k === "description" && !seoCustom.meta_description ? { meta_description: seoDescription(value) } : {}),
+    }));
+  };
+  const restoreSeo = (k) => () => {
+    if (f[k].trim()) return;
+    setF((s) => ({ ...s, [k]: k === "meta_title" ? s.title : seoDescription(s.description) }));
+  };
 
   const validate = () => {
     const e = {};
@@ -109,10 +140,12 @@ export default function ProductForm({ product }) {
   return (
     <form className="panel" onSubmit={submit} noValidate>
       <div className="panel__head">
-        <h1>{product ? "Edit product" : "Add product"}</h1>
-        <Link href="/admin/products" className="btn btn--outline btn--sm">
-          ← Back
-        </Link>
+        <div className="panel__title">
+          <Link href="/admin/products" className="iconbtn" aria-label="Back to products" title="Back to products">
+            <FiArrowLeft aria-hidden="true" />
+          </Link>
+          <h1>{product ? "Edit product" : "Add product"}</h1>
+        </div>
       </div>
       <div className="form-grid">
         <div className="field full">
@@ -213,8 +246,12 @@ export default function ProductForm({ product }) {
             id="mt"
             value={f.meta_title}
             onChange={set("meta_title")}
+            onBlur={restoreSeo("meta_title")}
             maxLength={200}
           />
+          <small className="field__hint">
+            {seoCustom.meta_title ? "Custom" : "Same as product title"} · {f.meta_title.length}/60
+          </small>
         </div>
         <div className="field">
           <label htmlFor="md">SEO description</label>
@@ -222,8 +259,12 @@ export default function ProductForm({ product }) {
             id="md"
             value={f.meta_description}
             onChange={set("meta_description")}
+            onBlur={restoreSeo("meta_description")}
             maxLength={300}
           />
+          <small className="field__hint">
+            {seoCustom.meta_description ? "Custom" : "From product description"} · {f.meta_description.length}/{SEO_DESC_LENGTH}
+          </small>
         </div>
       </div>
       <button className="btn" disabled={busy}>

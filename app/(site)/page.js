@@ -13,23 +13,25 @@ import {
   Features,
 } from "@/components/home/Sections";
 import { getPublic } from "@/lib/api";
-import { HERO_FALLBACK } from "@/data/site";
+import { getCategoryTiles } from "@/lib/catalog";
 import Testimonials from "@/components/Testimonials";
 import TrustStrip from "@/components/TrustStrip";
 
 // 1. Import demo products JSON directly (replaces the missing productData.js)
 import demoProductsData from "@/data/demoCatalog.json";
 import BlogSection from "@/components/blog/BlogSection";
-import { BLOG_POSTS } from "@/data/blogData";
+import { getBlogs } from "@/lib/blogs";
 
 export const revalidate = 15;
 export const metadata = { alternates: { canonical: "/" } };
 
 export default async function Home() {
-  const [b, best, smallBags] = await Promise.all([
+  const [b, best, smallBags, categoryTiles, blogPosts] = await Promise.all([
     getPublic("/banners"),
     getPublic("/products?bestseller=1&limit=6"), // Increased limit to 6 for the 6 cards
     getPublic("/products?category=small-bags&limit=4"),
+    getCategoryTiles(),
+    getBlogs(15),
   ]);
 
   // Safely extract JSON array whether it is a direct array or { products: [...] }
@@ -40,7 +42,7 @@ export default async function Home() {
   // Use API products if available; otherwise use demoProduct.json
   let products = best?.data?.length ? best.data : fallbackProducts;
 
-  const banners = b?.data?.length ? b.data : HERO_FALLBACK;
+  const banners = b?.data || [];
   const smallBagsProducts = Array.isArray(smallBags)
     ? smallBags
     : Array.isArray(smallBags?.data)
@@ -56,7 +58,7 @@ export default async function Home() {
       </h1>
 
       <BannerSlider banners={banners} />
-      <ShopByCategory />
+      <ShopByCategory items={categoryTiles || undefined} />
       <FestivalCollections />
       <FeaturedProducts products={products} />
       {/* <CollectionTiles /> */}
@@ -70,7 +72,7 @@ export default async function Home() {
       {/* <CollectionCards /> */}
       {/* <Story /> */}
       <Testimonials />
-      <BlogSection posts={BLOG_POSTS}/>
+      {blogPosts.length > 0 && <BlogSection posts={blogPosts} />}
       <TrustStrip />
       {/* <Features /> */}
     </>

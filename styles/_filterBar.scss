@@ -57,7 +57,7 @@
     // Main Header
     &__title {
         margin: 0 0 20px 0;
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 24px;
         font-weight: 700;
         color: #242024;

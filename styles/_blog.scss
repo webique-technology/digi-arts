@@ -19,7 +19,7 @@
     }
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: clamp(28px, 3.5vw, 42px);
         font-weight: 700;
         color: $color-primary-dark;
@@ -76,7 +76,7 @@
     }
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: clamp(28px, 3.5vw, 42px);
         font-weight: 700;
         color: $color-white;
@@ -327,7 +327,7 @@
     }
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 16px;
         font-weight: 700;
         line-height: 1.35;
@@ -416,7 +416,7 @@
     border: 1px solid #e8e3dd;
 
     h3 {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 20px;
         font-weight: 700;
         color: #2b221c;
@@ -558,7 +558,7 @@
     }
 
     &__heading {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: clamp(22px, 3vw, 30px);
         font-weight: 700;
         color: #2b221c;
@@ -734,7 +734,7 @@
     }
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: clamp(28px, 4vw, 44px);
         font-weight: 700;
         line-height: 1.22;
@@ -900,7 +900,7 @@
     }
 
     &__quote {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 18px;
         font-style: italic;
         color: #2b221c;
@@ -1034,7 +1034,7 @@
     scroll-margin-top: 100px;
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 24px;
         font-weight: 700;
         color: #2b221c;
@@ -1044,7 +1044,7 @@
 
 .blog-drop-cap {
     float: left;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading), serif;
     font-size: 52px;
     font-weight: 700;
     line-height: 0.85;
@@ -1060,6 +1060,142 @@
 
     p {
         margin-bottom: 14px;
+    }
+}
+
+// Article body HTML managed from the admin
+.blog-rich {
+    h2,
+    h3 {
+        font-family: var(--font-heading), serif;
+        font-weight: 700;
+        color: #2b221c;
+        scroll-margin-top: 100px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin: 36px 0 14px;
+    }
+
+    h3 {
+        font-size: 19px;
+        margin: 24px 0 10px;
+    }
+
+    > :first-child {
+        margin-top: 0;
+    }
+
+    > h2:first-child + p::first-letter,
+    > p:first-child::first-letter {
+        float: left;
+        font-family: var(--font-heading), serif;
+        font-size: 52px;
+        font-weight: 700;
+        line-height: 0.85;
+        color: #e04d30;
+        padding-right: 10px;
+        padding-top: 4px;
+    }
+
+    a {
+        color: #e04d30;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+    }
+
+    blockquote {
+        background: #f4eee6;
+        border-radius: 14px;
+        padding: 24px 28px;
+        margin: 24px 0;
+
+        p {
+            font-family: var(--font-heading), serif;
+            font-size: 18px;
+            font-style: italic;
+            color: #2b221c;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        cite {
+            display: block;
+            margin-top: 8px;
+            font-size: 11px;
+            font-style: normal;
+            font-weight: 700;
+            color: #e04d30;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+    }
+
+    ol,
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 16px;
+        display: grid;
+        gap: 12px;
+    }
+
+    li {
+        background: #ffffff;
+        border: 1px solid #e8e3dd;
+        border-radius: 12px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #695e55;
+
+        > strong:first-child {
+            display: block;
+            font-size: 15px;
+            color: #2b221c;
+            margin-bottom: 4px;
+        }
+    }
+
+    ol {
+        counter-reset: step;
+
+        li {
+            counter-increment: step;
+            position: relative;
+            padding: 18px 20px 18px 66px;
+
+            &::before {
+                content: counter(step, decimal-leading-zero);
+                position: absolute;
+                left: 20px;
+                top: 18px;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: #e04d30;
+                color: #ffffff;
+                font-size: 12px;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    ul {
+        @media (min-width: 576px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        li {
+            padding: 20px;
+        }
     }
 }
 
@@ -1084,7 +1220,7 @@
     height: 100%;
 
     &__value {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 24px;
         font-weight: 700;
         color: #e04d30;
@@ -1199,7 +1335,7 @@
     }
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 18px;
         font-weight: 700;
         color: #2b221c;
@@ -1221,7 +1357,7 @@
     }
 
     &__price {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 18px;
         font-weight: 700;
         color: #e04d30;
@@ -1561,7 +1697,7 @@
     }
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 26px;
         font-weight: 700;
         color: #2b221c;
@@ -1643,7 +1779,7 @@
     }
 
     &__title {
-        font-family: 'Playfair Display', serif;
+        font-family: var(--font-heading), serif;
         font-size: 15px;
         font-weight: 700;
         color: #2b221c;

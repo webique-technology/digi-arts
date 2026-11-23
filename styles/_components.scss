@@ -39,8 +39,7 @@
   @include m.button;
 
   &--outline {
-    @include m.button(transparent, v.$color-primary);
-    border-color: v.$color-primary;
+    @include m.button(transparent, v.$color-primary, v.$color-primary);
   }
 }
 
@@ -1704,6 +1703,11 @@
   &--off {
     background: #fdecea;
     color: v.$color-error;
+  }
+
+  &--warn {
+    background: #fff4e0;
+    color: #a86400;
   }
 }
 
