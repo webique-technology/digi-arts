@@ -56,11 +56,12 @@ export default function AdminProvider({ children }) {
     try {
       await adminFetch("/admin/logout", { method: "POST" });
     } catch {
-    } finally {
-      clearSession();
-      router.replace("/admin/login");
+      toast("Could not log out. You are still signed in. Please try again.", "error");
+      return;
     }
-  }, [router]);
+    clearSession();
+    router.replace("/admin/login");
+  }, [router, toast]);
 
   if (loading || !admin) {
     return (

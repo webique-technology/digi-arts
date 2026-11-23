@@ -11,7 +11,7 @@ const fmtDate = (d) => (d ? new Date(d).toLocaleString('en-IN', { day: '2-digit'
 
 // Bare 10-digit numbers are assumed to be Indian mobiles.
 const intlDigits = (phone) => {
-  const d = String(phone || '').replace(/\D/g, '');
+  const d = String(phone || '').replace(/\D/g, '').replace(/^0+/, '');
   return d.length === 10 ? `91${d}` : d;
 };
 

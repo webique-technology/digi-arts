@@ -292,6 +292,7 @@ export default function Header() {
           </button>
           <Link
             href="/account"
+            prefetch={false}
             onClick={handleUserClick}
             aria-label="User account"
             data-testid={TEST_IDS.headerAdminLogin}

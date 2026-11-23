@@ -151,7 +151,7 @@ export default function AdminShell({ children }) {
         message="You'll be signed out of the admin panel on all devices."
         confirmText="Log out"
         busy={loggingOut}
-        onConfirm={() => { setLoggingOut(true); logout(); }}
+        onConfirm={async () => { setLoggingOut(true); await logout(); setLoggingOut(false); setConfirmLogout(false); }}
         onCancel={() => setConfirmLogout(false)}
       />
     </div>

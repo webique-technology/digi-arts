@@ -36,6 +36,8 @@ export default function AdminLogin() {
   const showError = (err) => {
     if (err.status === 401) setError(mode === "otp" ? "Invalid mobile number or OTP" : "Invalid email or password");
     else if (err.status === 422) setError(err.message || "Please check your login details");
+    // The Next.js proxy answers 500 when the API is down
+    else if (err.status && err.status !== 500) setError(err.message);
     else setError("Can't reach the server. Please try again.");
   };
 

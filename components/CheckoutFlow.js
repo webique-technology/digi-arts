@@ -70,20 +70,20 @@ export default function CheckoutFlow() {
         const a = user?.addresses?.find((x) => x.is_default) || user?.addresses?.[0];
         if (!a) return;
         const [firstName, ...rest] = a.name.split(/\s+/);
+        const delivery = {
+          firstName,
+          lastName: rest.join(" "),
+          address: a.line1,
+          city: a.city,
+          state: STATES.includes(a.state) ? a.state : EMPTY_FORM.state,
+          pincode: a.pincode,
+          phone: a.phone,
+        };
+        // All or nothing, so a typed recipient is never mixed with the saved address
         setF((cur) =>
-          cur.address
+          Object.keys(delivery).some((k) => cur[k] !== EMPTY_FORM[k])
             ? cur
-            : {
-                ...cur,
-                firstName,
-                lastName: rest.join(" "),
-                address: a.line1,
-                city: a.city,
-                state: STATES.includes(a.state) ? a.state : cur.state,
-                pincode: a.pincode,
-                phone: a.phone,
-                email: cur.email || user.email || "",
-              },
+            : { ...cur, ...delivery, email: cur.email || user.email || "" },
         );
       })
       .catch(() => {});

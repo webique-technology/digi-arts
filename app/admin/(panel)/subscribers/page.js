@@ -7,6 +7,9 @@ import ConfirmModal from '@/components/admin/ConfirmModal';
 
 const fmtDate = (d) => (d ? new Date(d).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : '');
 
+// A leading = + - @ tab or CR would make spreadsheets evaluate the cell as a formula
+const csvCell = (v) => `"${String(v).replace(/^(?=[=+\-@\t\r])/, "'").replace(/"/g, '""')}"`;
+
 export default function AdminSubscribers() {
   const { toast, onError } = useAdmin();
   const [rows, setRows] = useState(null);
@@ -21,7 +24,7 @@ export default function AdminSubscribers() {
   };
 
   const exportCsv = () => {
-    const csv = ['email,subscribed_on', ...rows.map((s) => `${s.email},${new Date(s.createdAt).toISOString().slice(0, 10)}`)].join('\n');
+    const csv = ['email,subscribed_on', ...rows.map((s) => `${csvCell(s.email)},${new Date(s.createdAt).toISOString().slice(0, 10)}`)].join('\n');
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
     const a = Object.assign(document.createElement('a'), { href: url, download: 'subscribers.csv' });
     a.click();
