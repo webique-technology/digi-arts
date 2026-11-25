@@ -97,8 +97,66 @@ export default function Footer() {
                 )}
               </div>
 
-              {/* Social Media Links */}
-              <div className="da-footer__socials d-flex gap-2">
+              
+            </Col>
+
+            {/* Column 2: Company */}
+            <Col xs={6} sm={4} lg={2} className="da-footer__col-links">
+              <h3 className="da-footer__heading">Company</h3>
+              <ul className="da-footer__list">
+                <li>
+                  <Link href="/about">About Us</Link>
+                </li>
+                <li>
+                  <Link href="/blog">Blogs</Link>
+                </li>
+                <li>
+                  <Link href="/contact">Contact Us</Link>
+                </li>
+              </ul>
+            </Col>
+
+            {/* Column 3: Help */}
+            <Col xs={6} sm={4} lg={2} className="da-footer__col-links">
+              <h3 className="da-footer__heading">Policies</h3>
+              <ul className="da-footer__list">
+                 <li>
+                  <Link href="/privacy-policy">Privacy Policy</Link>
+                </li>
+                <li>
+                  <Link href="/terms-of-service">Terms of Service</Link>
+                </li>
+                <li>
+                  <Link href="/refund-policy">Refund Policy</Link>
+                </li>
+              </ul>
+            </Col>
+
+            {/* Column 4: Policies & Contact */}
+            <Col
+              xs={12}
+              sm={4}
+              lg={3}
+              className="da-footer__col-policies ps-lg-4"
+            >
+              <h3 className="da-footer__heading">Follow us</h3>
+              <div className="da-footer__direct-contact d-flex flex-column gap-2 pt-1">
+                <a
+                  href="mailto:digiartsstore@gmail.com"
+                  className="da-footer__contact-item d-flex align-items-center gap-2"
+                >
+                  <HiOutlineMail className="da-footer__contact-icon" />
+                  <span>digiartsstore@gmail.com</span>
+                </a>
+                <a
+                  href="tel:+91982831883"
+                  className="da-footer__contact-item d-flex align-items-center gap-2"
+                >
+                  <HiOutlinePhone className="da-footer__contact-icon" />
+                  <span>+91 9828 31883</span>
+                </a>
+                {/* Social Media Links */}
+              <div className="da-footer__socials d-flex gap-2 mt-3">
                 <a
                   href="https://facebook.com"
                   target="_blank"
@@ -136,84 +194,6 @@ export default function Footer() {
                   <FaYoutube />
                 </a>
               </div>
-            </Col>
-
-            {/* Column 2: Company */}
-            <Col xs={6} sm={4} lg={2} className="da-footer__col-links">
-              <h3 className="da-footer__heading">Company</h3>
-              <ul className="da-footer__list">
-                <li>
-                  <Link href="/about">About Us</Link>
-                </li>
-                <li>
-                  <Link href="/our-story">Our Story</Link>
-                </li>
-                <li>
-                  <Link href="/careers">Careers</Link>
-                </li>
-                <li>
-                  <Link href="/blog">Blogs</Link>
-                </li>
-                <li>
-                  <Link href="/contact">Contact Us</Link>
-                </li>
-              </ul>
-            </Col>
-
-            {/* Column 3: Help */}
-            <Col xs={6} sm={4} lg={2} className="da-footer__col-links">
-              <h3 className="da-footer__heading">Help</h3>
-              <ul className="da-footer__list">
-                <li>
-                  <Link href="/faqs">FAQs</Link>
-                </li>
-                <li>
-                  <Link href="/shipping-info">Shipping Info</Link>
-                </li>
-                <li>
-                  <Link href="/returns">Returns</Link>
-                </li>
-                <li>
-                  <Link href="/track-order">Track Order</Link>
-                </li>
-              </ul>
-            </Col>
-
-            {/* Column 4: Policies & Contact */}
-            <Col
-              xs={12}
-              sm={4}
-              lg={3}
-              className="da-footer__col-policies ps-lg-4"
-            >
-              <h3 className="da-footer__heading">Policies</h3>
-              <ul className="da-footer__list mb-3">
-                <li>
-                  <Link href="/privacy-policy">Privacy Policy</Link>
-                </li>
-                <li>
-                  <Link href="/terms-of-service">Terms of Service</Link>
-                </li>
-                <li>
-                  <Link href="/refund-policy">Refund Policy</Link>
-                </li>
-              </ul>
-
-              <div className="da-footer__direct-contact d-flex flex-column gap-2 pt-1">
-                <a
-                  href="mailto:digiartsstore@gmail.com"
-                  className="da-footer__contact-item d-flex align-items-center gap-2"
-                >
-                  <HiOutlineMail className="da-footer__contact-icon" />
-                  <span>digiartsstore@gmail.com</span>
-                </a>
-                <a
-                  href="tel:+91982831883"
-                  className="da-footer__contact-item d-flex align-items-center gap-2"
-                >
-                  <HiOutlinePhone className="da-footer__contact-icon" />
-                  <span>+91 9828 31883</span>
-                </a>
               </div>
             </Col>
           </Row>
@@ -225,7 +205,7 @@ export default function Footer() {
         <Container>
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
             <span className="da-footer__copyright text-center text-md-start">
-              © 2026 DigiArts. All rights reserved.
+              &copy; {new Date().getFullYear()} Digi Arts. All rights reserved.
             </span>
 
             <div className="da-footer__badges d-flex align-items-center justify-content-center flex-wrap gap-2">
@@ -235,6 +215,9 @@ export default function Footer() {
               <span className="da-footer__dot">•</span>
               <span>Easy Returns</span>
             </div>
+
+            <div className="da-footer__developer text-center text-md-end">
+            <span>Design & Developed by <a href="https://webique.in" target="_blank" rel="noopener noreferrer" className="text-decoration-underline">Webique Technology</a></span></div>
           </div>
         </Container>
       </div>

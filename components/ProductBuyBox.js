@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaLock } from "react-icons/fa";
-
+import Link from 'next/link';
 import { useCart } from "./CartProvider";
 import AddToCartButton from "./AddToCartButton";
 
@@ -125,6 +125,17 @@ export default function ProductBuyBox({
           >
             Buy Now
           </button>
+        </div>
+      </div>
+      <div className="row g-2 mb-3">
+        <div className="col-12 col-sm-12">
+
+<Link
+  href={`/bulk-order?product=${encodeURIComponent(product.slug)}`}
+  className="button fifth-btn fw-bold py-2 shadow-sm w-100"
+>
+  Bulk Order Enquiry
+</Link>
         </div>
       </div>
     </div>

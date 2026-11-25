@@ -4459,6 +4459,18 @@
       border: v.$color-primary;
     }
   }
+  &.fifth-btn {
+    border: 1px solid #000;
+    background: rgba(var(--bs-warning-rgb),var(--bs-text-opacity))!important;
+    border-radius: 8px !important;
+    color: v.$color-primary-dark !important;
+
+    &:hover {
+      color: #f2654d !important;
+      border: #f2654d;
+      border: 1px solid #f2654d;
+    }
+  }
 
 }
 

@@ -141,13 +141,17 @@ export default function Header() {
       label: "Best Sellers",
       href: "/products?bestseller=1",
     },
-    {
-      label: "About Us",
-      href: "/about",
-    },
+    // {
+    //   label: "About Us",
+    //   href: "/about",
+    // },
     {
       label: "Blogs",
       href: "/blog",
+    },
+    {
+      label: "Bulk Order",
+      href: "/bulk-order",
     },
     {
       label: "Contact",
