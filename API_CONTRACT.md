@@ -59,10 +59,25 @@ The browser always calls `/api/*` on the Next.js domain; `next.config.js` proxie
 `title, category_id, price, sale_price, stock, status, is_bestseller, description, meta_title, meta_description`,
 `images[]` (new files, in order), `image_order` (JSON array of tokens `e<existingImageId>` or `n<indexInImages[]>`),
 `primary_image` (one token), `delete_images` (JSON array of existing image ids, update only).
-Limits: max 10 images, 2 MB each, JPG/PNG/WebP, stored as WebP.
+Limits: max 10 images, see **Images**.
 
 ### Banner multipart fields
-`title, subtitle, link_url, sort_order, status, start_date, end_date, image_desktop (file, required on create), image_mobile (file), remove_mobile ("1")`. Max 3 MB each.
+`title, subtitle, link_url, sort_order, status, start_date, end_date, image_desktop (file, required on create), image_mobile (file), remove_mobile ("1")`. See **Images**.
+
+## Images
+Uploads: JPG/PNG/WebP, max 10 MB and 50 megapixels each (422 otherwise). The server strips metadata and saves three WebP versions, never enlarged:
+`small` (480px wide, max 80 KB), `medium` (960px, max 200 KB), `large` (1920px, max 500 KB).
+
+The existing path fields still hold the `large` path. Next to each is a variants object `{small, medium, large}` of paths, or `null` when the
+image has no generated versions (external/public paths, videos, older uploads before `npm run images:optimize`):
+
+| Resource | Path | Variants |
+|---|---|---|
+| Product | `primary_image`, `images[].image_path` | `primary_image_variants`, `images[].variants` |
+| Category | `image` | `image_variants` |
+| Banner | `image_desktop`, `image_mobile` | `image_desktop_variants`, `image_mobile_variants` |
+| Blog | `cover_image`, `hero_image` | `cover_image_variants`, `hero_image_variants` |
+| Order item | `image_path` | `image_variants` |
 
 ## Pricing rules (enforced on the server)
 - **Bulk tiers per product line:** 5+ units 5% off, 10+ 10%, 30+ 20%, 50 25% (max 50 per product).

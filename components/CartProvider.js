@@ -31,7 +31,7 @@ export default function CartProvider({ children }) {
       const key = `${preview ? 'preview' : 'live'}:${p.id}`;
       const ex = cur.find((i) => keyOf(i) === key);
       if (ex) return cur.map((i) => (keyOf(i) === key ? { ...i, stock: stockLimit, qty: Math.min(stockLimit, i.qty + qty) } : i));
-      return [...cur, { key, id: p.id, preview, slug: p.slug, title: p.title, price: Number(finalPrice(p)), stock: stockLimit, image: p.primary_image || p.images?.[0]?.image_path || null, qty: Math.min(stockLimit, qty) }];
+      return [...cur, { key, id: p.id, preview, slug: p.slug, title: p.title, price: Number(finalPrice(p)), stock: stockLimit, image: p.primary_image_variants?.small || p.primary_image || p.images?.[0]?.image_path || null, qty: Math.min(stockLimit, qty) }];
     });
     if (openDrawer) setOpen(true);
   }, [commit]);

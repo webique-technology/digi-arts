@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { RiArrowRightLine } from "react-icons/ri";
+import ResponsiveImage from "../ResponsiveImage";
 
 export default function BlogCard({ post }) {
   if (!post) return null;
@@ -8,8 +9,10 @@ export default function BlogCard({ post }) {
     <article className="blog-card">
       <div className="blog-card__media-wrapper">
         <Link href={`/blog/${post.slug}`} className="blog-card__img-link">
-          <img
+          <ResponsiveImage
             src={post.image}
+            variants={post.imageVariants}
+            sizes="(max-width: 767px) 50vw, (max-width: 991px) 33vw, 320px"
             alt={post.title}
             className="blog-card__img"
             loading="lazy"

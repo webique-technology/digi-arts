@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
 import { RiTimeLine } from "react-icons/ri";
+import ResponsiveImage from "../ResponsiveImage";
 
 export default function BlogDetailContent({ post }) {
   const related = post.related || [];
@@ -23,10 +24,15 @@ export default function BlogDetailContent({ post }) {
         </nav>
       </Container>
 
-      <section
-        className="blog-detail-hero d-flex align-items-end justify-content-center"
-        style={post.heroImage ? { backgroundImage: `url(${post.heroImage})` } : undefined}
-      >
+      <section className="blog-detail-hero d-flex align-items-end justify-content-center">
+        {post.heroImage && (
+          <ResponsiveImage
+            className="blog-detail-hero__img"
+            src={post.heroImage}
+            variants={post.heroImageVariants}
+            sizes="(max-width: 576px) max(100vw, 560px), max(100vw, 980px)"
+          />
+        )}
         <div className="blog-detail-hero__wrapper">
           <Container className="position-relative z-3">
             <h1 className="blog-detail-header__title">{post.title}</h1>

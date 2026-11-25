@@ -1,22 +1,22 @@
 'use client';
 import { useRef, useState } from 'react';
+import { IMAGE_TYPES, MAX_UPLOAD_MB, imageFileError } from '@/lib/images';
 
-const TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-const ok = (file, maxMB, onReject) => {
-  if (!TYPES.includes(file.type)) { onReject?.(`${file.name}: only JPG, PNG or WebP allowed`); return false; }
-  if (file.size > maxMB * 1024 * 1024) { onReject?.(`${file.name}: larger than ${maxMB} MB`); return false; }
-  return true;
+const ok = (file, onReject) => {
+  const error = imageFileError(file);
+  if (error) onReject?.(error);
+  return !error;
 };
 
 /** Multi-image: drag & drop, preview, choose primary, reorder, remove. */
-export default function ImageDropzone({ items, onChange, primary, onPrimary, maxMB = 2, max = 10, onReject }) {
+export default function ImageDropzone({ items, onChange, primary, onPrimary, max = 10, onReject }) {
   const input = useRef(null);
   const [drag, setDrag] = useState(false);
 
   const add = (files) => {
     const next = [...items];
     Array.from(files).forEach((file) => {
-      if (!ok(file, maxMB, onReject)) return;
+      if (!ok(file, onReject)) return;
       if (next.length >= max) { onReject?.(`Maximum ${max} images`); return; }
       next.push({ key: `n-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, file, url: URL.createObjectURL(file) });
     });
@@ -43,8 +43,8 @@ export default function ImageDropzone({ items, onChange, primary, onPrimary, max
         onDragLeave={() => setDrag(false)}
         onDrop={(e) => { e.preventDefault(); setDrag(false); add(e.dataTransfer.files); }}
       >
-        Drag &amp; drop images here, or click to browse<br /><small>JPG, PNG, WebP · max {maxMB} MB each · up to {max}</small>
-        <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden
+        Drag &amp; drop images here, or click to browse<br /><small>JPG, PNG, WebP · max {MAX_UPLOAD_MB} MB each · up to {max}</small>
+        <input ref={input} type="file" accept={IMAGE_TYPES.join(',')} multiple hidden
           onChange={(e) => { add(e.target.files); e.target.value = ''; }} />
       </div>
       {items.length > 0 && (
@@ -69,9 +69,9 @@ export default function ImageDropzone({ items, onChange, primary, onPrimary, max
 }
 
 /** Single image picker with preview (used for banners). */
-export function SingleImage({ label, url, onFile, onClear, maxMB = 3, aspect = '16 / 6', onReject, error }) {
+export function SingleImage({ label, url, onFile, onClear, aspect = '16 / 6', onReject, error }) {
   const input = useRef(null);
-  const pick = (file) => { if (file && ok(file, maxMB, onReject)) onFile(file, URL.createObjectURL(file)); };
+  const pick = (file) => { if (file && ok(file, onReject)) onFile(file, URL.createObjectURL(file)); };
   return (
     <div className="field">
       <label>{label}</label>
@@ -80,8 +80,8 @@ export function SingleImage({ label, url, onFile, onClear, maxMB = 3, aspect = '
         onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && input.current?.click()}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => { e.preventDefault(); pick(e.dataTransfer.files[0]); }}>
-        {url ? <img src={url} alt={`${label} preview`} style={{ width: '100%', aspectRatio: aspect, objectFit: 'cover', borderRadius: 6 }} /> : <>Click or drop an image<br /><small>JPG, PNG, WebP · max {maxMB} MB</small></>}
-        <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(e) => { pick(e.target.files[0]); e.target.value = ''; }} />
+        {url ? <img src={url} alt={`${label} preview`} style={{ width: '100%', aspectRatio: aspect, objectFit: 'cover', borderRadius: 6 }} /> : <>Click or drop an image<br /><small>JPG, PNG, WebP · max {MAX_UPLOAD_MB} MB</small></>}
+        <input ref={input} type="file" accept={IMAGE_TYPES.join(',')} hidden onChange={(e) => { pick(e.target.files[0]); e.target.value = ''; }} />
       </div>
       {url && onClear && <button type="button" className="btn btn--sm btn--outline" style={{ marginTop: 6 }} onClick={onClear}>Remove</button>}
       {error && <div className="field__error">{error}</div>}

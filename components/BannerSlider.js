@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, A11y } from "swiper/modules";
 import { imageUrl } from "@/lib/api";
+import { srcSet } from "@/lib/images";
+import ResponsiveImage from "./ResponsiveImage";
 import { TEST_IDS } from "@/components/testIds";
 import { MdArrowOutward } from "react-icons/md";
 import "swiper/css";
@@ -99,12 +101,16 @@ export default function BannerSlider({ banners = [] }) {
                   {b.image_mobile && (
                     <source
                       media="(max-width: 767px)"
-                      srcSet={imageUrl(b.image_mobile)}
+                      srcSet={srcSet(b.image_mobile_variants) || imageUrl(b.image_mobile)}
+                      sizes="100vw"
                     />
                   )}
-                  <img
+                  {/* Fixed-height cover crop: the drawn image can be wider than the screen */}
+                  <ResponsiveImage
                     className="hero__bg"
-                    src={imageUrl(b.image_desktop)}
+                    src={b.image_desktop}
+                    variants={b.image_desktop_variants}
+                    sizes="(max-width: 768px) max(100vw, 1100px), max(100vw, 1650px)"
                     alt={b.title || "Banner"}
                     loading={idx === 0 ? "eager" : "lazy"}
                   />

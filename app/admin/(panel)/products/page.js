@@ -2,7 +2,8 @@
 import Link from 'next/link';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { useCallback, useEffect, useState } from 'react';
-import { adminFetch, imageUrl } from '@/lib/api';
+import { adminFetch } from '@/lib/api';
+import { smallImage } from '@/lib/images';
 import { formatPrice } from '@/lib/utils';
 import { useAdmin } from '@/components/admin/AdminProvider';
 import ConfirmModal from '@/components/admin/ConfirmModal';
@@ -42,7 +43,7 @@ export default function AdminProducts() {
               : !st.rows.length ? <tr><td colSpan={7}>No products yet.</td></tr>
               : st.rows.map((r) => (
                 <tr key={r.id}>
-                  <td>{r.primary_image ? <img className="table__thumb" src={imageUrl(r.primary_image)} alt="" /> : <div className="table__thumb" />}</td>
+                  <td>{r.primary_image ? <img className="table__thumb" src={smallImage(r.primary_image, r.primary_image_variants)} alt="" /> : <div className="table__thumb" />}</td>
                   <td><Link className="table__link" href={`/admin/products/${r.id}`}>{r.title}</Link></td><td>{r.category_name || '—'}</td>
                   <td>{r.sale_price ? <>{formatPrice(r.sale_price)} <s>{formatPrice(r.price)}</s></> : formatPrice(r.price)}</td>
                   <td>{r.stock}</td>

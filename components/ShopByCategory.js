@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y, Autoplay } from "swiper/modules";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
-import { imageUrl } from "@/lib/api";
+import { smallImage } from "@/lib/images";
 // Swiper core styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -138,7 +138,8 @@ export default function ShopByCategory({ items = CATEGORIES }) {
                 <div className="category-item__image-wrap">
                   <div className="category-item__image">
                     <Image
-                      src={imageUrl(category.image)}
+                      src={smallImage(category.image, category.variants)}
+                      unoptimized={Boolean(category.variants)}
                       alt={category.label}
                       fill
                       sizes="(max-width: 575px) 28vw, (max-width: 991px) 22vw, 150px"

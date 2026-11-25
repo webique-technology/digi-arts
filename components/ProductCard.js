@@ -36,6 +36,11 @@ export default function ProductCard({
       : null);
 
   const img = resolveImagePath(rawImage);
+  const variants =
+    item.primary_image_variants ||
+    (Array.isArray(item.images)
+      ? item.images.find((i) => i?.image_path && i.image_path === rawImage)?.variants
+      : null);
   const title = item.title || item.name || "Product";
   const slug = item.slug || String(item.id);
   const categoryName = item.category_name || item.category?.name;
@@ -124,7 +129,13 @@ export default function ProductCard({
           aria-label={`View ${title}`}
         >
           <div className="pcard__media">
-            <Visual src={img} alt={title} className="pcard__img" />
+            <Visual
+              src={img}
+              variants={variants}
+              sizes="(max-width: 767px) 50vw, (max-width: 991px) 33vw, 320px"
+              alt={title}
+              className="pcard__img"
+            />
           </div>
         </Link>
 

@@ -60,9 +60,9 @@ export default function BannerForm({ banner }) {
         <div />
         <div className="field"><label htmlFor="b-start">Start date</label><input id="b-start" type="date" value={f.start_date} onChange={set('start_date')} /></div>
         <div className="field"><label htmlFor="b-end">End date</label><input id="b-end" type="date" value={f.end_date} onChange={set('end_date')} /><Err k="end_date" /></div>
-        <div className="full"><SingleImage label="Desktop image * (recommended 1920×700)" url={desk.url} aspect="16 / 6" maxMB={3}
+        <div className="full"><SingleImage label="Desktop image * (recommended 1920×700)" url={desk.url} aspect="16 / 6"
           onFile={(file, url) => setDesk({ file, url })} onReject={(m) => toast(m, 'error')} error={errors.image_desktop} /></div>
-        <div className="full"><SingleImage label="Mobile image (recommended 800×1000)" url={mob.url} aspect="4 / 5" maxMB={3}
+        <div className="full"><SingleImage label="Mobile image (recommended 800×1000)" url={mob.url} aspect="4 / 5"
           onFile={(file, url) => setMob({ file, url, removed: false })} onClear={() => setMob({ file: null, url: '', removed: true })} onReject={(m) => toast(m, 'error')} /></div>
       </div>
       <button className="btn" disabled={busy}>{busy ? 'Saving…' : banner ? 'Update banner' : 'Create banner'}</button>

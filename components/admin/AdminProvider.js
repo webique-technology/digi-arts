@@ -84,7 +84,7 @@ export default function AdminProvider({ children }) {
       {children}
       <div className="toasts" aria-live="polite">
         {toasts.map((t) => (
-          <div key={t.id} className={`toast toast--${t.type}`}>
+          <div key={t.id} className={`toast show toast--${t.type}`}>
             {t.message}
           </div>
         ))}

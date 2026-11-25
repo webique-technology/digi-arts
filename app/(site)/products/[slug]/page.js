@@ -83,7 +83,7 @@ export default async function ProductPage({ params }) {
   const rawList = p.images?.length
     ? p.images
     : p.primary_image
-      ? [{ image_path: p.primary_image }]
+      ? [{ image_path: p.primary_image, variants: p.primary_image_variants }]
       : [{ image_path: p.image }];
 
   const productImages = rawList.map((item, index) => {
@@ -96,6 +96,7 @@ export default async function ProductPage({ params }) {
     return {
       id: item.id || index + 1,
       image_path: resolveImagePath(rawPath),
+      variants: item?.variants || null,
       type: isVideo ? "video" : "image",
       is_primary: index === 0,
     };

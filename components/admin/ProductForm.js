@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiArrowLeft } from "react-icons/fi";
-import { adminFetch, imageUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
+import { smallImage } from "@/lib/images";
 import { useAdmin } from "./AdminProvider";
 import ImageDropzone from "./ImageDropzone";
 
@@ -41,7 +42,7 @@ export default function ProductForm({ product }) {
   const existing = (product?.images || []).map((im) => ({
     key: `e${im.id}`,
     existingId: im.id,
-    url: imageUrl(im.image_path),
+    url: smallImage(im.image_path, im.variants),
   }));
   const [items, setItems] = useState(existing);
   const [primary, setPrimary] = useState(() => {
@@ -235,7 +236,6 @@ export default function ProductForm({ product }) {
             onChange={setItems}
             primary={primary}
             onPrimary={setPrimary}
-            maxMB={2}
             onReject={(m) => toast(m, "error")}
           />
           <Err k="images" />

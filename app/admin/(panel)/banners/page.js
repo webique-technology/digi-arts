@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { useCallback, useEffect, useState } from "react";
-import { adminFetch, imageUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
+import { smallImage } from "@/lib/images";
 import { useAdmin } from "@/components/admin/AdminProvider";
 import ConfirmModal from "@/components/admin/ConfirmModal";
 
@@ -84,7 +85,7 @@ export default function AdminBanners() {
                 <tr key={r.id}>
                   <td>
                     <img
-                      src={imageUrl(r.image_desktop)}
+                      src={smallImage(r.image_desktop, r.image_desktop_variants)}
                       alt=""
                       style={{
                         width: 120,

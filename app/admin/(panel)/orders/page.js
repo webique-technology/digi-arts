@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
-import { adminFetch, imageUrl } from '@/lib/api';
+import { adminFetch } from '@/lib/api';
+import { smallImage } from '@/lib/images';
 import { formatPrice } from '@/lib/utils';
 import { useAdmin } from '@/components/admin/AdminProvider';
 
@@ -79,7 +80,7 @@ export default function AdminOrders() {
             {detail.notes && <p className="detail__note"><strong>Note:</strong> {detail.notes}</p>}
             <ul className="detail__items">
               {detail.items.map((i, n) => (
-                <li key={n}>{i.image_path ? <img src={imageUrl(i.image_path)} alt="" /> : <span className="visual-ph" />}<span>{i.title}</span><span>{i.qty} × {formatPrice(i.unit_price ?? i.price)}{i.unit_price < i.price && <s style={{ marginLeft: 6, color: '#999' }}>{formatPrice(i.price)}</s>}</span><strong>{formatPrice(i.line_total ?? i.qty * i.price)}</strong></li>
+                <li key={n}>{i.image_path ? <img src={smallImage(i.image_path, i.image_variants)} alt="" /> : <span className="visual-ph" />}<span>{i.title}</span><span>{i.qty} × {formatPrice(i.unit_price ?? i.price)}{i.unit_price < i.price && <s style={{ marginLeft: 6, color: '#999' }}>{formatPrice(i.price)}</s>}</span><strong>{formatPrice(i.line_total ?? i.qty * i.price)}</strong></li>
               ))}
             </ul>
             <div className="detail__totals"><span>Subtotal {formatPrice(detail.subtotal)}</span>{detail.discount > 0 && <span>Discount ({detail.coupon_code}) −{formatPrice(detail.discount)}</span>}<span>Shipping {detail.shipping ? formatPrice(detail.shipping) : 'Free'}</span><strong>Total {formatPrice(detail.total)} (Cash on delivery)</strong></div>

@@ -161,9 +161,9 @@ export default function BlogForm({ blog }) {
           <small className="field__hint">Short summary shown on blog cards · {f.excerpt.length}/300</small>
         </div>
         <div className="full" style={{ display: 'grid', gap: '0 16px', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
-          <SingleImage label="Cover image * (cards, 4:3)" url={cover.url} aspect="4 / 3" maxMB={3}
+          <SingleImage label="Cover image * (cards, 4:3)" url={cover.url} aspect="4 / 3"
             onFile={(file, url) => setCover({ file, url })} onReject={(m) => toast(m, 'error')} error={errors.cover_image} />
-          <SingleImage label="Hero image (article banner; uses cover if empty)" url={hero.url} aspect="16 / 6" maxMB={3}
+          <SingleImage label="Hero image (article banner; uses cover if empty)" url={hero.url} aspect="16 / 6"
             onFile={(file, url) => setHero({ file, url, removed: false })}
             onClear={() => setHero({ file: null, url: '', removed: true })} onReject={(m) => toast(m, 'error')} />
         </div>

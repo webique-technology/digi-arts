@@ -1,13 +1,12 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FiEdit2, FiImage, FiTrash2, FiX } from 'react-icons/fi';
-import { adminFetch, imageUrl } from '@/lib/api';
+import { adminFetch } from '@/lib/api';
+import { IMAGE_TYPES, MAX_UPLOAD_MB, imageFileError, smallImage } from '@/lib/images';
 import { useAdmin } from '@/components/admin/AdminProvider';
 import ConfirmModal from '@/components/admin/ConfirmModal';
 
 const EMPTY_IMAGE = { file: null, url: '', removed: false };
-const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-const MAX_MB = 2;
 
 export default function AdminCategories() {
   const { toast, onError } = useAdmin();
@@ -31,14 +30,14 @@ export default function AdminCategories() {
   const startEdit = (r) => {
     setEditRow(r);
     setName(r.name);
-    setImage({ ...EMPTY_IMAGE, url: r.image ? imageUrl(r.image) : '' });
+    setImage({ ...EMPTY_IMAGE, url: smallImage(r.image, r.image_variants) });
     nameInput.current?.focus();
   };
 
   const pickFile = (file) => {
     if (!file) return;
-    if (!IMAGE_TYPES.includes(file.type)) return toast('Only JPG, PNG or WebP images', 'error');
-    if (file.size > MAX_MB * 1024 * 1024) return toast(`Image must be under ${MAX_MB} MB`, 'error');
+    const error = imageFileError(file);
+    if (error) return toast(error, 'error');
     setImage({ file, url: URL.createObjectURL(file), removed: false });
   };
 
@@ -102,7 +101,7 @@ export default function AdminCategories() {
             <button className="btn" disabled={busy}>{busy ? 'Saving…' : editRow ? 'Save changes' : 'Add category'}</button>
             {editRow && <button type="button" className="btn btn--outline" onClick={reset}>Cancel</button>}
           </div>
-          <p className="catform__hint">Square image, JPG, PNG or WebP up to {MAX_MB} MB. Shown on the shop&apos;s category tiles.</p>
+          <p className="catform__hint">Square image, JPG, PNG or WebP up to {MAX_UPLOAD_MB} MB. Shown on the shop&apos;s category tiles.</p>
         </div>
       </form>
 
@@ -113,7 +112,7 @@ export default function AdminCategories() {
             {loading ? <tr><td colSpan={6}>Loading…</td></tr> : !rows.length ? <tr><td colSpan={6}>No categories yet.</td></tr>
               : rows.map((r) => (
                 <tr key={r.id} className={editRow?.id === r.id ? 'is-editing' : ''}>
-                  <td>{r.image ? <img className="catthumb" src={imageUrl(r.image)} alt="" /> : <span className="catthumb catthumb--empty"><FiImage aria-hidden="true" /></span>}</td>
+                  <td>{r.image ? <img className="catthumb" src={smallImage(r.image, r.image_variants)} alt="" /> : <span className="catthumb catthumb--empty"><FiImage aria-hidden="true" /></span>}</td>
                   <td><button type="button" className="table__link" onClick={() => startEdit(r)}>{r.name}</button></td><td>{r.slug}</td><td>{r.product_count}</td>
                   <td><button className={`badge ${Number(r.status) ? 'badge--ok' : 'badge--off'}`} style={{ border: 0, cursor: 'pointer' }} onClick={() => toggle(r)}>{Number(r.status) ? 'Active' : 'Inactive'}</button></td>
                   <td>

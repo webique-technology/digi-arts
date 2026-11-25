@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { FiEdit2, FiExternalLink, FiTrash2 } from "react-icons/fi";
 import { useCallback, useEffect, useState } from "react";
-import { adminFetch, imageUrl } from "@/lib/api";
+import { adminFetch } from "@/lib/api";
+import { smallImage } from "@/lib/images";
 import { useAdmin } from "@/components/admin/AdminProvider";
 import ConfirmModal from "@/components/admin/ConfirmModal";
 
@@ -111,7 +112,7 @@ export default function AdminBlogs() {
                 return (
                   <tr key={r.id}>
                     <td>
-                      {r.cover_image ? <img className="table__thumb" src={imageUrl(r.cover_image)} alt="" /> : <div className="table__thumb" />}
+                      {r.cover_image ? <img className="table__thumb" src={smallImage(r.cover_image, r.cover_image_variants)} alt="" /> : <div className="table__thumb" />}
                     </td>
                     <td>
                       <Link className="table__link" href={`/admin/blogs/${r.id}`}>

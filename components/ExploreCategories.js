@@ -95,6 +95,8 @@ export default function ExploreCategories({
                   <Visual
                     className="xcard__img w-100 h-100 object-fit-cover"
                     src={c.image}
+                    variants={c.variants}
+                    sizes="(max-width: 479px) 87vw, (max-width: 575px) 67vw, (max-width: 767px) 45vw, (max-width: 1199px) 31vw, 260px"
                     alt={c.label}
                   />
                 </div>

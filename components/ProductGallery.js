@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { imageUrl } from "@/lib/api";
+import { smallImage } from "@/lib/images";
+import ResponsiveImage from "./ResponsiveImage";
 import { TEST_IDS } from "./testIds";
 
 // Determines if media item is a video
@@ -110,6 +112,7 @@ export default function ProductGallery({
           img.src ||
           img.url ||
           (typeof img === "string" ? img : ""),
+        variants: img.variants,
         poster: img.poster || img.thumbnail || "",
       };
     });
@@ -214,9 +217,11 @@ export default function ProductGallery({
             Your browser does not support playing this video.
           </video>
         ) : (
-          <img
+          <ResponsiveImage
             className="gallery__main rounded-2 w-100"
-            src={activeSrc}
+            src={activeMedia.src}
+            variants={activeMedia.variants}
+            sizes="(max-width: 767px) 100vw, (max-width: 1199px) 42vw, 430px"
             alt={`${title} - image ${i + 1}`}
             style={{ maxHeight: "500px", objectFit: "contain" }}
           />
@@ -231,7 +236,7 @@ export default function ProductGallery({
               const effectiveThumb = m.poster
                 ? imageUrl(m.poster)
                 : snapshots[m.src] ||
-                  (m.type === "image" ? imageUrl(m.src) : "");
+                  (m.type === "image" ? smallImage(m.src, m.variants) : "");
 
               const isCurrent = idx === i;
 
